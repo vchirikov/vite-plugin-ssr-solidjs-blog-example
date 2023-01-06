@@ -1,0 +1,159 @@
+{
+  "editor.tabSize": 2,
+  "eslint.format.enable": false,
+  "editor.detectIndentation": false,
+  // use alt+shift+f, because might conflict with editor.codeActionsOnSave + source.fixAll.eslint
+  "editor.formatOnSave": false,
+  "files.eol": "\n",
+  "files.encoding": "utf8",
+  "files.exclude": {
+    "**/.git": true,
+    "**/Thumbs.db": true,
+    "**/node_modules": true,
+  },
+  "search.exclude": {
+    "node_modules": true,
+    "tmp": true,
+    ".svelte-kit": true,
+    "pnpm-lock.yaml": true,
+  },
+  "javascript.preferences.quoteStyle": "single",
+  "typescript.preferences.quoteStyle": "single",
+  "eslint.probe": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "html",
+    "vue",
+    "svelte",
+  ],
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "vue",
+    "svelte",
+  ],
+  "[svelte]": {
+    "editor.defaultFormatter": "svelte.svelte-vscode"
+  },
+  "[javascript][javascriptreact][typescript][typescriptreact]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "[json][jsonc]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "[css][scss][less]": {
+    "editor.defaultFormatter": "vscode.css-language-features",
+  },
+  "[html]": {
+    "editor.defaultFormatter": "vscode.html-language-features",
+  },
+  "[markdown]": {
+    "editor.defaultFormatter": "vscode.markdown-language-features",
+  },
+  "[mdx]": {
+    // no-one (prettier too) can't format mdx correctly (new lines, trailing whitespaces)
+    "editor.defaultFormatter": "do-not-format-mdx",
+  },
+  "svelte.enable-ts-plugin": true,
+  "svelte.ask-to-enable-ts-plugin": false,
+  "svelte.plugin.svelte.defaultScriptLanguage": "ts",
+  "svelte.plugin.svelte.format.config.singleQuote": true,
+  "svelte.plugin.svelte.format.config.printWidth": 120,
+  "svelte.plugin.svelte.useNewTransformation": true,
+  "svelte.plugin.svelte.note-new-transformation": false,
+  // works badly with tailwindcss + daisyui
+  "svelte.plugin.css.diagnostics.enable": false,
+  "trailing-spaces.syntaxIgnore": [
+    "markdown",
+    "mdx"
+  ],
+  "[markdown][mdx]": {
+    "editor.renderWhitespace": "trailing",
+    "editor.formatOnSave": false,
+    "files.trimTrailingWhitespace": false,
+    "files.trimFinalNewlines": false,
+    "editor.codeActionsOnSave": [],
+    "editor.tabSize": 2,
+  },
+  "editor.codeActionsOnSave": [
+    //"source.addMissingImports",
+    "source.fixAll.eslint"
+  ],
+  // Multiple language settings for json and jsonc files
+  "cSpell.words": [
+    "биндингами",
+    "блейзор",
+    "бложик",
+    "вебпак",
+    "внутряшек",
+    "профайлере",
+    "рендером",
+    "таск",
+    "фиксит",
+    "фиксится",
+    "шринкается",
+    "юзает",
+    "Artboard",
+    "Astro",
+    "Berloga",
+    "blogspot",
+    "camelcase",
+    "Chirikov",
+    "classname",
+    "consolas",
+    "corepack",
+    "cssnano",
+    "daisyui",
+    "esbuild",
+    "execa",
+    "frontmatter",
+    "gitversioning",
+    "inversify",
+    "languagedetector",
+    "ldjson",
+    "mdast",
+    "mdsvex",
+    "mdxjs",
+    "nerdbank",
+    "nofollow",
+    "noopener",
+    "noreferrer",
+    "opengraph",
+    "Parens",
+    "precompress",
+    "predev",
+    "preexport",
+    "prismjs",
+    "pwsh",
+    "rehype",
+    "resvg",
+    "sergioramos",
+    "singleline",
+    "sveltekit",
+    "twrnc",
+    "typesafe",
+    "unist",
+    "vfile"
+  ],
+  "css.lint.unknownAtRules": "ignore",
+  "files.associations": {
+    "*.json": "jsonc"
+  },
+  "json.schemas": [
+    {
+      "fileMatch": [
+        "src/i18n/locales/*/*.json"
+      ],
+      "schema": {
+        // webpack loader doesn't support trailing commas in json files
+        "allowTrailingCommas": false,
+        // webpack loader doesn't support comments in json files
+        "allowComments": false
+      }
+    }
+  ]
+}
