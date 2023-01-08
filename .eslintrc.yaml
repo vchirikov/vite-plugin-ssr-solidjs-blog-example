@@ -3,38 +3,75 @@ parser: "@typescript-eslint/parser"
 plugins:
   - svelte3
   - "@typescript-eslint"
+  - simple-import-sort
 extends:
   - eslint:recommended
   - plugin:import/recommended
   - plugin:import/typescript
   - plugin:@typescript-eslint/recommended
 rules:
-  "@typescript-eslint/ban-ts-comment": "off"
   quotes:
     - error
     - single
+  "@typescript-eslint/ban-ts-comment":
+    - "error"
+    - ts-expect-error: allow-with-description
+      ts-ignore: allow-with-description
+      ts-nocheck: true
+      ts-check: false
+      minimumDescriptionLength: 5
+  "@typescript-eslint/consistent-type-definitions":
+    - error
+    - interface
+  "@typescript-eslint/consistent-type-imports":
+    - error
+    - prefer: type-imports
+      disallowTypeAnnotations: true
+  "@typescript-eslint/no-unused-vars":
+    - warn
+    - varsIgnorePattern: ^_
+      argsIgnorePattern: ^_
+  simple-import-sort/imports:
+    - error
   import/no-extraneous-dependencies:
     - error
     - devDependencies: false
-      packageDir: [., ./src/lib/server, ./src/lib/build-time]
+  import/no-unresolved:
+    - error
+    - ignore:
+        # vite-plugin-svelte is a virtual module
+        - "@sveltejs/vite-plugin-svelte"
   import/no-restricted-paths:
     - error
     - zones:
-        - target:
-            - ./src/!(server)/**/*
-            - ./src/!(build-time)/**/*
-          from:
-            - ./src/lib/server
-            - ./src/lib/build-time
-overrides:
-  - files:
-      - "*.svelte"
-    processor: svelte3/svelte3
+        - target: "./src/lib/!(server)/**/*"
+          from: "./src/lib/server"
 settings:
   svelte3/typescript: true
+  import/resolver:
+    # You will also need to install and configure the TypeScript resolver
+    # See also https://github.com/import-js/eslint-import-resolver-typescript#configuration
+    typescript: true
+    node: true
 parserOptions:
   sourceType: module
 env:
   browser: true
   es2022: true
   node: true
+overrides:
+  - files:
+      - "*.svelte"
+    processor: svelte3/svelte3
+  # build-time files
+  - files:
+      - "build/**/*.ts"
+      - "src/lib/server/**/*.ts"
+      - "src/**/*.server.ts"
+      - "./*.{ts,mjs,js,cjs}"
+      # svelte itself is a devDependency so let use it from components
+      - "src/pages/**/*.svelte"
+    rules:
+      import/no-extraneous-dependencies:
+        - error
+        - devDependencies: true

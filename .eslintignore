@@ -1,18 +1,9 @@
 .git
 node_modules
 tmp
-static
-
-# <sveltekit>
-/dist
-/.svelte-kit
-/package
-.env
-.env.*
-!.env.example
+dist
 
 # Ignore files for PNPM, NPM and YARN
 pnpm-lock.yaml
 package-lock.json
 yarn.lock
-# </sveltekit>

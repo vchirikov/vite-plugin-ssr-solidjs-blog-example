@@ -40,7 +40,7 @@
     "editor.defaultFormatter": "svelte.svelte-vscode"
   },
   "[javascript][javascriptreact][typescript][typescriptreact]": {
-    "editor.defaultFormatter": "vscode.typescript-language-features"
+    "editor.defaultFormatter": "vscode.typescript-language-features",
   },
   "[json][jsonc]": {
     "editor.defaultFormatter": "vscode.json-language-features"
@@ -119,6 +119,7 @@
     "mdsvex",
     "mdxjs",
     "nerdbank",
+    "nodenext",
     "nofollow",
     "noopener",
     "noreferrer",
@@ -127,6 +128,7 @@
     "precompress",
     "predev",
     "preexport",
+    "prerender",
     "prismjs",
     "pwsh",
     "rehype",

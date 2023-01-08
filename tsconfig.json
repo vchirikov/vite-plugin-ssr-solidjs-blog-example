@@ -1,19 +1,44 @@
 {
   "extends": "@tsconfig/svelte/tsconfig.json",
+  "maxNodeModuleJsDepth": 1,
   "compilerOptions": {
+    "newLine": "lf",
+    "charset": "utf-8",
+    "emitBOM": false,
+    "noEmitOnError": true,
     "baseUrl": ".",
+    /** Sync with other places of [path aliases](https://vite-plugin-ssr.com/path-aliases):
+      * vite.config.js#resolve.alias (for files processed by Vite)
+      * package.json#imports (for Node.js files not processed by Vite)
+      * tsconfig.json#compilerOptions.paths (for TypeScript)
+      * NOTE: [must use '#' for node aliases](https://nodejs.org/api/packages.html#subpath-imports)
+      */
     "paths": {
-      "$src/*": [
+      "#root/*": [
+        "./*"
+      ],
+      "#src/*": [
         "src/*"
       ],
-      "$lib/*": [
-        "src/lib/*"
+      "#types": [
+        "src/types/types.ts"
+      ],
+      "#lib/*": [
+        "src/lib/*",
       ]
     },
     "target": "ESNext",
     "useDefineForClassFields": true,
     "module": "ESNext",
-    "moduleResolution": "NodeNext",
+    // NodeNext doesn't work well with vite-plugin-ssr
+    // Module '"vite-plugin-ssr/client/router"' has no exported member 'PageContextBuiltInClient'
+    "moduleResolution": "Node",
+    "moduleDetection": "force",
+    "moduleSuffixes": [
+      ""
+    ],
+    "skipLibCheck": false,
+    "esModuleInterop": true,
     "resolveJsonModule": true,
     "importsNotUsedAsValues": "error",
     "preserveValueImports": true,
@@ -24,10 +49,15 @@
     ],
     "allowJs": true,
     "checkJs": true,
-    "isolatedModules": true
+    "isolatedModules": true,
+    // for IoC container
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
   },
   "include": [
     "src/**/*.ts",
+    "build/*.ts",
+    "types/**/*.ts",
     "src/**/*.js",
     "src/**/*.svelte"
   ],
@@ -38,5 +68,12 @@
     {
       "path": "./tsconfig.node.json"
     }
-  ]
+  ],
+  "ts-node": {
+    "esm": true,
+    // we don't need to check types for build scripts, leave it for IDE
+    "transpileOnly": true,
+    "experimentalResolver": true,
+    "experimentalSpecifierResolution": "node",
+  }
 }

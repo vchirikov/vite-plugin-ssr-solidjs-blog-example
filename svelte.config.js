@@ -1,9 +1,12 @@
-import preprocess from "svelte-preprocess";
-import { vitePreprocess } from "@sveltejs/vite-plugin-svelte";
+import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
+import preprocess from 'svelte-preprocess';
 
-export default {
-  // Consult https://svelte.dev/docs#compile-time-svelte-preprocess
-  // for more information about preprocessors
+/** @type {import('@sveltejs/vite-plugin-svelte').Options} */
+const config = {
+  compilerOptions: {
+    hydratable: true,
+  },
+  /** {@link https://svelte.dev/docs#compile-time-svelte-preprocess} */
   preprocess: [
     vitePreprocess(),
     preprocess({
@@ -11,3 +14,5 @@ export default {
     }),
   ],
 };
+
+export default config;
