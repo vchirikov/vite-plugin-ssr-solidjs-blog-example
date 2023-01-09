@@ -24,6 +24,15 @@ interface PageContextCustom {
   };
 }
 
-export type PageContextServer = PageContextBuiltIn<Page> & PageContextCustom;
+export type PageContextServer = PageContextBuiltIn<Page> & {
+  /** the current page was prerendered or not (should be hydrated) */
+  isHydration: boolean;
+  /**
+   * Whether the user is navigating back in history.
+   * The value is `true` when the user clicks on his browser's backward navigation button,
+   * or when invoking `history.back()`.
+   */
+  isBackwardNavigation: boolean | null;
+} & PageContextCustom;
 export type PageContextClient = (ServerRouter<Page> | ClientRouter<Page>) & PageContextCustom;
 export type PageContext = PageContextClient | PageContextServer;

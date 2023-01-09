@@ -9,7 +9,7 @@ const base = import.meta.env.BASE_URL;
 export const passToClient = ['pageProps', 'routeParams'];
 
 async function render(pageContext: PageContextServer) {
-  console.log('exports', pageContext.exports);
+
   const context = new Map<string, unknown>();
   context.set('container', container);
   context.set('mode', 'server');

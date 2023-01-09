@@ -1,6 +1,7 @@
 <script context="module">
-    export const hello = 'booooo';
+  export const hello = 'booooo';
 </script>
+
 <script lang="ts">
   import type { Container } from 'inversify';
   import { getContext, onMount } from 'svelte';
@@ -20,10 +21,11 @@
   onMount(() => {
     state_text = 'Pre-rendered and interactive (hydrated)';
   });
-
 </script>
 
 <ul>
   <li>{state_text}</li>
   <li>container used for rendering: {containerType}</li>
 </ul>
+
+<a href="/confetti" class="contrast">Navigate to confetti page (via CSR)</a>

@@ -129,6 +129,7 @@
     "predev",
     "preexport",
     "prerender",
+    "prerendered",
     "prismjs",
     "pwsh",
     "rehype",
