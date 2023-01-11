@@ -7,6 +7,12 @@
   cd ~
   corepack enable
   corepack prepare pnpm@latest --activate
+  npm config set store $PWD\.pnpm-store
+  npm config set -g store $PWD\.pnpm-store
+  # check the path
+  pnpm store path
+  # time-to-time use prune to cleanup old packages
+  pnpm store prune
   ```
   
 * [rust](https://rustup.rs) to run install and run `stork`
