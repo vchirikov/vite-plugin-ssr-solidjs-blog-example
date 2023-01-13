@@ -1,11 +1,11 @@
-import type { ComponentType, SvelteComponent } from 'svelte';
+import type { ParentComponent } from 'solid-js';
 import type { PageContextBuiltIn } from 'vite-plugin-ssr';
 // <doesn't-work-with-nodenext-moduleResolution>
 import type { PageContextBuiltInClient as ServerRouter } from 'vite-plugin-ssr/client';
 import type { PageContextBuiltInClient as ClientRouter } from 'vite-plugin-ssr/client/router';
 // </doesn't-work-with-nodenext-moduleResolution>
 
-type Page = SvelteComponent & ComponentType;
+type Page = ParentComponent<PageProps & unknown>;
 
 export interface PageProps extends Record<string, unknown> {
   /** {@link https://vite-plugin-ssr.com/error-page router implementation detail} */

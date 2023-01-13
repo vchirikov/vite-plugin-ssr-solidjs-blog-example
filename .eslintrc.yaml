@@ -1,7 +1,6 @@
 root: true
 parser: "@typescript-eslint/parser"
 plugins:
-  - svelte3
   - "@typescript-eslint"
   - simple-import-sort
 extends:
@@ -13,6 +12,7 @@ rules:
   quotes:
     - error
     - single
+  "@typescript-eslint/no-non-null-assertion": "off"
   "@typescript-eslint/ban-ts-comment":
     - "error"
     - ts-expect-error: allow-with-description
@@ -36,18 +36,12 @@ rules:
   import/no-extraneous-dependencies:
     - error
     - devDependencies: false
-  import/no-unresolved:
-    - error
-    - ignore:
-        # vite-plugin-svelte is a virtual module
-        - "@sveltejs/vite-plugin-svelte"
   import/no-restricted-paths:
     - error
     - zones:
         - target: "./src/lib/!(server)/**/*"
           from: "./src/lib/server"
 settings:
-  svelte3/typescript: true
   import/resolver:
     # You will also need to install and configure the TypeScript resolver
     # See also https://github.com/import-js/eslint-import-resolver-typescript#configuration
@@ -60,17 +54,12 @@ env:
   es2022: true
   node: true
 overrides:
-  - files:
-      - "*.svelte"
-    processor: svelte3/svelte3
   # build-time files
   - files:
-      - "build/**/*.ts"
-      - "src/lib/server/**/*.ts"
-      - "src/**/*.server.ts"
+      - "build/**/*.{ts,tsx}"
+      - "src/lib/server/**/*.{ts,tsx}"
+      - "src/**/*.server.{ts,tsx}"
       - "./*.{ts,mjs,js,cjs}"
-      # svelte itself is a devDependency so let use it from components
-      - "src/pages/**/*.svelte"
     rules:
       import/no-extraneous-dependencies:
         - error

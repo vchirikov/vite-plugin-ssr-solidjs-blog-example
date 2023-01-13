@@ -1,6 +1,6 @@
-import { svelte } from '@sveltejs/vite-plugin-svelte';
 import * as path from 'path';
 import type { UserConfigExport } from 'vite';
+import solid from 'vite-plugin-solid';
 import ssr from 'vite-plugin-ssr/plugin';
 
 const stripTrailingSlash = (str: string): string => (str.endsWith('/') ? str.slice(0, -1) : str);
@@ -30,9 +30,11 @@ const config: UserConfigExport = {
   // TODO: decide to use assets or public
   publicDir: 'public',
   plugins: [
-    svelte({
-      // svelte vscode doesn't work well with svelte.config.mjs
-      configFile: 'svelte.config.js',
+    solid({
+      ssr: true,
+      solid: {
+        hydratable: true,
+      }
     }),
     ssr({
       baseAssets: servedUrl,
@@ -56,6 +58,9 @@ const config: UserConfigExport = {
   server: {
     host: server.hostname,
     port: Number(server.port),
+  },
+  build: {
+    target: 'esnext'
   },
   define: {
     'process.env.servedUrl': JSON.stringify(servedUrl),

@@ -1,5 +1,4 @@
 {
-  "extends": "@tsconfig/svelte/tsconfig.json",
   "maxNodeModuleJsDepth": 1,
   "compilerOptions": {
     "newLine": "lf",
@@ -38,31 +37,35 @@
       ""
     ],
     "skipLibCheck": false,
+    "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "importsNotUsedAsValues": "error",
     "preserveValueImports": true,
+    "forceConsistentCasingInFileNames": true,
     "lib": [
       "esnext",
       "DOM",
       "DOM.Iterable"
     ],
-    "allowJs": true,
+    "allowJs": false,
     "checkJs": true,
     "isolatedModules": true,
     // for IoC container
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
+    "jsx": "preserve",
+    "jsxImportSource": "solid-js",
+    "noEmit": true,
   },
   "include": [
-    "src/**/*.ts",
-    "build/*.ts",
-    "types/**/*.ts",
-    "src/**/*.js",
-    "src/**/*.svelte"
+    "src",
+    "build",
+    "types",
   ],
   "exclude": [
-    "./node_modules/**",
+    "node_modules",
+    "dist"
   ],
   "references": [
     {

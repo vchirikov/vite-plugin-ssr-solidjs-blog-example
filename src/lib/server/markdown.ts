@@ -55,6 +55,7 @@ export async function compileMdx(
     development: process.env.NODE_ENV === 'development',
     format,
     outputFormat: 'function-body',
+    jsxImportSource: 'solid-jsx',
     //providerImportSource: 'only-jsx',
     //useDynamicImport: false,
     // md -> md ast

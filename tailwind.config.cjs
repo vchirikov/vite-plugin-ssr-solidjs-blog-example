@@ -29,7 +29,7 @@ const daisyuiConfig = {
 /** @type {import('tailwindcss').Config} */
 const tailwindcssConfig = {
   darkMode: 'class',
-  content: ['./src/**/*.{html,svelte}'],
+  content: ['./src/**/*.{html,tsx}'],
   plugins: [require('@tailwindcss/typography'), require('daisyui')],
   daisyui: daisyuiConfig,
 };
