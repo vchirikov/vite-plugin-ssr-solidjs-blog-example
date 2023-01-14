@@ -16,7 +16,7 @@ if (process.env.servedUrl && process.env.servedUrl !== '/') {
 }
 if (process.env.basePath) basePath = stripTrailingSlash(process.env.basePath);
 
-// for sveltekit, where defines don't work
+// for where defines don't work
 process.env.basePath = basePath;
 process.env.servedUrl = servedUrl;
 
@@ -69,10 +69,13 @@ const config: UserConfigExport = {
   },
   resolve: {
     alias: [
-      { find: '#root', replacement: rootDir },
-      { find: '#src', replacement: path.resolve(rootDir, 'src') },
-      { find: '#lib', replacement: path.resolve(rootDir, 'src', 'lib') },
       { find: '#types', replacement: path.resolve(rootDir, 'src', 'types', 'types.tx') },
+      { find: '#shared', replacement: path.resolve(rootDir, 'src', 'lib', 'shared') },
+      { find: '#client', replacement: path.resolve(rootDir, 'src', 'lib', 'client') },
+      { find: '#server', replacement: path.resolve(rootDir, 'src', 'lib', 'server') },
+      { find: '#src', replacement: path.resolve(rootDir, 'src') },
+      { find: '#tests', replacement: path.resolve(rootDir, 'tests') },
+      { find: '#root', replacement: rootDir },
     ]
   }
 };

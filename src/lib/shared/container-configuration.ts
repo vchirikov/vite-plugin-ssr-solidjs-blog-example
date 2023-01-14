@@ -3,8 +3,8 @@ import '@abraham/reflection';
 
 import type { Container } from 'inversify';
 
-import { ConsoleLogger } from '#lib/diagnostics/console-logger';
-import { type Logger, LogLevel } from '#lib/diagnostics/logging';
+import { ConsoleLogger } from '#shared/diagnostics/console-logger';
+import { type Logger, LogLevel } from '#shared/diagnostics/logging';
 
 export function configure(container: Container) {
   container.bind<string>(Services.ContainerType).toConstantValue('base');

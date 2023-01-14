@@ -10,7 +10,7 @@ export interface Frontmatter {
   modified_date?: Date;
   image?: OpenGraphImageInfo;
   /** fallback */
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 export interface OpenGraphImageInfo {

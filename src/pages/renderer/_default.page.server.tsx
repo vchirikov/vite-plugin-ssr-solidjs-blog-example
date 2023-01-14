@@ -1,8 +1,8 @@
 import { generateHydrationScript, renderToStringAsync } from 'solid-js/web';
 import { dangerouslySkipEscape, escapeInject } from 'vite-plugin-ssr';
 
-import { ContainerContext } from '#lib/components/container-context';
-import { container } from '#lib/server/container';
+import { ContainerContext } from '#client/components/container-context';
+import { container } from '#server/container';
 import type { PageContextServer } from '#types';
 
 const base = import.meta.env.BASE_URL;

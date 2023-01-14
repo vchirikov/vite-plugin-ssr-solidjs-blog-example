@@ -6,22 +6,31 @@
   "version": "0.0.0-placeholder",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "npm-run-all --parallel dev:*",
+    "dev:vite": "vite dev",
+    "dev:i18n": "typesafe-i18n",
     "build": "vite build",
     "build:ssr": "vite build --ssr",
     "preview": "vite preview",
-    "clean": "rimraf dist"
+    "clean": "rimraf dist",
+    "lint": "eslint .",
+    "test:unit": "vitest"
   },
   "imports": {
-    "#root/*": "./*",
+    "#types": "./src/types/types",
+    "#shared/*": "./src/lib/shared/*",
+    "#client/*": "./src/lib/client/*",
+    "#server/*": "./src/lib/server/*",
     "#src/*": "./src/*",
-    "#lib/*": "./src/lib/*",
-    "#types": "./src/types/types"
+    "#tests/*": "./tests/*",
+    "#root/*": "./*"
   },
   "devDependencies": {
     "@mdx-js/mdx": "^2.2.1",
     "@tailwindcss/typography": "^0.5.9",
     "@types/node": "^18.11.18",
+    "@types/object-hash": "^3.0.2",
+    "@types/prismjs": "^1.26.0",
     "@typescript-eslint/eslint-plugin": "^5.48.1",
     "@typescript-eslint/parser": "^5.48.1",
     "autoprefixer": "^10.4.13",
@@ -32,10 +41,16 @@
     "eslint-plugin-simple-import-sort": "^8.0.0",
     "nerdbank-gitversioning": "3.6.65-alpha",
     "npm-run-all": "^4.1.5",
+    "object-hash": "^3.0.0",
     "postcss": "^8.4.21",
-    "postcss-load-config": "^4.0.1",
-    "rimraf": "^3.0.2",
-    "solid-jsx": "^0.9.1",
+    "refractor": "^4.8.0",
+    "rehype-autolink-headings": "^6.1.1",
+    "rehype-prism-plus": "^1.5.0",
+    "rehype-slug": "^5.1.0",
+    "rehype-stringify": "^9.0.3",
+    "remark-copy-linked-files": "github:joostdecock/remark-copy-linked-files",
+    "remark-gfm": "^3.0.1",
+    "rimraf": "^4.0.4",
     "tailwindcss": "^3.2.4",
     "ts-node": "^10.9.1",
     "tslib": "^2.4.1",
@@ -44,11 +59,17 @@
     "vfile-matter": "^4.0.0",
     "vite": "^4.0.4",
     "vite-plugin-solid": "^2.5.0",
-    "vite-plugin-ssr": "^0.4.69"
+    "vite-plugin-ssr": "^0.4.69",
+    "vitest": "^0.27.1",
+    "yaml": "^2.2.1"
   },
   "dependencies": {
     "@abraham/reflection": "^0.11.0",
+    "cancellationtoken": "^2.2.0",
     "inversify": "^6.0.1",
-    "solid-js": "^1.6.8"
+    "prismjs": "^1.29.0",
+    "solid-js": "^1.6.9",
+    "solid-jsx": "^0.9.1",
+    "typesafe-i18n": "^5.18.1"
   }
 }

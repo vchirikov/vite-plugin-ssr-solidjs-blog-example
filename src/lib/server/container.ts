@@ -1,9 +1,9 @@
 /** @file contains server-side container */
 import { Container } from 'inversify';
 
-import { configure, Services as BaseServices } from '#lib/container-configuration';
-import { ConsoleLogger } from '#lib/diagnostics/console-logger';
-import { type Logger, LogLevel } from '#lib/diagnostics/logging';
+import { configure, Services as BaseServices } from '#shared/container-configuration';
+import { ConsoleLogger } from '#shared/diagnostics/console-logger';
+import { type Logger, LogLevel } from '#shared/diagnostics/logging';
 
 const container = new Container({ defaultScope: 'Singleton' });
 

@@ -1,8 +1,8 @@
 import { hydrate, render as renderSolid } from 'solid-js/web';
 
-import { ContainerContext } from '#lib/components/container-context';
-import { container } from '#lib/container';
-import { pageDisposer } from '#src/renderer/page-disposer';
+import { ContainerContext } from '#client/components/container-context';
+import { container } from '#client/container';
+import { pageDisposer } from '#client/render/page-disposer';
 import type { PageContext } from '#types';
 
 export const clientRouting = true;

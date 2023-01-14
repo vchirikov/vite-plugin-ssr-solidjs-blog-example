@@ -1,10 +1,12 @@
 import { generateHydrationScript, renderToStringAsync } from 'solid-js/web';
+import * as jsxRuntime from 'solid-jsx';
 import { dangerouslySkipEscape, escapeInject } from 'vite-plugin-ssr';
 
-import { ContainerContext } from '#lib/components/container-context';
-import { container } from '#lib/server/container';
-import { compileMdx } from '#root/src/lib/server/markdown';
-import type { PageContextServer } from '#types';
+import { ContainerContext } from '#client/components/container-context';
+import { Counter } from '#client/components/counter';
+import { container } from '#server/container';
+import { compileMdx } from '#server/markdown/markdown';
+import type { MdxComponent, PageContextServer } from '#types';
 
 const base = import.meta.env.BASE_URL;
 
@@ -12,7 +14,7 @@ const base = import.meta.env.BASE_URL;
 export const passToClient = ['pageProps', 'routeParams'];
 
 export async function onBeforeRender(pageContext) {
-  const mdx = await compileMdx('### hello \n **Bold**', '', 'mdx');
+  const mdx = await compileMdx('\n\n <Counter />', '', 'mdx');
   return {
     pageContext: {
       pageProps: {
@@ -25,10 +27,19 @@ export async function onBeforeRender(pageContext) {
 export async function render(pageContext: PageContextServer) {
 
   const { Page, pageProps } = pageContext;
+  const code = pageContext.pageProps.mdx as string;
+  const Rendered = new Function(code || '')({ ...jsxRuntime }).default as MdxComponent;
 
+  const components = {
+    Counter,
+  };
   const page = () => (
     <ContainerContext.Provider value={container}>
-      <Page {...pageProps} />
+      <jsxRuntime.MDXProvider components={components}>
+        <Page {...pageProps} />
+        Rendered:
+        <Rendered />
+      </jsxRuntime.MDXProvider>
     </ContainerContext.Provider>
   );
 

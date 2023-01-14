@@ -1,4 +1,4 @@
-import type { ParentComponent } from 'solid-js';
+import type { JSX, ParentComponent, ParentProps } from 'solid-js';
 import type { PageContextBuiltIn } from 'vite-plugin-ssr';
 // <doesn't-work-with-nodenext-moduleResolution>
 import type { PageContextBuiltInClient as ServerRouter } from 'vite-plugin-ssr/client';
@@ -36,3 +36,29 @@ export type PageContextServer = PageContextBuiltIn<Page> & {
 } & PageContextCustom;
 export type PageContextClient = (ServerRouter<Page> | ClientRouter<Page>) & PageContextCustom;
 export type PageContext = PageContextClient | PageContextServer;
+
+
+
+// <mdx>
+
+type MdxComponents = {
+  [key in keyof JSX.IntrinsicElements | string]: key extends keyof JSX.IntrinsicElements
+  ? ((properties: JSX.IntrinsicElements[key]) => JSX.Element) | keyof JSX.IntrinsicElements
+  : (properties: ParentProps) => JSX.Element;
+};
+
+interface MDXProperties {
+  components?: Partial<MdxComponents>;
+  children?: JSX.Element;
+  [key: string]: unknown;
+}
+
+/**
+ * An function component which renders the MDX content using JSX.
+ *
+ * @param props This value is be available as the named variable `props` inside the MDX component.
+ * @returns A JSX element. The meaning of this may depend on the project configuration. I.e. it
+ * could be a React, Preact, or Vuex element.
+ */
+export type MdxComponent = (properties: MDXProperties) => JSX.Element;
+// </mdx>

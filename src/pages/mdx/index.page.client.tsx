@@ -1,12 +1,13 @@
-import * as jsxRuntime from 'solid-js/h/jsx-runtime';
 import { hydrate, render as renderSolid } from 'solid-js/web';
+import * as jsxRuntime from 'solid-jsx';
 
-import { ContainerContext } from '#lib/components/container-context';
-import { container } from '#lib/container';
-import { pageDisposer } from '#root/src/renderer/page-disposer';
-import type { PageContext } from '#types';
+import { ContainerContext } from '#client/components/container-context';
+import { Counter } from '#client/components/counter';
+import { container } from '#client/container';
+import { pageDisposer } from '#client/render/page-disposer';
+import type { MdxComponent, PageContext } from '#types';
 
-export const clientRouting = true;
+//export const clientRouting = true;
 // we can't really abort hydration in client-side, but just in case
 export const hydrationCanBeAborted = true;
 
@@ -16,18 +17,20 @@ export function render(pageContext: PageContext) {
 
   const code = pageContext.pageProps.mdx as string;
 
-  const rendered = new Function(code || '')({ ...jsxRuntime, jsxDEV: jsxRuntime.jsx }).default as (props?: unknown) => unknown;
-  window['rendered'] = rendered;
+  //const Rendered = new Function(code || '')({ jsxDEV: jsxRuntime.jsxDEV, Fragment: jsxRuntime.Fragment }).default as MdxComponent;
+  const Rendered = new Function(code || '')({ ...jsxRuntime }).default as MdxComponent;
 
-  console.log(code);
-  console.log(rendered);
-
-  console.log(rendered());
-
+  const components = {
+    Counter,
+  };
 
   const page = () => (
     <ContainerContext.Provider value={container}>
-      <Page {...pageProps} />
+      <jsxRuntime.MDXProvider components={components}>
+        <Page {...pageProps} />
+        Rendered:
+        <Rendered />
+      </jsxRuntime.MDXProvider>
     </ContainerContext.Provider>
   );
 

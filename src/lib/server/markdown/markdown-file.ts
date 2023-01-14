@@ -1,7 +1,9 @@
 import path from 'path';
-import { VFile } from 'vfile';
+import { type Compatible, VFile } from 'vfile';
+import { matter } from 'vfile-matter';
 
 import type { Frontmatter } from './frontmatter';
+import { compileMdx } from './markdown';
 
 export class MarkdownFile {
   public static readonly extensionRegex = /\.mdx?$/;
@@ -11,13 +13,15 @@ export class MarkdownFile {
   private matter?: Frontmatter;
 
   public get content(): string {
-    if (!this.matter) this.read();
+    if (!this.matter)
+      this.read();
     return String(this.vfile.value);
   }
 
   public get frontmatter(): Frontmatter {
-    if (!this.matter) this.read();
-    return this.matter!;
+    if (!this.matter)
+      this.read();
+    return this.matter;
   }
 
   public get slug(): string {
@@ -43,16 +47,12 @@ export class MarkdownFile {
 
   private read(): void {
     matter(this.vfile, { strip: true });
-    this.matter = {} as Frontmatter;
-
-    Object.entries((this.vfile.data.matter as Record<string, string>) ?? {}).forEach(x => {
-      const [key, value] = x;
-      this.matter![key] = value;
-    });
+    this.matter = this.vfile.data.matter;
   }
 
   public compile(relativePath: string): Promise<string> {
-    if (!this.matter) this.read();
+    if (!this.matter)
+      this.read();
     return compileMdx(this.vfile, relativePath, 'detect');
   }
 }

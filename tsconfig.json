@@ -13,18 +13,27 @@
       * NOTE: [must use '#' for node aliases](https://nodejs.org/api/packages.html#subpath-imports)
       */
     "paths": {
-      "#root/*": [
-        "./*"
+      "#types": [
+        "src/types/types.ts"
+      ],
+      "#shared/*": [
+        "src/lib/shared/*",
+      ],
+      "#client/*": [
+        "src/lib/client/*",
+      ],
+      "#server/*": [
+        "src/lib/server/*",
       ],
       "#src/*": [
         "src/*"
       ],
-      "#types": [
-        "src/types/types.ts"
+      "#tests/*": [
+        "src/*"
       ],
-      "#lib/*": [
-        "src/lib/*",
-      ]
+      "#root/*": [
+        "./*"
+      ],
     },
     "target": "ESNext",
     "useDefineForClassFields": true,
@@ -62,6 +71,7 @@
     "src",
     "build",
     "types",
+    "tests",
   ],
   "exclude": [
     "node_modules",
