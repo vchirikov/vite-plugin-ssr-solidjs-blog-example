@@ -2,6 +2,7 @@ import * as path from 'path';
 import type { UserConfigExport } from 'vite';
 import solid from 'vite-plugin-solid';
 import ssr from 'vite-plugin-ssr/plugin';
+import type { UserConfigExport as VitestConfig } from 'vitest/config'
 
 const stripTrailingSlash = (str: string): string => (str.endsWith('/') ? str.slice(0, -1) : str);
 
@@ -25,9 +26,8 @@ const server = new URL(servedUrl === '/' ? 'http://localhost:3000/' : servedUrl)
 const rootDir = path.resolve(__dirname);
 
 /** {@link  https://vitejs.dev/config/ } */
-const config: UserConfigExport = {
+const config: UserConfigExport & VitestConfig = {
   base: servedUrl,
-  // TODO: decide to use assets or public
   publicDir: 'public',
   plugins: [
     solid({
@@ -77,7 +77,10 @@ const config: UserConfigExport = {
       { find: '#tests', replacement: path.resolve(rootDir, 'tests') },
       { find: '#root', replacement: rootDir },
     ]
-  }
+  },
+  test: {
+    include: ['tests/**/*.tests.{ts,tsx}'],
+  },
 };
 
 

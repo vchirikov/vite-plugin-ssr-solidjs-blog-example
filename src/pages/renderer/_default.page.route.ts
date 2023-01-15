@@ -1,8 +1,6 @@
-// Environment: server, client
+/** @file contains route hooks, works on environment: server, client */
 
 // export function onBeforeRoute(pageContext) {
-  
-  
 //   const { urlWithoutLocale, locale } = extractLocale(pageContext.urlOriginal);
 //   return {
 //     pageContext: {

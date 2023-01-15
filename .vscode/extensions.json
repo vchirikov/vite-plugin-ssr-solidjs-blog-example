@@ -3,6 +3,7 @@
     "dbaeumer.vscode-eslint",
     "bradlc.vscode-tailwindcss",
     "unifiedjs.vscode-mdx",
-    "solidjs-community.solid-snippets"
+    "solidjs-community.solid-snippets",
+    "zixuanchen.vitest-explorer"
   ]
 }

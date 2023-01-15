@@ -14,7 +14,9 @@
     "preview": "vite preview",
     "clean": "rimraf dist",
     "lint": "eslint .",
-    "test:unit": "vitest"
+    "test:unit": "vitest",
+    "test:ui": "vitest --ui",
+    "test:update": "vitest --update"
   },
   "imports": {
     "#types": "./src/types/types",

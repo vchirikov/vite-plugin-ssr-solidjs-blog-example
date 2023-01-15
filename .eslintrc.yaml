@@ -63,6 +63,7 @@ overrides:
       - "build/**/*.{ts,tsx}"
       - "src/lib/server/**/*.{ts,tsx}"
       - "src/**/*.server.{ts,tsx}"
+      - "tests/**/*.{ts,tsx}"
       - "./*.{ts,mjs,js,cjs}"
     rules:
       import/no-extraneous-dependencies:

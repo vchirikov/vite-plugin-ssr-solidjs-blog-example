@@ -14,7 +14,7 @@
   "search.exclude": {
     "node_modules": true,
     "tmp": true,
-    ".svelte-kit": true,
+    "dist": true,
     "pnpm-lock.yaml": true,
   },
   "javascript.preferences.quoteStyle": "single",
@@ -25,20 +25,13 @@
     "typescript",
     "typescriptreact",
     "html",
-    "vue",
-    "svelte",
   ],
   "eslint.validate": [
     "javascript",
     "javascriptreact",
     "typescript",
     "typescriptreact",
-    "vue",
-    "svelte",
   ],
-  "[svelte]": {
-    "editor.defaultFormatter": "svelte.svelte-vscode"
-  },
   "[javascript][javascriptreact][typescript][typescriptreact]": {
     "editor.defaultFormatter": "vscode.typescript-language-features",
   },
@@ -58,15 +51,6 @@
     // no-one (prettier too) can't format mdx correctly (new lines, trailing whitespaces)
     "editor.defaultFormatter": "do-not-format-mdx",
   },
-  "svelte.enable-ts-plugin": true,
-  "svelte.ask-to-enable-ts-plugin": false,
-  "svelte.plugin.svelte.defaultScriptLanguage": "ts",
-  "svelte.plugin.svelte.format.config.singleQuote": true,
-  "svelte.plugin.svelte.format.config.printWidth": 120,
-  "svelte.plugin.svelte.useNewTransformation": true,
-  "svelte.plugin.svelte.note-new-transformation": false,
-  // works badly with tailwindcss + daisyui
-  "svelte.plugin.css.diagnostics.enable": false,
   "trailing-spaces.syntaxIgnore": [
     "markdown",
     "mdx"
@@ -146,17 +130,8 @@
   "files.associations": {
     "*.json": "jsonc"
   },
-  "json.schemas": [
-    {
-      "fileMatch": [
-        "src/i18n/locales/*/*.json"
-      ],
-      "schema": {
-        // webpack loader doesn't support trailing commas in json files
-        "allowTrailingCommas": false,
-        // webpack loader doesn't support comments in json files
-        "allowComments": false
-      }
-    }
+  "vitest.enable": true,
+  "vitest.include": [
+    "tests/**/*.tests.{ts,tsx}"
   ]
 }
