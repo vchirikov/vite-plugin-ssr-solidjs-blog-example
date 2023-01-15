@@ -126,6 +126,7 @@
     "unist",
     "vfile"
   ],
+  "mdx.experimentalLanguageServer": true,
   "css.lint.unknownAtRules": "ignore",
   "files.associations": {
     "*.json": "jsonc"

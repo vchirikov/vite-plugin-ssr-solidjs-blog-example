@@ -10,13 +10,12 @@
     "dev:vite": "vite dev",
     "dev:i18n": "typesafe-i18n",
     "build": "vite build",
-    "build:ssr": "vite build --ssr",
     "preview": "vite preview",
     "clean": "rimraf dist",
     "lint": "eslint .",
-    "test:unit": "vitest",
-    "test:ui": "vitest --ui",
-    "test:update": "vitest --update"
+    "test:unit": "cross-env NODE_OPTIONS='--no-warnings' vitest",
+    "test:ui": "cross-env NODE_OPTIONS='--no-warnings' vitest --ui",
+    "test:update": "cross-env NODE_OPTIONS='--no-warnings' vitest --update"
   },
   "imports": {
     "#types": "./src/types/types",
@@ -35,7 +34,9 @@
     "@types/prismjs": "^1.26.0",
     "@typescript-eslint/eslint-plugin": "^5.48.1",
     "@typescript-eslint/parser": "^5.48.1",
+    "@vitest/ui": "^0.27.1",
     "autoprefixer": "^10.4.13",
+    "cross-env": "^7.0.3",
     "daisyui": "^2.46.1",
     "eslint": "^8.31.0",
     "eslint-import-resolver-typescript": "^3.5.3",
