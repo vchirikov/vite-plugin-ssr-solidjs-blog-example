@@ -23,3 +23,16 @@ exports[`<Counter /> > renders 1 1`] = `
   </button>
 </div>
 `;
+
+exports[`Counter > should render 1`] = `
+<div>
+  <button
+    data-testid="counter"
+  >
+    Counter 
+    <!--#-->
+    0
+    <!--/-->
+  </button>
+</div>
+`;

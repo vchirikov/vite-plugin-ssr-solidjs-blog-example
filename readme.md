@@ -44,3 +44,6 @@ To write test use:
 * [happy-dom](https://github.com/capricorn86/happy-dom)  
 * [@solidjs/testing-library](https://github.com/solidjs/solid-testing-library)
 * [Testing Library API](https://testing-library.com/docs/queries/about)  
+
+It's VERY important to use lambdas where you want to use JSX, only functions will be translated with solidjs,
+in other case this JSX will be rendered as static without any context and so on.

@@ -31,9 +31,9 @@ const config: UserConfigExport & VitestConfig = {
   publicDir: 'public',
   plugins: [
     /**
-     * TODO: use solid.babel transforms or something like
+     * you can use use solid.babel transforms or something like
      * [vite-plugin-react-remove-attributes](https://www.npmjs.com/package/vite-plugin-react-remove-attributes)
-     * to remove data-testid attributes
+     * to remove data-testid attributes in production builds, although I don't know how much build-time it will add
      */
     solid({
       ssr: true,
@@ -79,7 +79,7 @@ const config: UserConfigExport & VitestConfig = {
     // for vitest + happy-dom
     conditions: ['development', 'browser'],
     alias: [
-      { find: '#types', replacement: path.resolve(rootDir, 'src', 'types', 'types.tx') },
+      { find: '#types', replacement: path.resolve(rootDir, 'src', 'types', 'types.ts') },
       { find: '#shared', replacement: path.resolve(rootDir, 'src', 'lib', 'shared') },
       { find: '#client', replacement: path.resolve(rootDir, 'src', 'lib', 'client') },
       { find: '#server', replacement: path.resolve(rootDir, 'src', 'lib', 'server') },

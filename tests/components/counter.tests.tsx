@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 
 import { Counter } from '#client/components/counter';
 
-describe('<Counter />', () => {
+describe('Counter', () => {
   // it('increments value', async () => {
   //   const { queryByRole, unmount } = render(() => <Counter />);
   //   const button = (await queryByRole('button')) as HTMLButtonElement;
@@ -13,8 +13,7 @@ describe('<Counter />', () => {
   //   // expect(button).toHaveTextContent(/Clicks: 1/);
   //   unmount();
   // });
-
-  it('it renders', () => {
+  it('should render', () => {
     const { container, unmount } = render(() => <Counter />);
     expect(container).toMatchSnapshot();
     expect(getByTestId(container, 'counter')).toHaveTextContent('Counter');

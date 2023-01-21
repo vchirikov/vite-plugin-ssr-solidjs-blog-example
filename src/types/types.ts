@@ -7,7 +7,7 @@ import type { PageContextBuiltInClient as ClientRouter } from 'vite-plugin-ssr/c
 // </doesn't-work-with-nodenext-moduleResolution>
 import type { Locales } from '#shared/i18n/i18n-types';
 
-type Page = ParentComponent<PageProps & unknown>;
+export type Page = ParentComponent<PageProps & unknown>;
 
 export interface PageProps extends Record<string, unknown> {
   /** {@link https://vite-plugin-ssr.com/error-page router implementation detail} */
@@ -19,21 +19,6 @@ interface PageContextCustom {
   locale: Locales;
   // don't change the name `pageProps`, implementation detail
   pageProps?: PageProps;
-  /** url without baseUrl, same as urlParsed.pathname only available with clientRouting=true */
-  urlPathname: string;
-  /** only available with clientRouting=true */
-  urlParsed?: {
-    origin: unknown | null,
-    /** pathName without baseUrl */
-    pathname: string | null,
-    /** pathName with baseUrl */
-    pathnameOriginal: string | null,
-    search?: unknown,
-    searchAll: unknown,
-    searchOriginal: unknown,
-    hash: string | null,
-    hashOriginal: string | null;
-  },
   exports: {
     documentProps?: {
       title?: string;

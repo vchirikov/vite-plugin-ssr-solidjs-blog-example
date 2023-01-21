@@ -130,7 +130,7 @@
   "mdx.experimentalLanguageServer": false,
   "vitest.commandLine": "pnpm vitest",
   "vitest.nodeEnv": {
-    "NODE_OPTIONS": "--no-warnings"
+    "NODE_OPTIONS": "--no-warnings",
   },
   "css.lint.unknownAtRules": "ignore",
   "files.associations": {

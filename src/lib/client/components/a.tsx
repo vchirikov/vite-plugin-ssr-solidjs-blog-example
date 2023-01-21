@@ -15,6 +15,7 @@ export interface AnchorProps extends JSX.AnchorHTMLAttributes<HTMLAnchorElement>
    */
   skipRouting?: boolean;
 }
+
 export function A(props: AnchorProps) {
   const pageContext = usePageContext();
   const [our, rest] = splitProps(props, ['href', 'keepScrollPosition', 'prefetch', 'skipRouting', 'rel']);
