@@ -57,7 +57,7 @@
       "DOM",
       "DOM.Iterable"
     ],
-    "allowJs": false,
+    "allowJs": true,
     "checkJs": true,
     "isolatedModules": true,
     // for IoC container
@@ -67,10 +67,16 @@
     "jsxImportSource": "solid-js",
     "noEmit": true,
   },
+  // overrides default, so be careful / https://www.typescriptlang.org/tsconfig#typeRoots
+  "typeRoots": [
+    "./node_modules/@types",
+    "./src/types"
+  ],
+  // https://www.typescriptlang.org/tsconfig#include // includes ts/tsx/d.ts
   "include": [
+    "src/types",
     "src",
     "build",
-    "types",
     "tests",
   ],
   "exclude": [

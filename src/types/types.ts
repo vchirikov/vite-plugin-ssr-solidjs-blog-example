@@ -3,7 +3,9 @@ import type { PageContextBuiltIn } from 'vite-plugin-ssr';
 // <doesn't-work-with-nodenext-moduleResolution>
 import type { PageContextBuiltInClient as ServerRouter } from 'vite-plugin-ssr/client';
 import type { PageContextBuiltInClient as ClientRouter } from 'vite-plugin-ssr/client/router';
+
 // </doesn't-work-with-nodenext-moduleResolution>
+import type { Locales } from '#shared/i18n/i18n-types';
 
 type Page = ParentComponent<PageProps & unknown>;
 
@@ -13,9 +15,25 @@ export interface PageProps extends Record<string, unknown> {
 }
 
 interface PageContextCustom {
+  /** baseLocale or current locale */
+  locale: Locales;
   // don't change the name `pageProps`, implementation detail
   pageProps?: PageProps;
+  /** url without baseUrl, same as urlParsed.pathname only available with clientRouting=true */
   urlPathname: string;
+  /** only available with clientRouting=true */
+  urlParsed?: {
+    origin: unknown | null,
+    /** pathName without baseUrl */
+    pathname: string | null,
+    /** pathName with baseUrl */
+    pathnameOriginal: string | null,
+    search?: unknown,
+    searchAll: unknown,
+    searchOriginal: unknown,
+    hash: string | null,
+    hashOriginal: string | null;
+  },
   exports: {
     documentProps?: {
       title?: string;

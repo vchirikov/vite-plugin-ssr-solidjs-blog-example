@@ -2,7 +2,7 @@ import * as path from 'path';
 import type { UserConfigExport } from 'vite';
 import solid from 'vite-plugin-solid';
 import ssr from 'vite-plugin-ssr/plugin';
-import type { UserConfigExport as VitestConfig } from 'vitest/config'
+import type { UserConfigExport as VitestConfig } from 'vitest/config';
 
 const stripTrailingSlash = (str: string): string => (str.endsWith('/') ? str.slice(0, -1) : str);
 
@@ -30,15 +30,20 @@ const config: UserConfigExport & VitestConfig = {
   base: servedUrl,
   publicDir: 'public',
   plugins: [
+    /**
+     * TODO: use solid.babel transforms or something like
+     * [vite-plugin-react-remove-attributes](https://www.npmjs.com/package/vite-plugin-react-remove-attributes)
+     * to remove data-testid attributes
+     */
     solid({
       ssr: true,
       solid: {
         hydratable: true,
-      }
+      },
     }),
     ssr({
       baseAssets: servedUrl,
-      baseServer: servedUrl,
+      baseServer: basePath === '' ? '/' : basePath,
       prerender: {
         noExtraDir: false,
         partial: true,
@@ -60,7 +65,10 @@ const config: UserConfigExport & VitestConfig = {
     port: Number(server.port),
   },
   build: {
-    target: 'esnext'
+    target: 'esnext',
+    modulePreload: {
+      polyfill: false,
+    },
   },
   define: {
     'process.env.servedUrl': JSON.stringify(servedUrl),
@@ -68,6 +76,8 @@ const config: UserConfigExport & VitestConfig = {
     'process.env.npm_package_version': JSON.stringify(process.env.npm_package_version),
   },
   resolve: {
+    // for vitest + happy-dom
+    conditions: ['development', 'browser'],
     alias: [
       { find: '#types', replacement: path.resolve(rootDir, 'src', 'types', 'types.tx') },
       { find: '#shared', replacement: path.resolve(rootDir, 'src', 'lib', 'shared') },
@@ -79,7 +89,26 @@ const config: UserConfigExport & VitestConfig = {
     ]
   },
   test: {
-    include: ['tests/**/*.tests.{ts,tsx}'],
+    // @testing-library/jest-dom wants the global expect method, but we don't want to expose it globally
+    // we use the trick in setupFiles with manual extending the expect method
+    globals: false,
+    // https://vitest.dev/guide/environment.html#test-environment
+    environment: 'happy-dom',
+    transformMode: {
+      web: [/\.tsx?$/],
+    },
+    include: ['./tests/**/*.tests.{ts,tsx}'],
+    setupFiles: ['./tests/vitest.setup.ts'],
+    threads: true,
+    // if something won't work try to set this to false
+    isolate: false,
+    deps: {
+      // otherwise, solid would be loaded twice
+      // info from: https://github.com/solidjs/templates/blob/master/js-vitest/vite.config.js
+      // anyway using vite specific node-loader is ok
+      registerNodeLoader: true,
+      fallbackCJS: true,
+    }
   },
 };
 

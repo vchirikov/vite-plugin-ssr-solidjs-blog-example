@@ -1,7 +1,7 @@
 import { hydrate, render as renderSolid } from 'solid-js/web';
 
 import { ContainerContext } from '#client/components/container-context';
-import { container } from '#client/container';
+import { createScoped } from '#client/container';
 import { pageDisposer } from '#client/render/page-disposer';
 import type { PageContext } from '#types';
 
@@ -10,6 +10,7 @@ export const clientRouting = true;
 export const hydrationCanBeAborted = true;
 
 export function render(pageContext: PageContext) {
+  const container = createScoped(pageContext);
   const { Page, pageProps } = pageContext;
   const $app = document.getElementById('app');
   const page = () => (

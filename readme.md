@@ -25,3 +25,22 @@ There are four page file suffixes:
 * `page.server.js`: runs only in Node.js
 * `page.route.js`: defines the page's Route String or Route Function.
 
+
+
+---
+
+https://github.com/solidjs/solid-meta
+
+
+# Testing
+
+`tests/unit` - unit test for services
+`tests/components` - test for components
+`tests/e2e` - e2e tests with playwright
+
+To write test use:
+* [vitest](https://vitest.dev/api/expect.html)
+* [testing-library/jest-dom](https://github.com/testing-library/jest-dom#table-of-contents)  
+* [happy-dom](https://github.com/capricorn86/happy-dom)  
+* [@solidjs/testing-library](https://github.com/solidjs/solid-testing-library)
+* [Testing Library API](https://testing-library.com/docs/queries/about)  

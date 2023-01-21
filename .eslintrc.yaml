@@ -27,6 +27,7 @@ rules:
     - error
     - prefer: type-imports
       disallowTypeAnnotations: true
+      fixStyle: inline-type-imports
   "@typescript-eslint/no-unused-vars":
     - warn
     - varsIgnorePattern: ^_
@@ -45,6 +46,9 @@ rules:
         # #shared code can't import code 'from #client'/'from #server'
         - target: "./src/lib/shared"
           from: ["./src/lib/server", "./src/lib/client"]
+        # src code can't import code 'from #tests/'
+        - target: "./src"
+          from: ["./tests"]
 settings:
   import/resolver:
     # You will also need to install and configure the TypeScript resolver

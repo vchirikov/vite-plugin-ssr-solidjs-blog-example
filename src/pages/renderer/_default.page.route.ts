@@ -4,7 +4,9 @@ import { isBrowser } from '#shared/utils';
 import type { PageContext } from '#types';
 
 export function onBeforeRoute(pageContext: PageContext) {
-  console.log(pageContext, JSON.stringify(pageContext.exportsAll));
+  console.log(pageContext);
+  console.log('urlPathname:', pageContext.urlPathname);
+  console.log('urlParsed:', pageContext.urlParsed);
   const detectors = [];
   // if (isBrowser()) {
   //   detectors.push();

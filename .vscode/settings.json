@@ -126,7 +126,12 @@
     "unist",
     "vfile"
   ],
-  "mdx.experimentalLanguageServer": true,
+  // breaks typescript support in tsx/ts files
+  "mdx.experimentalLanguageServer": false,
+  "vitest.commandLine": "pnpm vitest",
+  "vitest.nodeEnv": {
+    "NODE_OPTIONS": "--no-warnings"
+  },
   "css.lint.unknownAtRules": "ignore",
   "files.associations": {
     "*.json": "jsonc"
