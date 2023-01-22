@@ -1,4 +1,4 @@
-import { fireEvent, getByTestId, render } from '@solidjs/testing-library';
+import { getByTestId, render } from '@solidjs/testing-library';
 import { describe, expect, it } from 'vitest';
 
 import { Counter } from '#client/components/counter';

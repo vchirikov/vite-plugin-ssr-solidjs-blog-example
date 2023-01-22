@@ -1,0 +1,3 @@
+root: false
+rules:
+  unicorn/no-abusive-eslint-disable: "off"

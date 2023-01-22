@@ -18,7 +18,7 @@ export interface AnchorProps extends JSX.AnchorHTMLAttributes<HTMLAnchorElement>
 
 export function A(props: AnchorProps) {
   const pageContext = usePageContext();
-  const [our, rest] = splitProps(props, ['href', 'keepScrollPosition', 'prefetch', 'skipRouting', 'rel']);
+  const [our, rest] = splitProps(props, ['href', 'keepScrollPosition', 'prefetch', 'skipRouting', 'rel', 'class', 'classList']);
   const isActive = createMemo(() => pageContext.urlPathname === our.href);
   const rel = createMemo(() => {
     const arr: string[] = our.rel?.split(',') ?? [];
@@ -26,8 +26,7 @@ export function A(props: AnchorProps) {
       arr.push('external');
     }
     if (!our.href.startsWith('/')) {
-      arr.push('nofollow');
-      arr.push('external');
+      arr.push('nofollow', 'external');
     }
     if (our.prefetch) {
       arr.push('prefetch');
@@ -53,9 +52,9 @@ export function A(props: AnchorProps) {
       href={href()}
       rel={rel()}
       classList={{
-        ...(props.class && { [props.class]: true }),
+        ...(our.class && { [our.class]: true }),
         ['active']: isActive(),
-        ...props.classList
+        ...our.classList
       }}
       data-prefetch={our.prefetch}
       keep-scroll-position={our.keepScrollPosition}

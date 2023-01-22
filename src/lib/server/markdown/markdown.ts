@@ -103,5 +103,5 @@ export async function compileMdx(
     },
   };
   const compiled = await compile(mdx, compileOptions);
-  return compiled.toString('utf-8');
+  return compiled.toString('utf8');
 }

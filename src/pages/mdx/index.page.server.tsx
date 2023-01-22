@@ -13,7 +13,7 @@ const base = import.meta.env.BASE_URL;
 // See https://vite-plugin-ssr.com/data-fetching
 
 
-export async function onBeforeRender(pageContext) {
+export async function onBeforeRender(_pageContext) {
   const mdx = await compileMdx('\n\n <Counter />', '', 'mdx');
   return {
     pageContext: {
@@ -27,7 +27,7 @@ export async function onBeforeRender(pageContext) {
 export async function render(pageContext: PageContextServer) {
   const container = createScoped(pageContext);
   const { Page, pageProps } = pageContext;
-  const code = pageContext.pageProps.mdx as string;
+  const code = pageProps.mdx as string;
   const Rendered = new Function(code || '')({ ...jsxRuntime }).default as MdxComponent;
 
   const components = {

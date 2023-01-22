@@ -4,13 +4,13 @@ import { navigate } from 'vite-plugin-ssr/client/router';
 // import { useConfiguration, usePageContext } from '#client/hooks';
 import { isBrowser } from '#shared/utils';
 
-type NavigateParams = Parameters<typeof navigate>;
+type NavigateParameters = Parameters<typeof navigate>;
 type NavigateReturn = ReturnType<typeof navigate>;
 
 const completed = Promise.resolve();
 
 /** Navigates to the url */
-export function goto(url: string, parameters?: NavigateParams[1]): NavigateReturn {
+export function goto(url: string, parameters?: NavigateParameters[1]): NavigateReturn {
   // if it is not browser => do nothing
   if (isBrowser) {
     // contains scheme:// so it's an external url, navigate through redirect

@@ -21,26 +21,27 @@ class ConsoleLogger implements Logger {
     // some environments only expose the console when the F12 developer console is open
     const level = console ? logLevel : LogLevel.None;
 
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    // eslint-disable-next-line @typescript-eslint/no-empty-function, unicorn/consistent-function-scoping
     const emptyFunc = () => { };
 
+    // eslint-disable-next-line unicorn/consistent-function-scoping
     const convert = (loggerMethod: keyof Logger): LogLevelStrings => {
       return (loggerMethod[0].toUpperCase() + loggerMethod.slice(1)) as LogLevelStrings;
     };
 
-    for (let i = 0; i < consoleMap.length; i++) {
-      if (level >= LogLevel[convert(consoleMap[i].level)]) {
-        let func = console[consoleMap[i].method];
+    for (const element of consoleMap) {
+      if (level >= LogLevel[convert(element.level)]) {
+        let func = console[element.method];
         // not all environments support all functions
         if (typeof func !== 'function') {
           func = console.log;
         }
         if (typeof func === 'function') {
-          this[consoleMap[i].level] = (...args) => func.apply(console, args);
+          this[element.level] = (...args) => func.apply(console, args);
         }
 
       }
-      this[consoleMap[i].level] ??= emptyFunc;
+      this[element.level] ??= emptyFunc;
     }
   }
 

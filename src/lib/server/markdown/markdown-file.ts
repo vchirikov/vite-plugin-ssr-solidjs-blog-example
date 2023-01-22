@@ -1,4 +1,5 @@
-import path from 'path';
+import * as path from 'node:path';
+
 import { type Compatible, VFile } from 'vfile';
 import { matter } from 'vfile-matter';
 

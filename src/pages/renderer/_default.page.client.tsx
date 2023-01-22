@@ -13,16 +13,16 @@ export const hydrationCanBeAborted = true;
 
 export function render(pageContext: PageContext) {
   const container = createScoped(pageContext);
-  const { Page, pageProps } = pageContext;
+  const { Page, pageProps, locale, isHydration } = pageContext;
   const $app = document.getElementById('app');
   const page = () => (
     <ContainerContext.Provider value={container}>
-      <TypesafeI18n locale={pageContext.locale}>
+      <TypesafeI18n locale={locale}>
         <Page {...pageProps} />
       </TypesafeI18n>
     </ContainerContext.Provider>
   );
 
   pageDisposer.dispose();
-  pageDisposer.set(pageContext.isHydration ? hydrate(page, $app) : renderSolid(page, $app));
+  pageDisposer.set(isHydration ? hydrate(page, $app) : renderSolid(page, $app));
 }

@@ -1,11 +1,8 @@
 /** @file contains route hooks, works on environment: server, client */
-import { localStorageDetector, navigatorDetector } from 'typesafe-i18n/detectors';
-
-import { goto } from '#client/utils';
-import { baseLocale, detectLocale } from '#shared/i18n/i18n-util';
+import { detectLocale } from '#shared/i18n/i18n-util';
 import { createUrlLocaleDetector } from '#shared/i18n/url-locale-detector';
 import { isBrowser } from '#shared/utils';
-import type { PageContext, PageContextClient, PageContextServer } from '#types';
+import type { PageContext } from '#types';
 
 /**
  * onBeforeRoute:
@@ -21,7 +18,7 @@ export function onBeforeRoute(pageContext: PageContext) {
   console.log('onBeforeRoute', pageContext.urlParsed);
   // see the description, in browser we don't have the real url
   if (isBrowser) {
-    return null;
+    return;
   }
   const locale = detectLocale(createUrlLocaleDetector(pageContext));
   // pass to the router url without locale, locale will be provided by pageContext field
@@ -32,7 +29,7 @@ export function onBeforeRoute(pageContext: PageContext) {
   else if (url.startsWith(`/${locale}/`, 0)) {
     url = url.slice(`/${locale}`.length);
   }
-  console.log(locale, 'route to ', url);
+  console.log(locale, 'route to', url);
 
   return {
     pageContext: {

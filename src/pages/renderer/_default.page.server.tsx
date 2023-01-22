@@ -5,7 +5,6 @@ import { ContainerContext } from '#client/components/container-context';
 import { createScoped } from '#server/container';
 import TypesafeI18n from '#shared/i18n/i18n-solid';
 import { baseLocale, loadedLocales, locales } from '#shared/i18n/i18n-util';
-import { loadLocaleAsync } from '#shared/i18n/i18n-util.async';
 import { loadLocale } from '#shared/i18n/i18n-util.sync';
 import type { PageContext, PageContextServer, PrerenderContext } from '#types';
 
@@ -24,18 +23,19 @@ export const passToClient = [
 ];
 
 export async function render(pageContext: PageContextServer) {
+  const { Page, pageProps, locale } = pageContext;
+
   const container = createScoped(pageContext);
   // to use i18n from SSR/SSG we should load a locale
-  if (!loadedLocales[pageContext.locale]) {
+  if (!loadedLocales[locale]) {
     // use the sync version to load in compile-time
-    loadLocale(pageContext.locale);
+    loadLocale(locale);
   }
 
-  const { Page, pageProps } = pageContext;
 
   const page = () => (
     <ContainerContext.Provider value={container}>
-      <TypesafeI18n locale={pageContext.locale}>
+      <TypesafeI18n locale={locale}>
         <Page {...pageProps} />
       </TypesafeI18n>
     </ContainerContext.Provider>
@@ -68,7 +68,7 @@ export async function render(pageContext: PageContextServer) {
 export function onBeforePrerender(prerenderContext: PrerenderContext) {
   const pageContexts: PageContext[] = [];
 
-  prerenderContext.pageContexts.forEach((pageContext) => {
+  for (const pageContext of prerenderContext.pageContexts) {
     // for the main page we will generate one main page and 2 with locales
     if (pageContext.urlOriginal === '/') {
       pageContexts.push({
@@ -76,14 +76,14 @@ export function onBeforePrerender(prerenderContext: PrerenderContext) {
         locale: baseLocale
       });
     }
-    locales.forEach((locale) => {
+    for (const locale of locales) {
       pageContexts.push({
         ...pageContext,
         urlOriginal: `/${locale}${pageContext.urlOriginal}`,
         locale
       });
-    });
-  });
+    }
+  }
   return {
     prerenderContext: {
       pageContexts

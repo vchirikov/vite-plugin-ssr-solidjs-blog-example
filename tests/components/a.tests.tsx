@@ -32,4 +32,15 @@ describe('A', () => {
     expect(a).toHaveTextContent('bar');
     unmount();
   });
+  it('should work with class correctly', () => {
+    const services = createContainer();
+    const { container, unmount } = render(
+      services,
+      () => <A href="/page" class="test-class" classList={{ ['hello']: true }}>bar</A>
+    );
+    const a = container.firstChild as HTMLLinkElement;
+    expect(a.className.includes('hello')).true;
+    expect(a.className.includes('test-class')).true;
+    unmount();
+  });
 });

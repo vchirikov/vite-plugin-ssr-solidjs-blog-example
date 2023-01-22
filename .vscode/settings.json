@@ -104,12 +104,14 @@
     "mdsvex",
     "mdxjs",
     "nerdbank",
+    "nocheck",
     "nodenext",
     "nofollow",
     "noopener",
     "noreferrer",
     "opengraph",
     "Parens",
+    "Preact",
     "precompress",
     "predev",
     "preexport",
@@ -125,7 +127,8 @@
     "twrnc",
     "typesafe",
     "unist",
-    "vfile"
+    "vfile",
+    "Vuex"
   ],
   // breaks typescript support in tsx/ts files
   "mdx.experimentalLanguageServer": false,

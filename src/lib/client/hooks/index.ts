@@ -1,4 +1,4 @@
-export { usePageContext } from './usePageContext';
-export { useContainer } from './useContainer';
-export { useLogger } from './useLogger';
-export { useConfiguration } from './useConfiguration';
+export { usePageContext } from './use-page-context';
+export { useContainer } from './use-container';
+export { useLogger } from './use-logger';
+export { useConfiguration } from './use-configuration';

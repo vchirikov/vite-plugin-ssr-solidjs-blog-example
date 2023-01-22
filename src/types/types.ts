@@ -9,6 +9,7 @@ import type { Locales } from '#shared/i18n/i18n-types';
 
 export type Page = ParentComponent<PageProps & unknown>;
 
+// eslint-disable-next-line unicorn/prevent-abbreviations
 export interface PageProps extends Record<string, unknown> {
   /** {@link https://vite-plugin-ssr.com/error-page router implementation detail} */
   is404?: boolean;

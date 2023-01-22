@@ -8,11 +8,9 @@ import { createScoped, Services } from '#client/container';
 import type { Configuration } from '#shared/configuration';
 import type { Page, PageContext } from '#types';
 
+const page: Page = (props) => (<>{props.children}</>);
 
 export function createContainer(configureContext?: (pageContext: PageContext) => void): Container {
-
-  const page: Page = (props) => (<>{props.children}</>);
-
   /** the full url of the page: 'https://example.com/some-base-url/product/42?details=yes&fruit=apple&fruit=orange#reviews'; */
   const urlParsed = {
     /** could be null */
@@ -38,8 +36,8 @@ export function createContainer(configureContext?: (pageContext: PageContext) =>
     hash: 'reviews',
     /** could be null */
     hashOriginal: 'reviews',
-    hashString: null,
-    searchString: null,
+    hashString: undefined,
+    searchString: undefined,
   };
 
   const pageContext: PageContext = {

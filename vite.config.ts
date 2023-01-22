@@ -1,4 +1,5 @@
-import * as path from 'path';
+import * as path from 'node:path';
+
 import type { UserConfigExport } from 'vite';
 import solid from 'vite-plugin-solid';
 import ssr from 'vite-plugin-ssr/plugin';
@@ -23,6 +24,7 @@ process.env.servedUrl = servedUrl;
 
 const server = new URL(servedUrl === '/' ? 'http://localhost:3000/' : servedUrl);
 
+// eslint-disable-next-line unicorn/prefer-module
 const rootDir = path.resolve(__dirname);
 
 /** {@link  https://vitejs.dev/config/ } */
