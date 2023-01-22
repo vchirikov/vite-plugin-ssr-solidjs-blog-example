@@ -53,8 +53,8 @@ rules:
         - target: "./src/lib/client/!(hooks)/**/*"
           from: ["./src/lib/client/hooks/!(index.ts)"]
         # code can't import code 'from #shared/utils/*', use index.ts exports
-        - target: "./src/lib/shared/!(utils)/**/*"
-          from: ["./src/lib/shared/utils/!(index.ts)"]
+        - target: "./src/lib/*/!(utils)/**/*"
+          from: ["./src/lib/*/utils/!(index.ts)"]
 settings:
   import/resolver:
     # You will also need to install and configure the TypeScript resolver

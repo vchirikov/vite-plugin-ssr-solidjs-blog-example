@@ -1,5 +1,5 @@
 /** @file contains client-side container */
-import { type interfaces, Container } from 'inversify';
+import { Container } from 'inversify';
 
 import { configure, containerOptions, createScoped as createScopedBase, Services as BaseServices } from '#shared/container-configuration';
 import { ConsoleLogger } from '#shared/diagnostics/console-logger';
@@ -13,7 +13,6 @@ const Services = {
 };
 
 const container = new Container(containerOptions);
-
 
 configure(container);
 container.rebind<string>(BaseServices.ContainerType).toConstantValue('client');

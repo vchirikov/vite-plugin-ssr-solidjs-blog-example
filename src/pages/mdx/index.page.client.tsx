@@ -7,7 +7,7 @@ import { createScoped } from '#client/container';
 import { pageDisposer } from '#client/render/page-disposer';
 import type { MdxComponent, PageContext } from '#types';
 
-//export const clientRouting = true;
+
 // we can't really abort hydration in client-side, but just in case
 export const hydrationCanBeAborted = true;
 
@@ -25,6 +25,9 @@ export function render(pageContext: PageContext) {
   const components = {
     Counter,
   };
+
+  console.log('render1', pageContext.urlPathname);
+  console.log('render2', pageContext.urlParsed);
 
   const page = () => (
     <ContainerContext.Provider value={container}>

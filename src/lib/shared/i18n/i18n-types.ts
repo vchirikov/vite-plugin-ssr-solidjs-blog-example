@@ -16,7 +16,7 @@ export type Translations = RootTranslation
 type RootTranslation = {
 	/**
 	 * H​e​l​l​o​ ​{​n​a​m​e​}
-	 * @param {unknown} name
+	 * @param {string} name
 	 */
 	hello: RequiredParams<'name'>
 	/**
@@ -30,7 +30,7 @@ export type TranslationFunctions = {
 	/**
 	 * Hello {name}
 	 */
-	hello: (arg: { name: unknown }) => LocalizedString
+	hello: (arg: { name: string }) => LocalizedString
 	/**
 	 * This log was called from [en] {fileName}
 	 */

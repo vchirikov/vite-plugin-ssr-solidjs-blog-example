@@ -40,7 +40,12 @@ export type PageContextServer = PageContextBuiltIn<Page> & {
 export type PageContextClient = (ServerRouter<Page> | ClientRouter<Page>) & PageContextCustom;
 export type PageContext = PageContextClient | PageContextServer;
 
-
+/** {@link https://github.com/brillout/vite-plugin-ssr/blob/8f73669b21007934cab67c7a236b873b98870645/vite-plugin-ssr/node/prerender/runPrerender.ts#L57-L61 } */
+export interface PrerenderContext {
+  pageContexts: PageContext[];
+  pageContextInit: Record<string, unknown> | null;
+  _noExtraDir: boolean;
+}
 
 // <mdx>
 

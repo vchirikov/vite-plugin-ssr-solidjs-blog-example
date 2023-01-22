@@ -11,7 +11,7 @@ import type { MdxComponent, PageContextServer } from '#types';
 const base = import.meta.env.BASE_URL;
 
 // See https://vite-plugin-ssr.com/data-fetching
-export const passToClient = ['pageProps', 'routeParams'];
+
 
 export async function onBeforeRender(pageContext) {
   const mdx = await compileMdx('\n\n <Counter />', '', 'mdx');
