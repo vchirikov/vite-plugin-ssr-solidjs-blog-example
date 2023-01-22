@@ -4,5 +4,8 @@ import { useContext } from 'solid-js';
 import { ContainerContext } from '#client/components/container-context';
 
 export function useContainer(): Container {
-  return useContext(ContainerContext);
+  const container = useContext(ContainerContext);
+  if (!container)
+    throw new Error('Container isn\'t presented in the context');
+  return container;
 }

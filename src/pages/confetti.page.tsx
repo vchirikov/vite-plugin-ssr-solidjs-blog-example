@@ -1,5 +1,7 @@
 import { type Component, createEffect, onCleanup, onMount } from 'solid-js';
 
+import { A } from '#client/components/a';
+
 export const Page: Component = () => {
 
   onMount(() => createEffect(() => {
@@ -31,7 +33,7 @@ export const Page: Component = () => {
     <>
       <h1>Confetti</h1>
       <button onClick={(e) => onClick()}> Fire confetti </button>
-      <a href="/">go back</a>
+      <A href="/">go back</A>
     </>
   );
 };

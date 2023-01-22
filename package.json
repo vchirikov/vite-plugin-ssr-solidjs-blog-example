@@ -38,7 +38,7 @@
     "@types/testing-library__jest-dom": "^5.14.5",
     "@typescript-eslint/eslint-plugin": "^5.48.2",
     "@typescript-eslint/parser": "^5.48.2",
-    "@vitest/ui": "^0.27.2",
+    "@vitest/ui": "^0.27.3",
     "autoprefixer": "^10.4.13",
     "cross-env": "^7.0.3",
     "daisyui": "^2.47.0",
@@ -69,7 +69,7 @@
     "vite": "^4.0.4",
     "vite-plugin-solid": "^2.5.0",
     "vite-plugin-ssr": "^0.4.71",
-    "vitest": "^0.27.2",
+    "vitest": "^0.27.3",
     "yaml": "^2.2.1"
   },
   "dependencies": {

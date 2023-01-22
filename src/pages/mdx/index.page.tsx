@@ -1,7 +1,9 @@
+import { A } from '#client/components/a';
+
 export const Page = () => {
 
   return (<ul>
     <h1>MDX page</h1>
-    <a href="/" class="contrast">HOME (via CSR)</a>;
+    <A href="/" class="contrast">HOME (via CSR)</A>;
   </ul>);
 };

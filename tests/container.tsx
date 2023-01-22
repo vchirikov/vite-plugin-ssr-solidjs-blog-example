@@ -2,10 +2,10 @@
 
 import { render as renderSolid } from '@solidjs/testing-library';
 import type { Container } from 'inversify';
-import type { JSX } from 'solid-js/jsx-runtime';
 
 import { ContainerContext } from '#client/components/container-context';
-import { createScoped } from '#client/container';
+import { createScoped, Services } from '#client/container';
+import type { Configuration } from '#shared/configuration';
 import type { Page, PageContext } from '#types';
 
 
@@ -15,24 +15,28 @@ export function createContainer(configureContext?: (pageContext: PageContext) =>
 
   /** the full url of the page: 'https://example.com/some-base-url/product/42?details=yes&fruit=apple&fruit=orange#reviews'; */
   const urlParsed = {
+    /** could be null */
     origin: 'https://example.com',
-    // TODO: check with our without search & hash
-    pathname: '/product/42?details=yes&fruit=apple&fruit=orange#reviews',
-    // TODO: check with our without search & hash
-    pathnameOriginal: '/some-base-url/product/42?details=yes&fruit=apple&fruit=orange#reviews',
+    /** without query string & hash */
+    pathname: '/product/42',
+    /** without query string & hash */
+    pathnameOriginal: '/some-base-url/product/42',
+    /** could be {} */
     search: {
       details: 'yes',
-      // TODO check this
-      fruit: 'apple'
+      // last wins
+      fruit: 'orange'
     },
+    /** could be {} */
     searchAll: {
       details: ['yes'],
-      // TODO check this
       fruit: ['apple', 'orange']
     },
-    // TODO: check this, should include hash or not
-    searchOriginal: '?details=yes&fruit=apple&fruit=orange#reviews',
+    /** query string without hash */
+    searchOriginal: '?details=yes&fruit=apple&fruit=orange',
+    /** empty string mostly, maybe it doesn't work as described */
     hash: 'reviews',
+    /** could be null */
     hashOriginal: 'reviews',
     hashString: null,
     searchString: null,
@@ -43,15 +47,16 @@ export function createContainer(configureContext?: (pageContext: PageContext) =>
     locale: 'en',
     isBackwardNavigation: false,
     is404: false,
-    urlPathname: '/blog/10FF',
-    urlOriginal: 'http://somesite.com/blog/10FF',
+    /** @deprecated */
+    urlPathname: urlParsed.pathname,
+    urlOriginal: '/some-base-url/product/42?details=yes&fruit=apple&fruit=orange#reviews',
     exports: {},
     exportsAll: {},
     Page: page,
     routeParams: {
       'productId': '42',
     },
-    url: 'http://somesite.com/blog/10FF',
+    url: 'https://example.com/some-base-url/product/42?details=yes&fruit=apple&fruit=orange#reviews',
     pageExports: {},
     urlParsed,
   };
@@ -59,6 +64,11 @@ export function createContainer(configureContext?: (pageContext: PageContext) =>
     configureContext(pageContext);
   }
   const container = createScoped(pageContext);
+
+  // to test what our components can work with some-base-url
+  container.bind<Configuration>(Services.Configuration).toConstantValue(
+    { basePath: '/some-base-url', servedUrl: 'https://example.com/some-base-url/' }
+  );
 
   // add some default testing overrides here
 

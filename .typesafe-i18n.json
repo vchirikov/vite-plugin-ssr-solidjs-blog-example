@@ -1,8 +1,8 @@
 {
-  "$schema": "https://unpkg.com/typesafe-i18n@5.18.1/schema/typesafe-i18n.json",
-  "baseLocale": "en",
-  "adapter": "solid",
-  "esmImports": true,
-  "outputPath": "./src/lib/shared/i18n",
-  "outputFormat": "TypeScript"
+   "$schema": "https://unpkg.com/typesafe-i18n@5.20.0/schema/typesafe-i18n.json",
+   "baseLocale": "en",
+   "adapter": "solid",
+   "esmImports": true,
+   "outputPath": "./src/lib/shared/i18n",
+   "outputFormat": "TypeScript"
 }

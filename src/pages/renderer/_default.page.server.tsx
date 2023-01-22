@@ -2,7 +2,7 @@ import { generateHydrationScript, renderToStringAsync } from 'solid-js/web';
 import { dangerouslySkipEscape, escapeInject } from 'vite-plugin-ssr';
 
 import { ContainerContext } from '#client/components/container-context';
-import { container } from '#server/container';
+import { createScoped } from '#server/container';
 import type { PageContextServer } from '#types';
 
 const base = import.meta.env.BASE_URL;
@@ -11,7 +11,7 @@ const base = import.meta.env.BASE_URL;
 export const passToClient = ['pageProps', 'routeParams'];
 
 export async function render(pageContext: PageContextServer) {
-
+  const container = createScoped(pageContext);
   const { Page, pageProps } = pageContext;
 
   const page = () => (

@@ -1,12 +1,9 @@
-import { useContext } from 'solid-js';
-
-import { ContainerContext } from '#client/components/container-context';
 import { Services } from '#client/container';
 import type { PageContext } from '#types';
 
+import { useContainer } from './useContainer';
+
 export function usePageContext(): PageContext {
-  const container = useContext(ContainerContext);
-  if (!container)
-    throw new Error('Container isn\'t presented in the context');
+  const container = useContainer();
   return container.get(Services.PageContext);
 }

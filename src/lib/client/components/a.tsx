@@ -1,6 +1,6 @@
-import { type JSX, createMemo, mergeProps, splitProps } from 'solid-js';
+import { type JSX, createMemo, splitProps } from 'solid-js';
 
-import { usePageContext } from '#client/hooks';
+import { useConfiguration, usePageContext } from '#client/hooks';
 
 export interface AnchorProps extends JSX.AnchorHTMLAttributes<HTMLAnchorElement> {
   href: string;
@@ -11,7 +11,7 @@ export interface AnchorProps extends JSX.AnchorHTMLAttributes<HTMLAnchorElement>
   /**
    * Flag to skip client routing via
    * {@link https://vite-plugin-ssr.com/clientRouting#usage-options rel="external"}
-   * it also will be skiped if you use links like `schema://url`
+   * it also will be skipped if you use links which are not started from `/`
    */
   skipRouting?: boolean;
 }
@@ -19,22 +19,46 @@ export interface AnchorProps extends JSX.AnchorHTMLAttributes<HTMLAnchorElement>
 export function A(props: AnchorProps) {
   const pageContext = usePageContext();
   const [our, rest] = splitProps(props, ['href', 'keepScrollPosition', 'prefetch', 'skipRouting', 'rel']);
-  const rel = !!our.rel == null
-  const isActive = createMemo(() => {
-    pageContext.urlPathname;
-    return false;
+  const isActive = createMemo(() => pageContext.urlPathname === our.href);
+  const rel = createMemo(() => {
+    const arr: string[] = our.rel?.split(',') ?? [];
+    if (our.skipRouting) {
+      arr.push('external');
+    }
+    if (!our.href.startsWith('/')) {
+      arr.push('nofollow');
+      arr.push('external');
+    }
+    if (our.prefetch) {
+      arr.push('prefetch');
+    }
+    return arr.length > 0 ? arr.join(' ') : undefined;
+  });
+  const href = createMemo(() => {
+    const href = our.href;
+    // if href is an external link, we do nothing
+    if (href.indexOf(':') > 0) {
+      return our.href;
+    }
+    if (href.startsWith('/')) {
+      const cfg = useConfiguration();
+      return `${cfg.basePath}/${href.slice(1)}`;
+    }
+    return `${pageContext.urlParsed.pathnameOriginal}/${href}`;
   });
 
   return (
     <a
       {...rest}
-      //href={href() || props.href}
+      href={href()}
+      rel={rel()}
       classList={{
         ...(props.class && { [props.class]: true }),
         ['active']: isActive(),
         ...props.classList
       }}
-      aria-current={isActive() ? 'page' : undefined}
-    />
+      data-prefetch={our.prefetch}
+      keep-scroll-position={our.keepScrollPosition}
+      aria-current={isActive() ? 'page' : undefined} />
   );
 }

@@ -4,7 +4,7 @@ import { dangerouslySkipEscape, escapeInject } from 'vite-plugin-ssr';
 
 import { ContainerContext } from '#client/components/container-context';
 import { Counter } from '#client/components/counter';
-import { container } from '#server/container';
+import { createScoped } from '#server/container';
 import { compileMdx } from '#server/markdown/markdown';
 import type { MdxComponent, PageContextServer } from '#types';
 
@@ -25,7 +25,7 @@ export async function onBeforeRender(pageContext) {
 }
 
 export async function render(pageContext: PageContextServer) {
-
+  const container = createScoped(pageContext);
   const { Page, pageProps } = pageContext;
   const code = pageContext.pageProps.mdx as string;
   const Rendered = new Function(code || '')({ ...jsxRuntime }).default as MdxComponent;

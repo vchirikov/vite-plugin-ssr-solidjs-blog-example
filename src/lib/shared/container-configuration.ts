@@ -1,10 +1,11 @@
 /** @file contains configuration for base IoC container for both side */
 import '@abraham/reflection';
 
-import type { Container } from 'inversify';
+import type { Container, interfaces } from 'inversify';
 
 import { ConsoleLogger } from '#shared/diagnostics/console-logger';
 import { type Logger, LogLevel } from '#shared/diagnostics/logging';
+import type { PageContext } from '#types';
 
 import type { Configuration } from './configuration';
 
@@ -24,4 +25,15 @@ export const Services = {
   Logger: Symbol('Logger'),
   Configuration: Symbol('Configuration'),
   Version: Symbol('Version'),
+  /** Returns a PageContext of rendering */
+  PageContext: Symbol('PageContext'),
 };
+
+/** Returns a child container from a container */
+export function createScoped(container: Container, pageContext: PageContext): Container {
+  const scoped = container.createChild(containerOptions);
+  scoped.bind<PageContext>(Services.PageContext).toConstantValue(pageContext);
+  return scoped;
+}
+
+export const containerOptions: interfaces.ContainerOptions = { defaultScope: 'Singleton' };

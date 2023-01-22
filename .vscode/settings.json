@@ -19,6 +19,7 @@
   },
   "javascript.preferences.quoteStyle": "single",
   "typescript.preferences.quoteStyle": "single",
+  "eslint.packageManager": "pnpm",
   "eslint.probe": [
     "javascript",
     "javascriptreact",

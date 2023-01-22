@@ -3,7 +3,7 @@ import * as jsxRuntime from 'solid-jsx';
 
 import { ContainerContext } from '#client/components/container-context';
 import { Counter } from '#client/components/counter';
-import { container } from '#client/container';
+import { createScoped } from '#client/container';
 import { pageDisposer } from '#client/render/page-disposer';
 import type { MdxComponent, PageContext } from '#types';
 
@@ -12,6 +12,8 @@ import type { MdxComponent, PageContext } from '#types';
 export const hydrationCanBeAborted = true;
 
 export function render(pageContext: PageContext) {
+  const container = createScoped(pageContext);
+
   const { Page, pageProps } = pageContext;
   const $app = document.getElementById('app');
 
