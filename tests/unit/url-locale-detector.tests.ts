@@ -5,28 +5,28 @@ import type { PageContext } from '#types';
 
 describe('createUrlLocaleDetector', () => {
   it('should return en locale from /en/<url>', () => {
-    const pageContext = { urlOriginal: '/en/foo' };
+    const pageContext = { urlParsed: { pathname: '/en/foo' } };
     const detector = createUrlLocaleDetector(pageContext as PageContext);
     const result = detector();
     expect(result).toEqual(['en']);
   });
 
   it('should return an empty array from /', () => {
-    const pageContext = { urlOriginal: '/' };
+    const pageContext = { urlParsed: { pathname: '/' } };
     const detector = createUrlLocaleDetector(pageContext as PageContext);
     const result = detector();
     expect(result).toEqual([]);
   });
 
   it('should return an empty array from /<page>', () => {
-    const pageContext = { urlOriginal: '/en-page' };
+    const pageContext = { urlParsed: { pathname: '/en-page' } };
     const detector = createUrlLocaleDetector(pageContext as PageContext);
     const result = detector();
     expect(result).toEqual([]);
   });
 
   it('should return en locale from /en', () => {
-    const pageContext = { urlOriginal: '/en' };
+    const pageContext = { urlParsed: { pathname: '/en' } };
     const detector = createUrlLocaleDetector(pageContext as PageContext);
     const result = detector();
     expect(result).toEqual(['en']);

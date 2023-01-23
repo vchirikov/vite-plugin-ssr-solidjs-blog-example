@@ -1,9 +1,12 @@
 import { type JSX, createMemo, splitProps } from 'solid-js';
 
 import { useConfiguration, usePageContext } from '#client/hooks';
+import type { Locales } from '#shared/i18n/i18n-types';
 
 export interface AnchorProps extends JSX.AnchorHTMLAttributes<HTMLAnchorElement> {
   href: string;
+  /** undefined == use page context locale, null = without locale, or the locale param */
+  locale?: Locales | null;
   /** {@link https://vite-plugin-ssr.com/clientRouting#link-prefetching keep-scroll-position} */
   keepScrollPosition?: boolean;
   /** {@link https://vite-plugin-ssr.com/clientRouting#link-prefetching data-prefetch="true"} */
@@ -18,7 +21,7 @@ export interface AnchorProps extends JSX.AnchorHTMLAttributes<HTMLAnchorElement>
 
 export function A(props: AnchorProps) {
   const pageContext = usePageContext();
-  const [our, rest] = splitProps(props, ['href', 'keepScrollPosition', 'prefetch', 'skipRouting', 'rel', 'class', 'classList']);
+  const [our, rest] = splitProps(props, ['href', 'locale', 'keepScrollPosition', 'prefetch', 'skipRouting', 'rel', 'class', 'classList']);
   const isActive = createMemo(() => pageContext.urlPathname === our.href);
   const rel = createMemo(() => {
     const arr: string[] = our.rel?.split(',') ?? [];
@@ -39,11 +42,21 @@ export function A(props: AnchorProps) {
     if (href.indexOf(':') > 0) {
       return our.href;
     }
+    let locale: string;
+    if (our.locale === undefined) {
+      locale = `/${pageContext.locale}/`;
+    }
+    else if (our.locale === null) {
+      locale = '/';
+    }
+    else {
+      locale = `/${our.locale}/`;
+    }
     if (href.startsWith('/')) {
       const cfg = useConfiguration();
-      return `${cfg.basePath}/${href.slice(1)}`;
+      return `${cfg.basePath}${locale}${href.slice(1)}`;
     }
-    return `${pageContext.urlParsed.pathnameOriginal}/${href}`;
+    return `${pageContext.urlParsed.pathnameOriginal}${locale}${href}`;
   });
 
   return (

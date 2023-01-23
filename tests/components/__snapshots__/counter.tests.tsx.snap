@@ -1,0 +1,14 @@
+// Vitest Snapshot v1
+
+exports[`Counter > should render 1`] = `
+<div>
+  <button
+    data-testid="counter"
+  >
+    Counter 
+    <!--#-->
+    0
+    <!--/-->
+  </button>
+</div>
+`;
