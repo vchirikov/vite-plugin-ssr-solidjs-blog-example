@@ -39,13 +39,15 @@ export const Page: Component = () => {
 
 
   return (<>
-    <ul>
+    <ul class="m-4">
       <li>LL:{LL().hello({ name: 'Vladimir' })}</li>
       <li>{state()}</li>
       <li>container used for rendering: {containerType()}</li>
     </ul>
 
-    <A href='/confetti' class="bg-red-400">Navigate to confetti page (via CSR)</A>;
-    <A href='/mdx' class="contrast">Navigate MDX (via CSR)</A>;
+    <div class="flex flex-row m-2">
+      <A href='/confetti' class="btn btn-primary mx-2">Navigate to confetti page (via CSR)</A>
+      <A href='/mdx' class="btn btn-secondary mx-2" >Navigate MDX (via CSR)</A>
+    </div>
   </>);
 };

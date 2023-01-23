@@ -2,6 +2,7 @@ import { generateHydrationScript, renderToStringAsync } from 'solid-js/web';
 import { dangerouslySkipEscape, escapeInject } from 'vite-plugin-ssr';
 
 import { ContainerContext } from '#client/components/container-context';
+import { MainLayout } from '#client/render/main-layout';
 import { createScoped } from '#server/container';
 import TypesafeI18n from '#shared/i18n/i18n-solid';
 import { baseLocale, loadedLocales, locales } from '#shared/i18n/i18n-util';
@@ -32,11 +33,10 @@ export async function render(pageContext: PageContextServer) {
     loadLocale(locale);
   }
 
-
   const page = () => (
     <ContainerContext.Provider value={container}>
       <TypesafeI18n locale={locale}>
-        <Page {...pageProps} />
+        <MainLayout><Page {...pageProps} /></MainLayout>
       </TypesafeI18n>
     </ContainerContext.Provider>
   );
