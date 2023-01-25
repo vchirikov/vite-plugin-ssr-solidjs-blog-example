@@ -1,9 +1,13 @@
 import * as path from 'node:path';
 
+import mdx from '@mdx-js/rollup';
 import type { UserConfigExport } from 'vite';
 import solid from 'vite-plugin-solid';
 import ssr from 'vite-plugin-ssr/plugin';
 import type { UserConfigExport as VitestConfig } from 'vitest/config';
+
+import { createForLocale } from './src/lib/shared/content/blog/posts/create-compile-options';
+import { locales } from './src/lib/shared/i18n/i18n-util';
 
 const stripTrailingSlash = (str: string): string => (str.endsWith('/') ? str.slice(0, -1) : str);
 
@@ -26,6 +30,12 @@ const server = new URL(servedUrl === '/' ? 'http://localhost:3000/' : servedUrl)
 
 // eslint-disable-next-line unicorn/prefer-module
 const rootDir = path.resolve(__dirname);
+
+const mdxPlugins = locales.map(locale => mdx({
+  ...createForLocale(locale),
+  include: `_content/${locale}/*.mdx`
+}));
+
 
 /** {@link  https://vitejs.dev/config/ } */
 const config: UserConfigExport & VitestConfig = {
@@ -61,6 +71,7 @@ const config: UserConfigExport & VitestConfig = {
        */
       disableAutoFullBuild: false,
     }),
+    ...mdxPlugins,
   ],
   server: {
     host: server.hostname,

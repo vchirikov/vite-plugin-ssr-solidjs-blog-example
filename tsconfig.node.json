@@ -2,7 +2,14 @@
   "compilerOptions": {
     "composite": true,
     "module": "ESNext",
-    "moduleResolution": "Node"
+    "moduleResolution": "Node",
+    "esModuleInterop": true,
+    "moduleDetection": "auto",
   },
-  "include": ["vite.config.ts"]
+  "include": [
+    "vite.config.ts",
+    "src/lib/shared/i18n/i18n-util.ts",
+    "src/lib/shared/i18n/i18n-types.ts",
+    "src/lib/shared/content/blog/posts/create-compile-options.ts"
+  ]
 }

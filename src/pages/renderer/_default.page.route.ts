@@ -15,7 +15,6 @@ import type { PageContext } from '#types';
  * should return null | undefined | { pageContext: {...} }
  */
 export function onBeforeRoute(pageContext: PageContext) {
-  console.log('onBeforeRoute', pageContext.urlParsed);
   // see the description, in browser we don't have the real url
   if (isBrowser) {
     return;
@@ -29,7 +28,6 @@ export function onBeforeRoute(pageContext: PageContext) {
   else if (url.startsWith(`/${locale}/`, 0)) {
     url = url.slice(`/${locale}`.length);
   }
-  console.log(locale, 'route to', url);
 
   return {
     pageContext: {
