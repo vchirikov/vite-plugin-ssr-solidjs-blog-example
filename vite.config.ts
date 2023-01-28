@@ -6,7 +6,7 @@ import solid from 'vite-plugin-solid';
 import ssr from 'vite-plugin-ssr/plugin';
 import type { UserConfigExport as VitestConfig } from 'vitest/config';
 
-import { createForLocale } from './src/lib/shared/content/blog/posts/create-compile-options';
+import { createForLocale } from './src/lib/server/content/blog/posts/create-compile-options';
 import { locales } from './src/lib/shared/i18n/i18n-util';
 
 const stripTrailingSlash = (str: string): string => (str.endsWith('/') ? str.slice(0, -1) : str);
@@ -33,7 +33,7 @@ const rootDir = path.resolve(__dirname);
 
 const mdxPlugins = locales.map(locale => mdx({
   ...createForLocale(locale),
-  include: `_content/${locale}/*.mdx`
+  include: `_content/${locale}/*.{mdx,md}`
 }));
 
 
@@ -79,6 +79,7 @@ const config: UserConfigExport & VitestConfig = {
   },
   build: {
     target: 'esnext',
+    cssCodeSplit: false,
     modulePreload: {
       polyfill: false,
     },

@@ -27,6 +27,7 @@ import ts from 'refractor/lang/typescript';
 import yaml from 'refractor/lang/yaml';
 import { refractor } from 'refractor/lib/core';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
+import rehypeExternalLinks from 'rehype-external-links';
 import rehypePrismGenerator from 'rehype-prism-plus/generator';
 import rehypeSlug from 'rehype-slug';
 /*
@@ -35,10 +36,12 @@ import rehypeSlug from 'rehype-slug';
  */
 // @ ts-ignore
 import remarkCopyLinkedFiles from 'remark-copy-linked-files';
+import remarkFrontmatter from 'remark-frontmatter';
 import gfm from 'remark-gfm';
+import remarkMdxFrontmatter from 'remark-mdx-frontmatter';
 
 // do not change this path to alias
-import type { Locales } from '../../../i18n/i18n-types';
+import type { Locales } from '../../../../shared/i18n/i18n-types';
 
 export const contentDirectory = join(process.cwd(), '_content');
 
@@ -73,6 +76,9 @@ export function create(relativePath: string): CompileOptions {
       useDynamicImport: false,
       // md -> md ast
       remarkPlugins: [
+        remarkFrontmatter,
+        // use the same 'matter' name as vfile-matter for convenient with manual compiling
+        [remarkMdxFrontmatter, { name: 'matter' }],
         gfm,
         [
           // @ts-ignore remark-copy-linked-files doesn't have type declarations
@@ -93,6 +99,7 @@ export function create(relativePath: string): CompileOptions {
       // md ast -> html ast
       rehypePlugins: [
         rehypeSlug,
+        [rehypeExternalLinks, { target: '_blank', rel: ['noopener', 'noreferrer'] }],
         [
           rehypeAutolinkHeadings,
           {
