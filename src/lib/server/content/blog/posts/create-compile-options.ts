@@ -76,7 +76,7 @@ export function create(relativePath: string): CompileOptions {
       useDynamicImport: false,
       // md -> md ast
       remarkPlugins: [
-        remarkFrontmatter,
+        [remarkFrontmatter, ['yaml']],
         // use the same 'matter' name as vfile-matter for convenient with manual compiling
         [remarkMdxFrontmatter, { name: 'matter' }],
         gfm,

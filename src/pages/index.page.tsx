@@ -1,4 +1,4 @@
-import { type Component, batch, createSignal } from 'solid-js';
+import { batch, type Component, createSignal } from 'solid-js';
 import { onMount } from 'solid-js';
 
 import { A } from '#client/components/a';
@@ -34,9 +34,6 @@ export const Page: Component = () => {
       }, 1000);
     });
   });
-
-
-
 
   return (<>
     <ul class="m-4">

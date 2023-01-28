@@ -1,3 +1,4 @@
+import { MetaProvider } from '@solidjs/meta';
 import { hydrate, render as renderSolid } from 'solid-js/web';
 
 import { ContainerContext } from '#client/components/container-context';
@@ -10,7 +11,8 @@ import type { PageContext } from '#types';
 // by default use server routing,
 // because [clientRouting can't be overridden](https://github.com/brillout/vite-plugin-ssr/discussions/605)
 // but if you want to use client, but if you want you can enable it:
-//export const clientRouting = true;
+// export const clientRouting = true;
+
 // we can't really abort hydration in client-side, but just in case
 export const hydrationCanBeAborted = true;
 
@@ -21,7 +23,9 @@ export function render(pageContext: PageContext) {
   const page = () => (
     <ContainerContext.Provider value={container}>
       <TypesafeI18n locale={locale}>
-        <MainLayout><Page {...pageProps} /></MainLayout>
+        <MetaProvider>
+          <MainLayout><Page {...pageProps} /></MainLayout>
+        </MetaProvider>
       </TypesafeI18n>
     </ContainerContext.Provider>
   );

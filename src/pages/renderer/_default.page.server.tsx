@@ -1,3 +1,4 @@
+import { MetaProvider, renderTags } from '@solidjs/meta';
 import { generateHydrationScript, renderToStringAsync } from 'solid-js/web';
 import { dangerouslySkipEscape, escapeInject } from 'vite-plugin-ssr';
 
@@ -33,10 +34,13 @@ export async function render(pageContext: PageContextServer) {
     loadLocale(locale);
   }
 
+  const tags = [];
   const page = () => (
     <ContainerContext.Provider value={container}>
       <TypesafeI18n locale={locale}>
-        <MainLayout><Page {...pageProps} /></MainLayout>
+        <MetaProvider tags={tags}>
+          <MainLayout><Page {...pageProps} /></MainLayout>
+        </MetaProvider>
       </TypesafeI18n>
     </ContainerContext.Provider>
   );
@@ -56,6 +60,7 @@ export async function render(pageContext: PageContextServer) {
         <meta charset="UTF-8" />
         <link rel="icon" href="${base}/logo.svg" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        ${dangerouslySkipEscape(renderTags(tags))}
         ${dangerouslySkipEscape(generateHydrationScript())}
       </head>
       <body>
