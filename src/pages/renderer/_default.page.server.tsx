@@ -33,7 +33,6 @@ export async function render(pageContext: PageContextServer) {
     // use the sync version to load in compile-time
     loadLocale(locale);
   }
-
   const tags = [];
   const page = () => (
     <ContainerContext.Provider value={container}>
@@ -58,10 +57,15 @@ export async function render(pageContext: PageContextServer) {
     <html lang="en">
       <head>
         <meta charset="UTF-8" />
-        <link rel="icon" href="${base}/logo.svg" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        ${dangerouslySkipEscape(renderTags(tags))}
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <meta name="color-scheme" content="dark light" />
+        <link rel="apple-touch-icon" sizes="180x180" href="${base}/apple-touch-icon.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="${base}/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="${base}/favicon-16x16.png" />
+        <link rel="icon" href="${base}/favicon.ico" />
+        <link rel="manifest" href="${base}/site.webmanifest" />
         ${dangerouslySkipEscape(generateHydrationScript())}
+        ${dangerouslySkipEscape(renderTags(tags))}
       </head>
       <body>
         <div id="app">${dangerouslySkipEscape(html)}</div>

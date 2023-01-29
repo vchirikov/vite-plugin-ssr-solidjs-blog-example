@@ -6,8 +6,9 @@ import { createScoped } from '#client/container';
 import { MainLayout } from '#client/render/main-layout';
 import { pageDisposer } from '#client/render/page-disposer';
 import TypesafeI18n from '#shared/i18n/i18n-solid';
+import { loadedLocales } from '#shared/i18n/i18n-util';
+import { loadLocaleAsync } from '#shared/i18n/i18n-util.async';
 import type { PageContext } from '#types';
-
 // by default use server routing,
 // because [clientRouting can't be overridden](https://github.com/brillout/vite-plugin-ssr/discussions/605)
 // but if you want to use client, but if you want you can enable it:
@@ -16,10 +17,15 @@ import type { PageContext } from '#types';
 // we can't really abort hydration in client-side, but just in case
 export const hydrationCanBeAborted = true;
 
-export function render(pageContext: PageContext) {
+export async function render(pageContext: PageContext) {
   const container = createScoped(pageContext);
   const { Page, pageProps, locale, isHydration } = pageContext;
   const $app = document.getElementById('app');
+  // to use i18n we should load a locale
+  if (!loadedLocales[locale]) {
+    await loadLocaleAsync(locale);
+  }
+
   const page = () => (
     <ContainerContext.Provider value={container}>
       <TypesafeI18n locale={locale}>

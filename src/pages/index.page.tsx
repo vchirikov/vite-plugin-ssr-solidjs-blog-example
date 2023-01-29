@@ -2,6 +2,7 @@ import { batch, type Component, createSignal } from 'solid-js';
 import { onMount } from 'solid-js';
 
 import { A } from '#client/components/a';
+import { PageDescription } from '#client/components/page-description';
 import { Services } from '#client/container';
 import { useContainer, useLogger } from '#client/hooks';
 import { useI18nContext } from '#shared/i18n/i18n-solid';
@@ -28,14 +29,15 @@ export const Page: Component = () => {
         console.log('setLocale');
         if (!loadedLocales['en']) {
           await loadLocaleAsync('en');
+          console.log('loaded');
         }
-        console.log('loaded');
         setLocale('en');
       }, 1000);
     });
   });
 
   return (<>
+    <PageDescription title='Index page' description='Just an example' />
     <ul class="m-4">
       <li>LL:{LL().hello({ name: 'Vladimir' })}</li>
       <li>{state()}</li>

@@ -15,6 +15,18 @@ export type Translations = RootTranslation
 
 type RootTranslation = {
 	/**
+	 * V​l​a​d​i​m​i​r​ ​C​h​i​r​i​k​o​v
+	 */
+	site_title: string
+	/**
+	 * H​o​m​e​p​a​g​e​ ​o​f​ ​V​l​a​d​i​m​i​r​ ​C​h​i​r​i​k​o​v
+	 */
+	meta_description: string
+	/**
+	 * V​l​a​d​i​m​i​r​ ​C​h​i​r​i​k​o​v
+	 */
+	author: string
+	/**
 	 * H​e​l​l​o​ ​{​n​a​m​e​}
 	 * @param {string} name
 	 */
@@ -27,6 +39,18 @@ type RootTranslation = {
 }
 
 export type TranslationFunctions = {
+	/**
+	 * Vladimir Chirikov
+	 */
+	site_title: () => LocalizedString
+	/**
+	 * Homepage of Vladimir Chirikov
+	 */
+	meta_description: () => LocalizedString
+	/**
+	 * Vladimir Chirikov
+	 */
+	author: () => LocalizedString
 	/**
 	 * Hello {name}
 	 */
