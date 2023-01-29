@@ -50,12 +50,11 @@ export async function render(pageContext: PageContextServer) {
    */
   const html = await renderToStringAsync(page);
 
-  // See https://vite-plugin-ssr.com/head
-  // pageContext.documentProps
-
+  // we must try to read the selected theme before the actual client-side render to avoid flickering
   return escapeInject`<!DOCTYPE html>
-    <html lang="en">
+    <html class="flex h-full w-full flex-col flex-nowrap" lang="${locale}">
       <head>
+        <script>document.documentElement.setAttribute('data-theme',window.localStorage.getItem('theme'))</script>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
         <meta name="color-scheme" content="dark light" />
@@ -67,7 +66,7 @@ export async function render(pageContext: PageContextServer) {
         ${dangerouslySkipEscape(generateHydrationScript())}
         ${dangerouslySkipEscape(renderTags(tags))}
       </head>
-      <body>
+      <body class="flex flex-1 flex-col flex-nowrap">
         <div id="app">${dangerouslySkipEscape(html)}</div>
       </body>
     </html>`;

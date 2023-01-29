@@ -36,7 +36,11 @@ rules:
     - warn
     - varsIgnorePattern: ^_
       argsIgnorePattern: ^_
+  # MUCH slower
   unicorn/prefer-query-selector: "off"
+  # dataset is much slower than attributes
+  # https://www.measurethat.net/Benchmarks/Show/14432/0/getattribute-vs-dataset#latest_results_block
+  unicorn/prefer-dom-node-dataset: "off"
   # conflicts with vscode default formatter
   unicorn/empty-brace-spaces: "off"
   unicorn/filename-case:

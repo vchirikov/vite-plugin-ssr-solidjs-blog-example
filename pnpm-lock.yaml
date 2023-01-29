@@ -4,6 +4,7 @@ specifiers:
   '@abraham/reflection': ^0.11.0
   '@mdx-js/mdx': ^2.2.1
   '@mdx-js/rollup': ^2.2.1
+  '@solid-primitives/media': ^2.0.6
   '@solid-primitives/script-loader': ^1.1.3
   '@solidjs/meta': ^0.28.2
   '@solidjs/testing-library': ^0.6.0
@@ -59,6 +60,7 @@ specifiers:
 
 dependencies:
   '@abraham/reflection': 0.11.0
+  '@solid-primitives/media': 2.0.6_solid-js@1.6.9
   '@solid-primitives/script-loader': 1.1.3_solid-js@1.6.9
   '@solidjs/meta': 0.28.2_solid-js@1.6.9
   cancellationtoken: 2.2.0
@@ -879,8 +881,45 @@ packages:
     resolution: {integrity: sha512-gFukHN4t8K4+wVC+ECqeqwzBDeFeTzBXroBTqE6vcWrQGbEUpHO7LYdG0f4xnvYq4VOEwITSlHlp0JBAIFMS/g==}
     dev: true
 
+  /@solid-primitives/event-listener/2.2.6_solid-js@1.6.9:
+    resolution: {integrity: sha512-Lb2q888Apv8wqgZ3WvPlt8ic2rEmHx6QT8d3pgi+JRSIRNwAysE6PZDmbwT6/hzzP1TIQG0IRZwh5tomfuqlaQ==}
+    peerDependencies:
+      solid-js: ^1.6.0
+    dependencies:
+      '@solid-primitives/utils': 5.0.0_solid-js@1.6.9
+      solid-js: 1.6.9
+    dev: false
+
+  /@solid-primitives/media/2.0.6_solid-js@1.6.9:
+    resolution: {integrity: sha512-VSTz8by6YDojYo8sdTCCyxXEFTKpOukWgM/z6J8hZ8FL+f1j35xShvKmCKY3IKDJ+MglKrhF+y9z3V3eXY6H5Q==}
+    peerDependencies:
+      solid-js: ^1.6.0
+    dependencies:
+      '@solid-primitives/event-listener': 2.2.6_solid-js@1.6.9
+      '@solid-primitives/rootless': 1.2.3_solid-js@1.6.9
+      '@solid-primitives/utils': 5.0.0_solid-js@1.6.9
+      solid-js: 1.6.9
+    dev: false
+
+  /@solid-primitives/rootless/1.2.3_solid-js@1.6.9:
+    resolution: {integrity: sha512-g6sKTQt8onmyWAh92q/+7ZwAZwVQx5qCDBEo7c0+yWZbFK81t6jWCPIYDWXpI1QJ/xxLg41iuN6Eb3fJL5IDHA==}
+    peerDependencies:
+      solid-js: ^1.6.0
+    dependencies:
+      '@solid-primitives/utils': 5.0.0_solid-js@1.6.9
+      solid-js: 1.6.9
+    dev: false
+
   /@solid-primitives/script-loader/1.1.3_solid-js@1.6.9:
     resolution: {integrity: sha512-ROr6vjYSGZtJ+qrTRumn+a4GwfWQFEq8S7UphRc3bV3z7JcinEL49mEus7XBuBnswGebx5ofANdp91Iv+GtssA==}
+    peerDependencies:
+      solid-js: ^1.6.0
+    dependencies:
+      solid-js: 1.6.9
+    dev: false
+
+  /@solid-primitives/utils/5.0.0_solid-js@1.6.9:
+    resolution: {integrity: sha512-VTvsVYFuZlglLqaEnsY/QIjKAdWs8YKn3+bhiOHkogaE8CSosu2Sg7jybnCfcuw7fePVG75MkoGbQylyo+yovg==}
     peerDependencies:
       solid-js: ^1.6.0
     dependencies:
