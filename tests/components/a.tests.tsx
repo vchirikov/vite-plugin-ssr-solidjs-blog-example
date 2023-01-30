@@ -1,3 +1,4 @@
+/* eslint-disable unicorn/no-null */
 
 import { describe, expect, it } from 'vitest';
 
@@ -5,7 +6,7 @@ import { A } from '#client/components/a';
 import { createContainer, render } from '#tests/container';
 
 describe('A', () => {
-  it('should use base path & options', () => {
+  it('should use base path, locale & options', () => {
     const services = createContainer();
     const { container, unmount } = render(
       services,
@@ -13,8 +14,30 @@ describe('A', () => {
     );
     const a = container.firstChild as HTMLLinkElement;
     expect(a).toBeTruthy();
-    expect(a.href).toBe('/some-base-url/foo');
+    expect(a.href).toBe('/some-base-url/en/foo');
     expect(a).toHaveTextContent('bar');
+    unmount();
+  });
+
+  it('should be able to override locale', () => {
+    const services = createContainer();
+    const { container, unmount } = render(
+      services,
+      () => <A href="/foo" locale={'ru'} keepScrollPosition={true} rel="nofollow">bar</A>
+    );
+    const a = container.firstChild as HTMLLinkElement;
+    expect(a.href).toBe('/some-base-url/ru/foo');
+    unmount();
+  });
+
+  it('should work without locale', () => {
+    const services = createContainer();
+    const { container, unmount } = render(
+      services,
+      () => <A href="/foo" locale={null} keepScrollPosition={true} rel="nofollow">bar</A>
+    );
+    const a = container.firstChild as HTMLLinkElement;
+    expect(a.href).toBe('/some-base-url/foo');
     unmount();
   });
 

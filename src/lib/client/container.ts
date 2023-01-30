@@ -4,6 +4,8 @@ import { Container } from 'inversify';
 import { configure, containerOptions, createScoped as createScopedBase, Services as BaseServices } from '#shared/container-configuration';
 import { ConsoleLogger } from '#shared/diagnostics/console-logger';
 import { type Logger, LogLevel } from '#shared/diagnostics/logging';
+import type { SimpleStorage } from '#shared/storage';
+import { isBrowser } from '#shared/utils/is-browser';
 import type { PageContext } from '#types';
 
 /** contain identifiers for available services from the client-side container */
@@ -18,7 +20,14 @@ configure(container);
 container.rebind<string>(BaseServices.ContainerType).toConstantValue('client');
 container.rebind<Logger>(BaseServices.Logger).toConstantValue(new ConsoleLogger(LogLevel.Info));
 
-// add here client-side specific services
+// client container is also created while ssr-render, so we have to check browser
+if (isBrowser) {
+  // add here client-side specific services
+  container.rebind<SimpleStorage>(Services.LocalStorage).toConstantValue(window.localStorage);
+  container.rebind<SimpleStorage>(Services.SessionStorage).toConstantValue(window.sessionStorage);
+}
+
+console.log('server too');
 
 
 /** Returns a child container from global client container */

@@ -8,6 +8,7 @@ import { type Logger, LogLevel } from '#shared/diagnostics/logging';
 import type { PageContext } from '#types';
 
 import type { Configuration } from './configuration';
+import { InMemoryStorage, type SimpleStorage } from './storage';
 
 export function configure(container: Container) {
   container.bind<string>(Services.ContainerType).toConstantValue('base');
@@ -17,6 +18,8 @@ export function configure(container: Container) {
     basePath: process.env.basePath,
     servedUrl: process.env.servedUrl,
   });
+  container.bind<SimpleStorage>(Services.LocalStorage).toConstantValue(new InMemoryStorage());
+  container.bind<SimpleStorage>(Services.SessionStorage).toConstantValue(new InMemoryStorage());
 }
 
 /** contain identifiers for available services from the base container */
@@ -27,12 +30,15 @@ export const Services = {
   Version: Symbol('Version'),
   /** Returns a PageContext of rendering */
   PageContext: Symbol('PageContext'),
+  LocalStorage: Symbol('LocalStorage'),
+  SessionStorage: Symbol('SessionStorage'),
 };
 
 /** Returns a child container from a container */
 export function createScoped(container: Container, pageContext: PageContext): Container {
   const scoped = container.createChild(containerOptions);
   scoped.bind<PageContext>(Services.PageContext).toConstantValue(pageContext);
+
   return scoped;
 }
 

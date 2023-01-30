@@ -18,7 +18,7 @@ export function createContainer(configureContext?: (pageContext: PageContext) =>
     /** without query string & hash */
     pathname: '/product/42',
     /** without query string & hash */
-    pathnameOriginal: '/some-base-url/product/42',
+    pathnameOriginal: '/some-base-url/en/product/42',
     /** could be {} */
     search: {
       details: 'yes',
@@ -47,14 +47,14 @@ export function createContainer(configureContext?: (pageContext: PageContext) =>
     is404: false,
     /** @deprecated */
     urlPathname: urlParsed.pathname,
-    urlOriginal: '/some-base-url/product/42?details=yes&fruit=apple&fruit=orange#reviews',
+    urlOriginal: '/some-base-url/en/product/42?details=yes&fruit=apple&fruit=orange#reviews',
     exports: {},
     exportsAll: {},
     Page: page,
     routeParams: {
       'productId': '42',
     },
-    url: 'https://example.com/some-base-url/product/42?details=yes&fruit=apple&fruit=orange#reviews',
+    url: 'https://example.com/some-base-url/en/product/42?details=yes&fruit=apple&fruit=orange#reviews',
     pageExports: {},
     urlParsed,
   };
