@@ -1,7 +1,7 @@
 import { usePrefersDark } from '@solid-primitives/media';
-import { type Component, createEffect, createRenderEffect, createSignal } from 'solid-js';
+import { type Component, createRenderEffect, createSignal } from 'solid-js';
 
-import { useContainer, useLocalStorage } from '#client/hooks';
+import { useLocalStorage } from '#client/hooks';
 import { isBrowser } from '#shared/utils';
 
 /** list of available themes should be in sync with daisyuiConfig in tailwind.config.cjs */
@@ -25,11 +25,11 @@ const disableAnimation = () => {
   }
 };
 
-type HtmlTag = Pick<HTMLElement, 'setAttribute'>;
+export type HtmlTagAccessor = () => Pick<HTMLElement, 'setAttribute'>;
 
 // is this a global first run across all theme switchers
 let isFirstRun = true;
-function createThemeSwitcher(htmlTagAccessor: () => HtmlTag): Component {
+export function createThemeSwitcher(htmlTagAccessor: HtmlTagAccessor): Component {
   const component: Component = () => {
     const storage = useLocalStorage();
     createRenderEffect(() => {
@@ -72,13 +72,3 @@ function createThemeSwitcher(htmlTagAccessor: () => HtmlTag): Component {
   };
   return component;
 }
-
-export const _internal = {
-  createThemeSwitcher,
-};
-
-
-
-export const ThemeSwitcher = isBrowser ? createThemeSwitcher(() => document.documentElement)
-  // eslint-disable-next-line unicorn/no-null, @typescript-eslint/no-empty-function
-  : createThemeSwitcher((): HtmlTag => ({ setAttribute: (_, __) => { } }));

@@ -20,3 +20,4 @@ export class InMemoryStorage implements SimpleStorage {
     this.storage.set(key, value);
   };
 }
+

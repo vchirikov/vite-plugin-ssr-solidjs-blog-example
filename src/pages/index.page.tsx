@@ -3,7 +3,7 @@ import { onMount } from 'solid-js';
 
 import { A } from '#client/components/a';
 import { PageDescription } from '#client/components/page-description';
-import { ThemeSwitcher } from '#client/components/theme-switcher';
+import { ThemeSwitcher } from '#client/components/theme-switcher/theme-switcher.internal';
 import { Services } from '#client/container';
 import { useContainer, useLogger } from '#client/hooks';
 import { useI18nContext } from '#shared/i18n/i18n-solid';
