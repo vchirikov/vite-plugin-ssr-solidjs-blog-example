@@ -9,6 +9,7 @@ import type { PageContext } from '#types';
 
 import type { Configuration } from './configuration';
 import { InMemoryStorage, type SimpleStorage } from './storage';
+import type { StorkClientProvider } from './stork/stork-client-provider';
 
 export function configure(container: Container) {
   container.bind<string>(Services.ContainerType).toConstantValue('base');
@@ -18,9 +19,19 @@ export function configure(container: Container) {
     basePath: process.env.basePath,
     servedUrl: process.env.servedUrl,
   });
-  container.bind<SimpleStorage>(Services.LocalStorage).toConstantValue(new InMemoryStorage());
-  container.bind<SimpleStorage>(Services.SessionStorage).toConstantValue(new InMemoryStorage());
+  /* <ClientServicesUsedForRendering> */
+  container.bind<SimpleStorage>(ClientServicesUsedForRendering.LocalStorage).toConstantValue(new InMemoryStorage());
+  container.bind<SimpleStorage>(ClientServicesUsedForRendering.SessionStorage).toConstantValue(new InMemoryStorage());
+  container.bind<StorkClientProvider>(ClientServicesUsedForRendering.StorkClientProvider).toConstantValue(undefined!);
+  /* </ClientServicesUsedForRendering> */
 }
+
+/** This services are client side, but they are used in SSR rendering in server container & client side container but on node */
+const ClientServicesUsedForRendering = {
+  LocalStorage: Symbol('LocalStorage'),
+  SessionStorage: Symbol('SessionStorage'),
+  StorkClientProvider: Symbol('StorkClientProvider'),
+};
 
 /** contain identifiers for available services from the base container */
 export const Services = {
@@ -30,8 +41,7 @@ export const Services = {
   Version: Symbol('Version'),
   /** Returns a PageContext of rendering */
   PageContext: Symbol('PageContext'),
-  LocalStorage: Symbol('LocalStorage'),
-  SessionStorage: Symbol('SessionStorage'),
+  ...ClientServicesUsedForRendering
 };
 
 /** Returns a child container from a container */

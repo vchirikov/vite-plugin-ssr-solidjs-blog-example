@@ -17,6 +17,7 @@ import type { PageContext } from '#types';
 export function onBeforeRoute(pageContext: PageContext) {
   // see the description, in browser we don't have the real url
   if (isBrowser) {
+
     return;
   }
   const locale = detectLocale(createUrlLocaleDetector(pageContext));

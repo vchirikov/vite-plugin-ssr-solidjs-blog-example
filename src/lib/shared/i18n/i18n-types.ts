@@ -27,6 +27,54 @@ type RootTranslation = {
 	 */
 	author: string
 	/**
+	 * S​e​a​r​c​h
+	 */
+	search: string
+	/**
+	 * I​n​d​e​x
+	 */
+	index: string
+	/**
+	 * B​a​c​k
+	 */
+	back: string
+	/**
+	 * N​o​t​ ​f​o​u​n​d
+	 */
+	not_found: string
+	/**
+	 * L​o​a​d​i​n​g
+	 */
+	loading: string
+	/**
+	 * U​n​k​n​o​w​n​ ​e​r​r​o​r
+	 */
+	error_unknown: string
+	/**
+	 * E​r​r​o​r​ ​i​n​f​o​r​m​a​t​i​o​n
+	 */
+	error_info: string
+	/**
+	 * T​r​y​ ​a​g​a​i​n
+	 */
+	try_again: string
+	/**
+	 * S​e​t​t​i​n​g​s
+	 */
+	settings: string
+	/**
+	 * s​c​o​r​e
+	 */
+	stork_score: string
+	/**
+	 * N​O​T​ ​F​O​U​N​D
+	 */
+	stork_not_found: string
+	/**
+	 * T​y​p​e​ ​a​ ​q​u​e​r​y​ ​i​n​t​o​ ​t​h​e​ ​i​n​p​u​t
+	 */
+	stork_empty_query: string
+	/**
 	 * H​e​l​l​o​ ​{​n​a​m​e​}
 	 * @param {string} name
 	 */
@@ -51,6 +99,54 @@ export type TranslationFunctions = {
 	 * Vladimir Chirikov
 	 */
 	author: () => LocalizedString
+	/**
+	 * Search
+	 */
+	search: () => LocalizedString
+	/**
+	 * Index
+	 */
+	index: () => LocalizedString
+	/**
+	 * Back
+	 */
+	back: () => LocalizedString
+	/**
+	 * Not found
+	 */
+	not_found: () => LocalizedString
+	/**
+	 * Loading
+	 */
+	loading: () => LocalizedString
+	/**
+	 * Unknown error
+	 */
+	error_unknown: () => LocalizedString
+	/**
+	 * Error information
+	 */
+	error_info: () => LocalizedString
+	/**
+	 * Try again
+	 */
+	try_again: () => LocalizedString
+	/**
+	 * Settings
+	 */
+	settings: () => LocalizedString
+	/**
+	 * score
+	 */
+	stork_score: () => LocalizedString
+	/**
+	 * NOT FOUND
+	 */
+	stork_not_found: () => LocalizedString
+	/**
+	 * Type a query into the input
+	 */
+	stork_empty_query: () => LocalizedString
 	/**
 	 * Hello {name}
 	 */

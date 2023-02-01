@@ -85,7 +85,7 @@ rules:
 
         - message: "can't import internal code, use index.ts exports first"
           from: "./src/lib/**/*.internal.{tsx,ts}"
-          target: ["./src/lib/**/!(index).{ts,tsx}"]
+          target: ["./src/lib/**/!(index|*.internal).{ts,tsx}"]
 
 settings:
   import/resolver:

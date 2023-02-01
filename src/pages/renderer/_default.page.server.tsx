@@ -1,8 +1,10 @@
 import { MetaProvider, renderTags } from '@solidjs/meta';
-import { generateHydrationScript, renderToStringAsync } from 'solid-js/web';
+import { ErrorBoundary } from 'solid-js';
+import {  generateHydrationScript, renderToStringAsync } from 'solid-js/web';
 import { dangerouslySkipEscape, escapeInject } from 'vite-plugin-ssr';
 
 import { ContainerContext } from '#client/components/container-context';
+import { ErrorBoundaryFallback } from '#client/components/error-boundary-fallback';
 import { MainLayout } from '#client/render/main-layout';
 import { createScoped } from '#server/container';
 import TypesafeI18n from '#shared/i18n/i18n-solid';
@@ -38,7 +40,9 @@ export async function render(pageContext: PageContextServer) {
     <ContainerContext.Provider value={container}>
       <TypesafeI18n locale={locale}>
         <MetaProvider tags={tags}>
-          <MainLayout><Page {...pageProps} /></MainLayout>
+          <ErrorBoundary fallback={(error, reset) => <ErrorBoundaryFallback reset={reset} error={error} />}>
+            <MainLayout><Page {...pageProps} /></MainLayout>
+          </ErrorBoundary>
         </MetaProvider>
       </TypesafeI18n>
     </ContainerContext.Provider>

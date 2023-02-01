@@ -1,3 +1,4 @@
+import type CancellationToken from 'cancellationtoken';
 import type { JSX, ParentComponent, ParentProps } from 'solid-js';
 import type { PageContextBuiltIn } from 'vite-plugin-ssr';
 // <doesn't-work-with-nodenext-moduleResolution>
@@ -71,3 +72,8 @@ interface MDXProperties {
  */
 export type MdxComponent = (properties: MDXProperties) => JSX.Element;
 // </mdx>
+
+export interface CancellationTokenSource {
+  token: CancellationToken;
+  cancel: (reason?: string) => void;
+}

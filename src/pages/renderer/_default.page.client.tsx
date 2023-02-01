@@ -1,7 +1,9 @@
 import { MetaProvider } from '@solidjs/meta';
-import { hydrate, render as renderSolid } from 'solid-js/web';
+import { ErrorBoundary } from 'solid-js';
+import {  hydrate, render as renderSolid } from 'solid-js/web';
 
 import { ContainerContext } from '#client/components/container-context';
+import { ErrorBoundaryFallback } from '#client/components/error-boundary-fallback';
 import { createScoped } from '#client/container';
 import { MainLayout } from '#client/render/main-layout';
 import { pageDisposer } from '#client/render/page-disposer';
@@ -30,7 +32,9 @@ export async function render(pageContext: PageContext) {
     <ContainerContext.Provider value={container}>
       <TypesafeI18n locale={locale}>
         <MetaProvider>
-          <MainLayout><Page {...pageProps} /></MainLayout>
+          <ErrorBoundary fallback={(error, reset) => <ErrorBoundaryFallback reset={reset} error={error} />}>
+            <MainLayout><Page {...pageProps} /></MainLayout>
+          </ErrorBoundary>
         </MetaProvider>
       </TypesafeI18n>
     </ContainerContext.Provider>
