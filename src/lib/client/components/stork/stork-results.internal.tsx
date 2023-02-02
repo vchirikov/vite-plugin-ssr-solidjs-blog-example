@@ -4,7 +4,6 @@ import { A } from '#client/components/a';
 import { useI18nContext } from '#shared/i18n/i18n-solid';
 import type { SearchData } from '#src/types/stork';
 
-import { ErrorBoundaryFallback } from '../error-boundary-fallback';
 import { StorkResult } from './stork-result.internal';
 
 interface StorkResultsProps {
