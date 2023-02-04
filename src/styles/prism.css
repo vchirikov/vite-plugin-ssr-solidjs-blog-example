@@ -1,0 +1,58 @@
+/** https://github.com/timlrx/rehype-prism-plus */
+.code-highlight {
+  float: left;
+  min-width: 100%;
+}
+
+.code-line {
+  display: block;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+  margin-left: -0.5em;
+  margin-right: -0.5em;
+  /* Set placeholder for highlight accent border color to transparent */
+  border-left: 4px solid rgba(0, 0, 0, 0);
+}
+
+.code-line span {
+  display: inline-block;
+}
+
+.code-line.inserted {
+  /* Set inserted line (+) color */
+  background-color: rgba(16, 185, 129, 0.2);
+}
+
+.code-line.deleted {
+  /* Set deleted line (-) color */
+  background-color: rgba(239, 68, 68, 0.2);
+}
+
+.highlight-line {
+  margin-left: -0.5em;
+  margin-right: -0.5em;
+  /* Set highlight bg color */
+  background-color: rgba(55, 65, 81, 0.5);
+  /* Set highlight accent border color */
+  border-left: 4px solid rgb(59, 130, 246);
+}
+
+.line-number::before {
+  display: inline-block;
+  width: 1.5rem;
+  text-align: right;
+  opacity: 0.45;
+  white-space: nowrap;
+  margin-right: 0.5em;
+  margin-left: 0em;
+  /* Line number color */
+  color: rgb(156, 163, 175);
+  padding-right: 0.25em;
+  border-right: 1px solid rgba(55, 65, 81, 0.5);
+  content: attr(line);
+}
+
+/* inline code */
+.prose :not(pre)>code:not([class*=language-]) {
+  @apply bg-base-300 rounded;
+}

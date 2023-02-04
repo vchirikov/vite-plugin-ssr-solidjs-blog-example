@@ -1,3 +1,32 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* auto-links */
+a.anchor {
+  text-decoration: none;
+  @apply opacity-20;
+  position: relative;
+}
+
+a.anchor::before {
+  content: '#';
+  @apply mr-1 text-base-content;
+  font-weight: bold;
+}
+
+h1>a.anchor::before {
+  @apply text-4xl ;
+}
+
+h2>a.anchor::before {
+  @apply text-2xl;
+}
+
+h3>a.anchor::before {
+  @apply text-xl;
+}
+
+:is(h1, h2, h3, h4, h5, h6, th):hover a.anchor {
+  @apply opacity-60;
+}

@@ -1,4 +1,6 @@
 import '#src/styles/global.css';
+import '#src/styles/tailwind-prism-vsc-dark-plus.css';
+import '#src/styles/prism.css';
 
 import type { ParentComponent } from 'solid-js';
 import { For } from 'solid-js';
