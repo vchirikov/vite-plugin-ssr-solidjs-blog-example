@@ -1,7 +1,7 @@
-import type CancellationToken from 'cancellationtoken';
 import type { SearchData, StorkWasmJs } from 'src/types/stork';
 
 import type { StorkClient } from '#shared/stork/stork-client';
+import { type CancellationToken } from '#shared/utils';
 
 export class StorkClientImpl implements StorkClient {
   private readonly name: string;
@@ -79,9 +79,8 @@ export class StorkClientImpl implements StorkClient {
     const initPromise = this.isInitialized ? Promise.resolve() : this.initialize();
 
     const changeIndexPromise = this.currentIndexUrl === indexUrl ? Promise.resolve() : this.changeIndex(indexUrl);
+    // await Promise.race([Promise.all([initPromise, changeIndexPromise]), token.asPromise()]);
     await Promise.all([initPromise, changeIndexPromise]);
-
-    token.throwIfCancelled();
 
     return this.stork!.search(this.name, query);
   }

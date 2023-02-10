@@ -1,3 +1,4 @@
+/* eslint-disable import/no-named-as-default-member */
 /* eslint-disable import/first */
 /* eslint-disable simple-import-sort/imports */
 // disable auto-mode for prism
@@ -7,15 +8,15 @@ if (typeof window !== 'undefined') {
   window.Prism.manual = true;
 }
 
-import { languages, util, highlight as prismHighlight } from 'prismjs';
+import Prism from 'prismjs';
 
 // we should load needed language into bundle (with side-effects)
 // because prismjs doesn't work with bundler + dynamic loading
 import 'prismjs/components/prism-yaml';
 
 export function highlight(code: string, language: string): string {
-  if (languages[language]) {
-    return prismHighlight(code, languages[language], language);
+  if (Prism.languages[language]) {
+    return Prism.highlight(code, Prism.languages[language], language);
   }
-  return util.encode(code).toString();
+  return Prism.util.encode(code).toString();
 }

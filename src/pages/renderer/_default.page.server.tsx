@@ -1,6 +1,6 @@
 import { MetaProvider, renderTags } from '@solidjs/meta';
 import { ErrorBoundary } from 'solid-js';
-import {  generateHydrationScript, renderToStringAsync } from 'solid-js/web';
+import { generateHydrationScript, renderToStringAsync } from 'solid-js/web';
 import { dangerouslySkipEscape, escapeInject } from 'vite-plugin-ssr';
 
 import { ContainerContext } from '#client/components/container-context';
@@ -55,7 +55,7 @@ export async function render(pageContext: PageContextServer) {
   const html = await renderToStringAsync(page);
 
   // we must try to read the selected theme before the actual client-side render to avoid flickering
-  return escapeInject`<!DOCTYPE html>
+  const documentHtml = escapeInject`<!DOCTYPE html>
     <html class="flex h-full w-full flex-col flex-nowrap" lang="${locale}">
       <head>
         <script>document.documentElement.setAttribute('data-theme',window.localStorage.getItem('theme'))</script>
@@ -74,6 +74,17 @@ export async function render(pageContext: PageContextServer) {
         <div id="app">${dangerouslySkipEscape(html)}</div>
       </body>
     </html>`;
+
+  const injectFilter = (assets): void => {
+    for (const entry of assets) {
+      //if (entry.assetType != 'script') {
+        console.log(JSON.stringify(entry, undefined!, 2));
+      //}
+
+    }
+  };
+
+  return { documentHtml, injectFilter };
 }
 
 /** Only for SSG */

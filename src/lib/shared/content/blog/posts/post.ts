@@ -1,5 +1,3 @@
-import type { MDXContent } from 'mdx/types';
-
 import type { Locales } from '#shared/i18n/i18n-types';
 
 export interface Frontmatter {
@@ -26,12 +24,12 @@ export interface OpenGraphImageInfo {
 }
 
 export interface Post {
-  matter: Frontmatter;
+  matter?: Frontmatter;
   locale: Locales;
-  content: MDXContent;
+  code: string;
   /** slug without locale part, for example for _content/en/1.mdx: 1 */
   slug: string;
   /** image sha1 hash if presented, computed by frontmatter info, if doesn't met => regenerate image */
   image_hash?: string;
+  filepath?: string;
 }
-

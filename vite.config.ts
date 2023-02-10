@@ -1,11 +1,11 @@
 import * as path from 'node:path';
 
-import mdx from '@mdx-js/rollup';
 import type { UserConfigExport } from 'vite';
 import solid from 'vite-plugin-solid';
 import ssr from 'vite-plugin-ssr/plugin';
 import type { UserConfigExport as VitestConfig } from 'vitest/config';
 
+import { mdx } from './build/vite-plugin-mdx';
 import { createForLocale } from './src/lib/server/content/blog/posts/create-compile-options';
 import { locales } from './src/lib/shared/i18n/i18n-util';
 
@@ -33,7 +33,8 @@ const rootDir = path.resolve(__dirname);
 
 const mdxPlugins = locales.map(locale => mdx({
   ...createForLocale(locale),
-  include: `_content/${locale}/*.{mdx,md}`
+  include: `_content/${locale}/*.{mdx,md}`,
+  compress: process.env.NODE_ENV === 'production',
 }));
 
 

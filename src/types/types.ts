@@ -1,9 +1,9 @@
-import type CancellationToken from 'cancellationtoken';
 import type { JSX, ParentComponent, ParentProps } from 'solid-js';
 import type { PageContextBuiltIn } from 'vite-plugin-ssr';
 // <doesn't-work-with-nodenext-moduleResolution>
 import type { PageContextBuiltInClient as ServerRouter } from 'vite-plugin-ssr/client';
 import type { PageContextBuiltInClient as ClientRouter } from 'vite-plugin-ssr/client/router';
+import type { resolveRoute } from 'vite-plugin-ssr/routing';
 
 // </doesn't-work-with-nodenext-moduleResolution>
 import type { Locales } from '#shared/i18n/i18n-types';
@@ -22,10 +22,7 @@ interface PageContextCustom {
   // don't change the name `pageProps`, implementation detail
   pageProps?: PageProps;
   exports: {
-    documentProps?: {
-      title?: string;
-      description?: string;
-    };
+    // add here what do you want to export from document
   };
 }
 
@@ -49,6 +46,25 @@ export interface PrerenderContext {
   _noExtraDir: boolean;
 }
 
+export type PageRoutingFunction<TRouteParameters extends Record<string, string>> = (pageContext: PageContext) =>
+  boolean | Partial<ReturnType<typeof resolveRoute>> & {
+    /** to resolve routing conflicts, larger wins */
+    precedence?: number;
+    /** route parameters will be available from pageContext.routeParams.id */
+    routeParams?: TRouteParameters;
+    /** you can pass something to context, like redirectTo: string */
+    pageContext?: PageContext;
+  };
+
+
+/**
+ * Return type for prerender() hook of vite-plugin-ssr, note if you provide
+ * the `pageContext`, vite-plugin-ssr will *not* call the `onBeforeRender()` hook
+ * for each `url` for `vite build`.
+ */
+export type AsyncPrerender = () => Promise<{ url: string, pageContext: Partial<PageContext>; }[] | string[]>;
+
+
 // <mdx>
 
 type MdxComponents = {
@@ -71,9 +87,9 @@ interface MDXProperties {
  * could be a React, Preact, or Vuex element.
  */
 export type MdxComponent = (properties: MDXProperties) => JSX.Element;
+
 // </mdx>
 
-export interface CancellationTokenSource {
-  token: CancellationToken;
-  cancel: (reason?: string) => void;
+export interface Disposable {
+  dispose(): void | PromiseLike<void>;
 }

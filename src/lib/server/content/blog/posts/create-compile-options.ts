@@ -5,7 +5,7 @@
  * we should know path of the foo.md, which is `_content/en`. To solve this
  * we can use @mdx-js/mdx, directly but it's better to use @mdx-js/rollup
  * which wraps compile method with cache. To do this we should create
- * NumOfLocales instances of mdx rollup plugin, so this is a place where
+ * NumOfLocales instances of mdx vite plugin, so this is a place where
  * we store a factory method for the CompileOptions
  */
 
@@ -36,9 +36,7 @@ import rehypeSlug from 'rehype-slug';
  */
 // @ ts-ignore
 import remarkCopyLinkedFiles from 'remark-copy-linked-files';
-import remarkFrontmatter from 'remark-frontmatter';
 import gfm from 'remark-gfm';
-import remarkMdxFrontmatter from 'remark-mdx-frontmatter';
 
 // do not change this path to alias
 import type { Locales } from '../../../../shared/i18n/i18n-types';
@@ -70,15 +68,16 @@ export function create(relativePath: string): CompileOptions {
       baseUrl: process.env.servedUrl ?? process.env.basePath ?? '',
       development: process.env.NODE_ENV === 'development',
       format: 'detect',
-      outputFormat: 'program',
+      // for eager = true you must use program, but we want to use async loading
+      outputFormat: 'function-body',
       jsxImportSource: 'solid-jsx',
       providerImportSource: 'solid-jsx',
       useDynamicImport: false,
+      // solid uses html's class / for instead of react's className / htmlFor
+      elementAttributeNameCase: 'html',
+      stylePropertyNameCase: 'css',
       // md -> md ast
       remarkPlugins: [
-        [remarkFrontmatter, ['yaml']],
-        // use the same 'matter' name as vfile-matter for convenient with manual compiling
-        [remarkMdxFrontmatter, { name: 'matter' }],
         gfm,
         [
           // @ts-ignore remark-copy-linked-files doesn't have type declarations

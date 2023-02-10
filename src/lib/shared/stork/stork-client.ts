@@ -1,5 +1,4 @@
-import type CancellationToken from 'cancellationtoken';
-
+import type { CancellationToken } from '#shared/utils';
 import type { SearchData } from '#src/types/stork';
 
 export interface StorkClient {

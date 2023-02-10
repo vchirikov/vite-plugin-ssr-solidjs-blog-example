@@ -1,5 +1,4 @@
-import CancellationToken from 'cancellationtoken';
-import { type Component, createMemo, type JSX } from 'solid-js';
+import { type Component, createMemo } from 'solid-js';
 
 import { Services } from '#client/container';
 import { useConfiguration, useContainer, useLogger } from '#client/hooks';
@@ -7,7 +6,8 @@ import type { SearchData } from '#root/src/types/stork';
 import { useI18nContext } from '#shared/i18n/i18n-solid';
 import type { StorkClient } from '#shared/stork/stork-client';
 import type { StorkClientProvider } from '#shared/stork/stork-client-provider';
-import type { CancellationTokenSource } from '#types';
+import { CancellationTokenSource } from '#shared/utils';
+
 
 interface StorkInputProps {
   name: string;
@@ -22,7 +22,7 @@ const StorkInput: Component<StorkInputProps> = (props: StorkInputProps) => {
 
   const indexUrl = `${cfg.servedUrl}/stork/${locale()}.st`;
   let query = '';
-  let cts: CancellationTokenSource = CancellationToken.create();
+  let cts = new CancellationTokenSource();
   const provider: StorkClientProvider | undefined = container.get(Services.StorkClientProvider);
   const client = createMemo<StorkClient | undefined>(() => provider?.getOrCreate(props.name));
 
@@ -33,8 +33,8 @@ const StorkInput: Component<StorkInputProps> = (props: StorkInputProps) => {
       return;
     try {
       query = event.target.value ?? '';
-      cts.cancel('new_query');
-      cts = CancellationToken.create();
+      cts.cancel();
+      cts = new CancellationTokenSource();
       props.searchDataCallback();
 
       if (!query)

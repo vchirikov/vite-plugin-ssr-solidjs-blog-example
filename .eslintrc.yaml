@@ -43,6 +43,8 @@ rules:
   unicorn/prefer-dom-node-dataset: "off"
   # conflicts with vscode default formatter
   unicorn/empty-brace-spaces: "off"
+  # sometimes it more readable than temp variables
+  unicorn/no-await-expression-member: "off"
   unicorn/filename-case:
     - error
     - case: kebabCase
@@ -104,7 +106,7 @@ overrides:
   - files:
       - "build/**/*.{ts,tsx}"
       - "src/lib/server/**/*.{ts,tsx}"
-      - "src/**/*.server.{ts,tsx}"
+      - "src/**/*.{server,route}.{ts,tsx}"
       - "tests/**/*.{ts,tsx}"
       - "./*.{ts,mjs,js,cjs}"
     rules:

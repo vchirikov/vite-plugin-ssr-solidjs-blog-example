@@ -1,4 +1,4 @@
-import { type JSX, createMemo, splitProps } from 'solid-js';
+import { createMemo, type JSX, splitProps } from 'solid-js';
 
 import { useConfiguration, usePageContext } from '#client/hooks';
 import type { Locales } from '#shared/i18n/i18n-types';

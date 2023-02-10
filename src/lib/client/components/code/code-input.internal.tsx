@@ -21,7 +21,8 @@ export const CodeInput: Component<Props> = (props) => {
   let textareaRef;
   let preRef;
 
-  const [value, setValue] = createSignal<string>(props.placeholder ?? '');
+  //const [value, setValue] = createSignal<string>(props.placeholder ?? '');
+  const [value, setValue] = createSignal<string>('');
   const html = createMemo(() => highlight(value(), props.language),);
 
   const onScroll = () => {

@@ -1,5 +1,7 @@
 import { injectable } from 'inversify';
 
+import { noop } from '#shared/utils';
+
 import type { LogFunction, Logger } from './logging';
 import { LogLevel } from './logging';
 
@@ -21,9 +23,6 @@ class ConsoleLogger implements Logger {
     // some environments only expose the console when the F12 developer console is open
     const level = console ? logLevel : LogLevel.None;
 
-    // eslint-disable-next-line @typescript-eslint/no-empty-function, unicorn/consistent-function-scoping
-    const emptyFunc = () => { };
-
     // eslint-disable-next-line unicorn/consistent-function-scoping
     const convert = (loggerMethod: keyof Logger): LogLevelStrings => {
       return (loggerMethod[0].toUpperCase() + loggerMethod.slice(1)) as LogLevelStrings;
@@ -41,7 +40,7 @@ class ConsoleLogger implements Logger {
         }
 
       }
-      this[element.level] ??= emptyFunc;
+      this[element.level] ??= noop;
     }
   }
 

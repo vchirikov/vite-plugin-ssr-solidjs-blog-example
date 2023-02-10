@@ -1,6 +1,6 @@
 /* eslint-disable solid/no-innerhtml */
 import { Link, Meta, Title } from '@solidjs/meta';
-import { type Component, createMemo, Show } from 'solid-js';
+import { type Component, Show } from 'solid-js';
 
 import { useConfiguration, usePageContext } from '#client/hooks';
 import { useI18nContext } from '#shared/i18n/i18n-solid';

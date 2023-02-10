@@ -3,6 +3,7 @@
 exports[`Counter > should render 1`] = `
 <div>
   <button
+    class="btn btn-primary"
     data-testid="counter"
   >
     Counter 
