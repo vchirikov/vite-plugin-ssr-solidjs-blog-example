@@ -41,3 +41,13 @@ To write test use:
 
 It's VERY important to use lambdas where you want to use JSX, only functions will be translated with solidjs,
 in other case this JSX will be rendered as static without any context and so on.
+
+
+### Debugging vite-plugin-ssr
+
+```ps1
+# To debug assets injecting
+$env:DEBUG='vps:extractAssets'
+pnpm build
+# output: `dist/client/manifest.json`
+```
