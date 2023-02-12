@@ -29,7 +29,7 @@ export const Page: Component<Props> = (props: Props) => {
     return {
       ...props.post,
       component: () => mdx,
-      image: `assets/img/generated/${props.post.locale}/${props.post.slug}/${props.post.image_hash}`
+      image: `assets/img/generated/${props.post.locale}/${props.post.slug}/${props.post.imageHash}`
     };
   });
 

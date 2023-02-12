@@ -1,4 +1,4 @@
-import type { Frontmatter } from '#server/content/blog/posts/frontmatter';
+import type { Frontmatter } from '../lib/shared/content/blog/posts/post';
 
 declare module 'vfile' {
   // let's type `file.data.matter`, matter is hardcoded value from vfile-matter
@@ -7,4 +7,8 @@ declare module 'vfile' {
   }
 }
 
-export { };
+export interface CompiledMdx {
+  matter?: Frontmatter;
+  code: string;
+  imageHash: string;
+}

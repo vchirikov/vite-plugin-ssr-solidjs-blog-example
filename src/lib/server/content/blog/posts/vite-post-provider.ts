@@ -5,14 +5,10 @@ import path from 'node:path';
 import { injectable } from 'inversify';
 import { sha1 } from 'object-hash';
 
-import type { Frontmatter, Post } from '#shared/content/blog/posts/post';
+import type { Post } from '#shared/content/blog/posts/post';
 import type { PostProvider } from '#shared/content/blog/posts/post-provider';
 import type { Locales } from '#shared/i18n/i18n-types';
-
-interface CompiledMdx {
-  matter?: Frontmatter;
-  code: string;
-}
+import type { CompiledMdx } from '#src/types/vfile';
 
 // [Vite doesn't support variables in glob](https://github.com/vitejs/vite/blob/167753d3754507430600a1bc2b100ca321b17a86/docs/guide/features.md?plain=1#L450)
 // so we have to create different functions here, we also don't save eager, because we don't want to have big bundle
@@ -24,8 +20,6 @@ const importEnPosts = () => Object.entries(import.meta.glob<CompiledMdx>('/_cont
 @injectable()
 export class VitePostProvider implements PostProvider {
 
-  private static readonly extensionRegex = /\.mdx?$/;
-
   public async all(locale: Locales): Promise<Post[]> {
     // posts are cached by a compiler from mdx-js, so should be fast to do this
     const posts = locale === 'en' ? importEnPosts() : importRuPosts();
@@ -36,8 +30,8 @@ export class VitePostProvider implements PostProvider {
         code: module.code,
         filepath: filepath,
         locale,
-        slug: path.basename(filepath).replace(VitePostProvider.extensionRegex, ''),
-        image_hash: sha1(module.matter?.image ?? ''),
+        slug: path.parse(filepath).name,
+        imageHash: sha1(module.matter?.image ?? ''),
       };
       return post;
     });
@@ -54,8 +48,7 @@ export class VitePostProvider implements PostProvider {
       return;
     // posts are cached by a compiler from mdx-js, so should be fast to do this
     const posts = locale === 'en' ? importEnPosts() : importRuPosts();
-    const tuple = posts.find(([filepath, _]) =>
-      path.basename(filepath).replace(VitePostProvider.extensionRegex, '') === slug);
+    const tuple = posts.find(([filepath, _]) => path.parse(filepath).name === slug);
 
     if (!tuple)
       return;
@@ -67,8 +60,8 @@ export class VitePostProvider implements PostProvider {
       code: module.code,
       filepath: filepath,
       locale,
-      slug: path.basename(filepath).replace(VitePostProvider.extensionRegex, ''),
-      image_hash: sha1(module.matter?.image ?? ''),
+      slug: path.parse(filepath).name,
+      imageHash: module.imageHash,
     };
     return post;
   }

@@ -5,10 +5,17 @@
     "moduleResolution": "Node",
     "esModuleInterop": true,
     "moduleDetection": "auto",
+    "jsx": "react-jsx",
+    "jsxImportSource": "solid-js/h"
+    // //"jsx": "react-jsx",
+    // "jsx": "react",
+    // "jsxFactory": "h",
   },
   "include": [
     "vite.config.ts",
     "build/",
+    "src/types/vfile.d.ts",
+    "src/lib/shared/content/blog/posts/post.ts",
     "src/lib/shared/utils/urls.ts",
     "src/lib/shared/i18n/i18n-util.ts",
     "src/lib/shared/i18n/i18n-types.ts",
