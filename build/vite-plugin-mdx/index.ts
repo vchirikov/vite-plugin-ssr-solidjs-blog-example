@@ -4,19 +4,23 @@
  * @mdx-js/rollup doesn't support it, so let's implement this manually
  * {@link https://rollupjs.org/plugin-development/ Plugin Development Docs}
  */
+import fs from 'node:fs';
+import path from 'node:path';
+
 import type { CompileOptions } from '@mdx-js/mdx';
 import { createFormatAwareProcessors } from '@mdx-js/mdx/lib/util/create-format-aware-processors.js';
+import { Resvg, type ResvgRenderOptions } from '@resvg/resvg-js';
 import { createFilter, dataToEsm, type FilterPattern } from '@rollup/pluginutils';
-import path from 'node:path';
-import fs from 'fs';
+import { sha1 } from 'object-hash';
+import satori from 'satori';
 import { VFile } from 'vfile';
 import { matter } from 'vfile-matter';
 import type { Plugin } from 'vite';
-import satori from 'satori';
-import { sha1 } from 'object-hash';
+
 import type { CompiledMdx } from '../../src/types/vfile';
-import { getFonts } from './fonts';
 import { ArtboardImage, sizes as artboardSizes } from './artboard';
+import { getFontFiles, getFonts } from './fonts';
+import { OpenGraphImage, size as openGraphSize } from './opengraph';
 
 
 type Options = CompileOptions & {
@@ -28,6 +32,11 @@ type Options = CompileOptions & {
   compress?: boolean;
   /** Path where to place generated images */
   imageGenerationPath: string;
+  author: {
+    name: string;
+    /** should be a full url, because it will be used in OpenGraph images */
+    avatarUrl: string;
+  };
 };
 
 /** Compiles mdx to a function-body in a tree-shakable module & generate images from frontmatter */
@@ -66,18 +75,68 @@ export function mdx(options: Options): Plugin {
     // TODO: change default to use base64 local file
     const background = file.data.matter?.image?.background ?? 'url("https://vchirikov.github.io/assets/img/bg.svg")';
 
+    const promises = [];
+    if (!isUpToDateOpenGraph) {
+      promises.push(generateOpenGraph());
+    }
+
     if (!isUpToDateArtboard) {
+      promises.push(generateArtBoard());
+    }
+
+    if (promises.length > 0)
+      await Promise.all(promises);
+
+    return imageHash;
+
+    async function generateArtBoard() {
       const svg_artboard_xs = await satori(ArtboardImage({
         size: 'xs',
         background,
         text,
         title,
         theme,
+
       }), { ...artboardSizes.xs, fonts });
       await fs.promises.writeFile(path.join(dir, `${imageHash}.sm.svg`), svg_artboard_xs, { encoding: 'utf8' });
     }
 
-    return imageHash;
+    async function generateOpenGraph() {
+      const { name, avatarUrl } = options.author;
+      const svg_opengraph = await satori(OpenGraphImage({
+        avatarUrl: avatarUrl,
+        authorName: name,
+        background,
+        text,
+        title,
+        theme
+      }), { ...openGraphSize, fonts });
+      const fullSvgPath = path.join(dir, `${imageHash}.svg`);
+      await fs.promises.writeFile(fullSvgPath, svg_opengraph, { encoding: 'utf8' });
+      // opengraph uses jpg/gif/png (at least telegram.org does not support svg for images)
+      // [sharp doesn't support embedded svg](https://github.com/lovell/sharp/issues/1378)
+      // so we can use rust-based [@resvg/resvg-js - npm](https://www.npmjs.com/package/@resvg/resvg-js)
+      const pngPath = path.join(dir, `${imageHash}.og.png`);
+
+      const opts: ResvgRenderOptions = {
+        background: theme === 'light' ? 'white' : 'black',
+        fitTo: {
+          mode: 'width',
+          value: openGraphSize.width
+        },
+        font: {
+          fontFiles: getFontFiles(),
+          loadSystemFonts: false,
+          defaultFontFamily: fonts[0]!.name
+        }
+      };
+
+      const resvg = new Resvg(svg_opengraph, opts);
+      // we also can use resvg.resolveImage() to add some images without urls
+      const pngData = resvg.render();
+      const pngBuffer = pngData.asPng();
+      await fs.promises.writeFile(pngPath, pngBuffer, 'binary');
+    }
   };
 
   return {

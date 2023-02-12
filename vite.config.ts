@@ -36,6 +36,11 @@ const mdxPlugins = locales.map(locale => mdx({
   imageGenerationPath: path.join('public', 'assets', 'img', 'generated', locale),
   include: `_content/${locale}/*.{mdx,md}`,
   compress: process.env.NODE_ENV === 'production',
+  author: {
+    name: locale === 'en' ? 'Vladimir Chirikov' : 'Владимир Чириков',
+    /** should be a full url, because it will be used in OpenGraph images */
+    avatarUrl: 'https://avatars.githubusercontent.com/u/40987940',
+  }
 }));
 
 

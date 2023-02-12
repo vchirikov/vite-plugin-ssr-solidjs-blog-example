@@ -1,17 +1,16 @@
 //import { type Component, createMemo, For, type JSX, Show } from 'solid-js';
+import { type Component, createMemo, ErrorBoundary, Show, Suspense } from 'solid-js';
 import * as jsxRuntime from 'solid-jsx';
 
-import { A } from '#client/components/a';
-import { components } from '#client/components/blog/mdx-components';
-import type { Post } from '#shared/content/blog/posts/post';
-import { useI18nContext } from '#shared/i18n/i18n-solid';
-import { useConfiguration, usePageContext } from '#client/hooks';
 import { Breadcrumbs } from '#client/components/blog';
-import { createMemo, ErrorBoundary, Show, Suspense, type Component, type JSX } from 'solid-js';
+import { components } from '#client/components/blog/mdx-components';
 import { ErrorBoundaryFallback } from '#client/components/error-boundary-fallback';
 import { LoadingIndicator } from '#client/components/loading-indicator';
 import { NotFound } from '#client/components/not-found';
 import { PageDescription } from '#client/components/page-description';
+import { useConfiguration, usePageContext } from '#client/hooks';
+import type { Post } from '#shared/content/blog/posts/post';
+import { useI18nContext } from '#shared/i18n/i18n-solid';
 
 interface Props {
   post?: Post;

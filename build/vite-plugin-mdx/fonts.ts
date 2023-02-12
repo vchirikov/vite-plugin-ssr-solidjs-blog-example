@@ -1,4 +1,4 @@
-import fs from 'fs';
+import fs from 'node:fs';
 
 declare type Weight = 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900;
 declare type Style = 'normal' | 'italic';

@@ -5,8 +5,6 @@
     "moduleResolution": "Node",
     "esModuleInterop": true,
     "moduleDetection": "auto",
-    "jsx": "react-jsx",
-    "jsxImportSource": "solid-js/h",
   },
   "include": [
     "vite.config.ts",

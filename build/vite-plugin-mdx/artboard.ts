@@ -1,10 +1,10 @@
-import { Component } from 'solid-js';
+/* eslint-disable solid/reactivity */
 import type { ImageProps } from './image';
 import { Image } from './image';
 
 /** same as Image but with predefined sizes */
 export type ArtboardImageProps =
-  Omit<ImageProps, 'fontSize' | 'avatar' | 'size' | 'author_name'>
+  Omit<ImageProps, 'fontSize' | 'avatar' | 'size' | 'authorName'>
   & { size: 'xs' /* | 'sm' | 'md' | 'base' | 'lg' | 'xl' */; };
 
 const fontSizes = {
@@ -20,8 +20,9 @@ export const sizes = {
   xs: { width: 568, height: 320 },
 };
 
-export const ArtboardImage: Component<ArtboardImageProps> = (props: ArtboardImageProps) => <Image
-  {...props}
-  fontSize={fontSizes[props.size]}
-  size={sizes[props.size]}
-/>;
+export const ArtboardImage = (props: ArtboardImageProps): VNode => Image({
+  ...props,
+  fontSize: fontSizes[props.size],
+  size: sizes[props.size]
+});
+

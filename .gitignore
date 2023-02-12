@@ -2,3 +2,10 @@ node_modules
 tmp
 dist
 Thumbs.db
+
+# copied files from markdown/mdx
+public/assets/md
+# generated images, we don't store them for now
+public/assets/img/generated
+# generated search index files
+public/stork/*.st
