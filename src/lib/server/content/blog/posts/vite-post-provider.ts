@@ -27,7 +27,7 @@ export class VitePostProvider implements PostProvider {
   private static readonly extensionRegex = /\.mdx?$/;
 
   public async all(locale: Locales): Promise<Post[]> {
-    // posts are cached by a compiler from @mdx-js/rollup
+    // posts are cached by a compiler from mdx-js, so should be fast to do this
     const posts = locale === 'en' ? importEnPosts() : importRuPosts();
     const promises = posts.map<Promise<Post>>(async ([filepath, entry]) => {
       const module: CompiledMdx = await entry();
@@ -49,8 +49,28 @@ export class VitePostProvider implements PostProvider {
     });
   }
 
-  public get(locale: Locales, slug: string): Promise<Post> {
-    throw new Error('Method not implemented.');
+  public async get(locale: Locales, slug?: string): Promise<Post | undefined> {
+    if (!slug || slug === '')
+      return;
+    // posts are cached by a compiler from mdx-js, so should be fast to do this
+    const posts = locale === 'en' ? importEnPosts() : importRuPosts();
+    const tuple = posts.find(([filepath, _]) =>
+      path.basename(filepath).replace(VitePostProvider.extensionRegex, '') === slug);
+
+    if (!tuple)
+      return;
+
+    const [filepath, entry] = tuple;
+    const module: CompiledMdx = await entry();
+    const post: Post = {
+      matter: module.matter,
+      code: module.code,
+      filepath: filepath,
+      locale,
+      slug: path.basename(filepath).replace(VitePostProvider.extensionRegex, ''),
+      image_hash: sha1(module.matter?.image ?? ''),
+    };
+    return post;
   }
 }
 

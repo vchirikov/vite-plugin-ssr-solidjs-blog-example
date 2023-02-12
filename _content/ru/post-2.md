@@ -1,5 +1,5 @@
 ---
-title: Страница 2
+title: Пост 2
 description:
 date: '2022-09-01'
 modified_date: '2022-11-20'

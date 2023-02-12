@@ -4,5 +4,5 @@ import type { Post } from './post';
 
 export interface PostProvider {
   all(locale: Locales): Promise<Post[]>;
-  get(locale: Locales, slug: string): Promise<Post>;
+  get(locale: Locales, slug?: string): Promise<Post | undefined>;
 }

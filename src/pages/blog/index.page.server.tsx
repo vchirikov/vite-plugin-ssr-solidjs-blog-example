@@ -17,6 +17,8 @@ export async function onBeforeRender(pageContext: PageContext) {
   return {
     pageContext: {
       pageProps: {
+        /** routeParams won't be available in a browser, lets use props to pass page */
+        page: pageNumber,
         posts: pagePosts[pageIndex] ?? [],
         next,
         previous,
@@ -31,10 +33,12 @@ export const prerender: AsyncPrerender = async () => {
     return split2chunks(posts, pageSize)
       .flatMap((pagePosts, pageIndex) => (
         {
-          url: `/blog/${pageIndex + 1}`,
+          url: `/blog/${pageIndex + 1}/`,
           pageContext: {
             locale,
             pageProps: {
+              /** routeParams won't be available in a browser, lets use props to pass page */
+              page: pageIndex + 1,
               posts: pagePosts,
               next: (pageIndex < pagePosts.length - 1) ? `/blog/${pageIndex + 2}` : undefined,
               previous: pageIndex === 0 ? undefined : ((pageIndex === 1) ? '/blog/' : `/blog/${pageIndex}`)

@@ -83,6 +83,10 @@ type RootTranslation = {
 	 */
 	posts_previous: string
 	/**
+	 * P​a​g​e
+	 */
+	page: string
+	/**
 	 * H​e​l​l​o​ ​{​n​a​m​e​}
 	 * @param {string} name
 	 */
@@ -163,6 +167,10 @@ export type TranslationFunctions = {
 	 * ← Newer posts
 	 */
 	posts_previous: () => LocalizedString
+	/**
+	 * Page
+	 */
+	page: () => LocalizedString
 	/**
 	 * Hello {name}
 	 */

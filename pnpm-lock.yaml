@@ -5,7 +5,6 @@ specifiers:
   '@mdx-js/mdx': ^2.3.0
   '@rollup/pluginutils': ^5.0.2
   '@solid-primitives/media': ^2.1.0
-  '@solid-primitives/script-loader': ^2.0.0
   '@solidjs/meta': ^0.28.2
   '@solidjs/testing-library': ^0.6.1
   '@tailwindcss/typography': ^0.5.9
@@ -61,7 +60,6 @@ specifiers:
 dependencies:
   '@abraham/reflection': 0.12.0
   '@solid-primitives/media': 2.1.0_solid-js@1.6.10
-  '@solid-primitives/script-loader': 2.0.0_solid-js@1.6.10
   '@solidjs/meta': 0.28.2_solid-js@1.6.10
   inversify: 6.0.1
   prismjs: 1.29.0
@@ -893,14 +891,6 @@ packages:
       solid-js: ^1.6.0
     dependencies:
       '@solid-primitives/utils': 5.1.0_solid-js@1.6.10
-      solid-js: 1.6.10
-    dev: false
-
-  /@solid-primitives/script-loader/2.0.0_solid-js@1.6.10:
-    resolution: {integrity: sha512-TveSeNjr80LVaCvX0+2U2H+P55b9QKkSQgR+tijwO79/zD+UpHTs1cJDXmv+tYSTdx53F6z7pFPELeuUMnLEMQ==}
-    peerDependencies:
-      solid-js: ^1.6.0
-    dependencies:
       solid-js: 1.6.10
     dev: false
 

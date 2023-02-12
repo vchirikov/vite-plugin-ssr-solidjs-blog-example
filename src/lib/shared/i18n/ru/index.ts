@@ -18,6 +18,7 @@ const ru: Translation = {
   stork_empty_query: 'Введите запрос в поле',
   posts_next: 'Посты старше →',
   posts_previous: '← Посты новее',
+  page: 'Страница',
   // examples:
   hello: 'Привет {name}',
   log: 'This log was called from [ru] from {fileName}',

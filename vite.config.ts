@@ -8,8 +8,8 @@ import type { UserConfigExport as VitestConfig } from 'vitest/config';
 import { mdx } from './build/vite-plugin-mdx';
 import { createForLocale } from './src/lib/server/content/blog/posts/create-compile-options';
 import { locales } from './src/lib/shared/i18n/i18n-util';
+import { removeTrailingSlash } from './src/lib/shared/utils/urls';
 
-const stripTrailingSlash = (str: string): string => (str.endsWith('/') ? str.slice(0, -1) : str);
 
 /** use this in OpenGraph meta tags and other places where do you need the full path, overwise use basePath */
 // '//' will be used, because we always use it like `${process.env.servedUrl}/something` -> `//something`
@@ -17,10 +17,10 @@ let servedUrl = '/';
 let basePath = '';
 
 if (process.env.servedUrl && process.env.servedUrl !== '/') {
-  servedUrl = stripTrailingSlash(process.env.servedUrl);
-  basePath = stripTrailingSlash(new URL(servedUrl).pathname);
+  servedUrl = removeTrailingSlash(process.env.servedUrl);
+  basePath = removeTrailingSlash(new URL(servedUrl).pathname);
 }
-if (process.env.basePath) basePath = stripTrailingSlash(process.env.basePath);
+if (process.env.basePath) basePath = removeTrailingSlash(process.env.basePath);
 
 // for where defines don't work
 process.env.basePath = basePath;

@@ -35,10 +35,7 @@ export const PageDescription: Component<Props> = (props) => {
       <Show when={props.canonical}>
         <Link rel="canonical" href={props.canonical} />
       </Show>
-      <Show when={!props.post}>
-        <Meta property="og:type" content="website" />
-      </Show>
-      <Show when={props.post}>
+      <Show when={props.post} fallback={<Meta property="og:type" content="website" />}>
         <Meta property="og:type" content="article" />
         <Meta property="og:image" content={`${cfg.servedUrl}/${props.post.image}.og.png`} />
         <Meta name="twitter:card" content="summary_large_image" />

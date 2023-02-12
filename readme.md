@@ -1,8 +1,8 @@
 ## Developing
 
 > **Warning**
-> typesafe-i18n + vite-plugin-ssr + solidjs doesn't work well if you run dev server and add a new
-> translate function. restart `pnpm dev` (`vite dev`) after you add a new translation function.
+> We cache typesafe-i18n locale at first run and don't reload locale all the time, thus if you add a new
+> translate function. restart `pnpm dev` (`vite dev`) to reload locale at nodejs.
 
 ## Requirements
 

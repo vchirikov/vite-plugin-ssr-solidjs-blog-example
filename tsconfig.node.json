@@ -9,6 +9,7 @@
   "include": [
     "vite.config.ts",
     "build/",
+    "src/lib/shared/utils/urls.ts",
     "src/lib/shared/i18n/i18n-util.ts",
     "src/lib/shared/i18n/i18n-types.ts",
     "src/lib/server/content/blog/posts/create-compile-options.ts"
