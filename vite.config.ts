@@ -80,8 +80,8 @@ const config: UserConfigExport & VitestConfig = {
   },
   build: {
     target: 'esnext',
-    // don't use [cssCodeSplit=false with vps](https://github.com/brillout/vite-plugin-ssr/issues/644)
-    cssCodeSplit: true,
+    // cssCodeSplit=false => use one style.css for all pages
+    cssCodeSplit: false,
     modulePreload: {
       polyfill: false,
     },

@@ -54,7 +54,7 @@ specifiers:
   vfile-matter: ^4.0.1
   vite: ^4.1.1
   vite-plugin-solid: ^2.5.0
-  vite-plugin-ssr: 0.4.79
+  vite-plugin-ssr: 0.4.80
   vitest: ^0.28.4
   yaml: ^2.2.1
 
@@ -115,7 +115,7 @@ devDependencies:
   vfile-matter: 4.0.1
   vite: 4.1.1_@types+node@18.13.0
   vite-plugin-solid: 2.5.0_solid-js@1.6.10+vite@4.1.1
-  vite-plugin-ssr: 0.4.79_vite@4.1.1
+  vite-plugin-ssr: 0.4.80_vite@4.1.1
   vitest: 0.28.4_ltpc5tyiinlekija55cyw5vcha
 
 packages:
@@ -5679,8 +5679,8 @@ packages:
       - supports-color
     dev: true
 
-  /vite-plugin-ssr/0.4.79_vite@4.1.1:
-    resolution: {integrity: sha512-2vKAU4VTHn2lKFjy2xKpIKKLE2BKlqJJamcVfAcZuZFzPpKO7zgvoVBzQe7ns5tI4qogfWna0MWowhiRCcRxiA==}
+  /vite-plugin-ssr/0.4.80_vite@4.1.1:
+    resolution: {integrity: sha512-mfJhpSxg4diGXCZ2hgEZllSJwdHMW3K9G3Y8T//R8nbac3//BWjcwjt4iH6Cvg1FeWfzce4RiYs9yL95NQgv6Q==}
     engines: {node: '>=12.19.0'}
     hasBin: true
     peerDependencies:

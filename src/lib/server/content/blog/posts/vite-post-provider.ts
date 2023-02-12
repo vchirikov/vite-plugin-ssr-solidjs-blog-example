@@ -41,7 +41,12 @@ export class VitePostProvider implements PostProvider {
       };
       return post;
     });
-    return await Promise.all(promises);
+    return (await Promise.all(promises)).sort((post1, post2) => {
+      const date1 = post1.matter.date;
+      const date2 = post2.matter.date;
+      if (!date1 || !date2) return 0;
+      return date1 > date2 ? -1 : 1;
+    });
   }
 
   public get(locale: Locales, slug: string): Promise<Post> {

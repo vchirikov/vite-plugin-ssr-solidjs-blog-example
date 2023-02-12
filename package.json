@@ -72,7 +72,7 @@
     "vfile-matter": "^4.0.1",
     "vite": "^4.1.1",
     "vite-plugin-solid": "^2.5.0",
-    "vite-plugin-ssr": "0.4.79",
+    "vite-plugin-ssr": "0.4.80",
     "vitest": "^0.28.4"
   },
   "dependencies": {

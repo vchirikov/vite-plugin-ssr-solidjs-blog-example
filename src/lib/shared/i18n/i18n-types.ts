@@ -75,6 +75,14 @@ type RootTranslation = {
 	 */
 	stork_empty_query: string
 	/**
+	 * O​l​d​e​r​ ​p​o​s​t​s​ ​→
+	 */
+	posts_next: string
+	/**
+	 * ←​ ​N​e​w​e​r​ ​p​o​s​t​s
+	 */
+	posts_previous: string
+	/**
 	 * H​e​l​l​o​ ​{​n​a​m​e​}
 	 * @param {string} name
 	 */
@@ -147,6 +155,14 @@ export type TranslationFunctions = {
 	 * Type a query into the input
 	 */
 	stork_empty_query: () => LocalizedString
+	/**
+	 * Older posts →
+	 */
+	posts_next: () => LocalizedString
+	/**
+	 * ← Newer posts
+	 */
+	posts_previous: () => LocalizedString
 	/**
 	 * Hello {name}
 	 */

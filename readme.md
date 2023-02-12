@@ -1,3 +1,9 @@
+## Developing
+
+> **Warning**
+> typesafe-i18n + vite-plugin-ssr + solidjs doesn't work well if you run dev server and add a new
+> translate function. restart `pnpm dev` (`vite dev`) after you add a new translation function.
+
 ## Requirements
 
 * nodejs according to [`.nvmrc`](./.nvmrc)
@@ -22,8 +28,6 @@ There are four page file suffixes:
 * `page.route.js`: defines the page's Route String or Route Function.
 
 ---
-
-https://github.com/solidjs/solid-meta
 
 
 # Testing

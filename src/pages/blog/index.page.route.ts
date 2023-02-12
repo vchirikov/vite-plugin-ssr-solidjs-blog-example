@@ -12,7 +12,7 @@ const route: PageRoutingFunction<PageRouteParameters> = (pageContext: PageContex
   if (!pageContext.urlPathname)
     return false;
   let url = pageContext.urlPathname;
-  // we want to show blog pages on the index too
+  // we want to show blog pages on the index too, let's override '/'
   if (url === '/') {
     return {
       match: true,
@@ -29,17 +29,15 @@ const route: PageRoutingFunction<PageRouteParameters> = (pageContext: PageContex
   url = url.slice(5);
 
   let page = 1;
-
-  // try to find page number
+    // try to find page number
   if (url !== '' && url !== '/') {
-    const pageNum = url.slice(6).split('/', 1);
+    const pageNum = url.slice(1).split('/', 1);
     if (pageNum && pageNum[0]) {
       const parsed = Number.parseInt(pageNum[0], 10);
       if (parsed && !Number.isNaN(parsed) && parsed > 0)
         page = parsed;
     }
   }
-
   return {
     routeParams: {
       page: page.toString(),

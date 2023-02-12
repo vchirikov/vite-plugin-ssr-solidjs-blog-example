@@ -6,13 +6,12 @@ import { dangerouslySkipEscape, escapeInject } from 'vite-plugin-ssr';
 import { ContainerContext } from '#client/components/container-context';
 import { ErrorBoundaryFallback } from '#client/components/error-boundary-fallback';
 import { MainLayout } from '#client/render/main-layout';
-import { createScoped } from '#server/container';
+import { createScoped, Services } from '#server/container';
+import type { Configuration } from '#shared/configuration';
 import TypesafeI18n from '#shared/i18n/i18n-solid';
 import { baseLocale, loadedLocales, locales } from '#shared/i18n/i18n-util';
 import { loadLocale } from '#shared/i18n/i18n-util.sync';
 import type { PageContext, PageContextServer, PrerenderContext } from '#types';
-
-const base = import.meta.env.BASE_URL;
 
 // See https://vite-plugin-ssr.com/data-fetching
 // for server
@@ -53,7 +52,7 @@ export async function render(pageContext: PageContextServer) {
    * {@link https://www.solidjs.com/docs/latest/api#rendertostringasync renderToStringAsync}
    */
   const html = await renderToStringAsync(page);
-
+  const base = container.get<Configuration>(Services.Configuration).servedUrl;
   // we must try to read the selected theme before the actual client-side render to avoid flickering
   const documentHtml = escapeInject`<!DOCTYPE html>
     <html class="flex h-full w-full flex-col flex-nowrap" lang="${locale}">
@@ -75,16 +74,7 @@ export async function render(pageContext: PageContextServer) {
       </body>
     </html>`;
 
-  const injectFilter = (assets): void => {
-    for (const entry of assets) {
-      //if (entry.assetType != 'script') {
-        console.log(JSON.stringify(entry, undefined!, 2));
-      //}
-
-    }
-  };
-
-  return { documentHtml, injectFilter };
+  return documentHtml;
 }
 
 /** Only for SSG */

@@ -1,6 +1,6 @@
 import { MetaProvider } from '@solidjs/meta';
 import { ErrorBoundary } from 'solid-js';
-import {  hydrate, render as renderSolid } from 'solid-js/web';
+import { hydrate, render as renderSolid } from 'solid-js/web';
 
 import { ContainerContext } from '#client/components/container-context';
 import { ErrorBoundaryFallback } from '#client/components/error-boundary-fallback';

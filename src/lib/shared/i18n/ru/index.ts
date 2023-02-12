@@ -16,6 +16,8 @@ const ru: Translation = {
   stork_score: 'очки',
   stork_not_found: 'НЕ НАЙДЕНО',
   stork_empty_query: 'Введите запрос в поле',
+  posts_next: 'Посты старше →',
+  posts_previous: '← Посты новее',
   // examples:
   hello: 'Привет {name}',
   log: 'This log was called from [ru] from {fileName}',

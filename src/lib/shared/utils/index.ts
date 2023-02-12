@@ -3,3 +3,4 @@ export { addTrailingSlash } from './add-trailing-slash';
 export { noop, noopPromise } from './noop';
 export { delay } from './delay';
 export { CancellationToken, CancellationTokenSource } from './cancellation';
+export { split2chunks } from './split2chunks';
