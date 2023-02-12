@@ -53,15 +53,16 @@ export const Image: Component<ImageProps> = (props: ImageProps) => {
   return (
     <div
       style={{
-        fontFamily: '"Consolas NF"',
+        "font-family": '"Consolas NF"',
         display: 'flex',
-        flexWrap: 'nowrap',
+        "flex-wrap": 'nowrap',
         padding: `${outer_padding}px`,
-        fontSize: fontSize.small,
+        "font-size": fontSize.small,
         background: background ?? primaryColor,
-        ...size,
+        width: size.width.toString(),
+        height: size.height.toString(),
         ...(debug ? { background: 'red' } : {}),
-        ...(background ? { backgroundSize: `${size.width}px ${size.height}px` } : {}),
+        ...(background ? { 'background-size': `${size.width}px ${size.height}px` } : {}),
       }}
     >
       {/* inner panel with border flex direction: ⬇️ */}
@@ -69,13 +70,13 @@ export const Image: Component<ImageProps> = (props: ImageProps) => {
         style={{
           padding: '2%',
           margin: 0,
-          borderColor: secondaryColor,
+          'border-color': secondaryColor,
           border: border ?? '0',
           display: 'flex',
-          flexDirection: 'column',
-          flexWrap: 'nowrap',
-          alignItems: 'stretch',
-          justifyContent: 'space-between',
+          'flex-direction': 'column',
+          'flex-wrap': 'nowrap',
+          'align-items': 'stretch',
+          'justify-content': 'space-between',
           flex: 1,
           height: '100%',
           ...(debug ? { background: 'orange' } : {}),
@@ -85,49 +86,49 @@ export const Image: Component<ImageProps> = (props: ImageProps) => {
           ...(debug ? { background: 'gray' } : {}),
           flex: 1,
           display: 'flex',
-          alignItems: 'flex-end',
-          fontWeight: 600,
+          'align-items': 'flex-end',
+          'font-weight': 600,
           color: secondaryColor,
-          fontSize: fontSize.title,
-          lineHeight: fontSize.title,
-          letterSpacing: '-0.025em',
+          'font-size': fontSize.title,
+          'line-height': fontSize.title,
+          'letter-spacing': '-0.025em',
         }}>
           {title}
         </div>
         <div id="footer" style={{
           ...(debug ? { background: 'blue' } : {}),
           display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'flex-end',
+          'flex-direction': 'row',
+          'justify-content': 'space-between',
+          'align-items': 'flex-end',
           height: '50%',
         }}>
           <div style={{
             ...(debug ? { background: 'yellow' } : {}),
             display: 'flex',
             flex: 1,
-            alignSelf: 'stretch',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
-            alignContent: 'stretch',
-            alignItems: 'stretch',
+            'align-self': 'stretch',
+            'flex-direction': 'column',
+            'justify-content': 'space-between',
+            'align-content': 'stretch',
+            'align-items': 'stretch',
           }}>
             <div id="description" style={{
               flex: 1,
-              marginTop: '2rem',
+              'margin-top': '2rem',
               display: 'flex',
               color: secondaryColor,
-              fontSize: fontSize.small,
-              lineHeight: fontSize.small,
-              letterSpacing: '-0.025em',
+              'font-size': fontSize.small,
+              'line-height': fontSize.small,
+              'letter-spacing': '-0.025em',
             }}>
               {text}
             </div>
             <div id="author_name"
               style={{
                 color: secondaryColor,
-                fontSize: fontSize.author,
-                letterSpacing: '-0.025em',
+                'font-size': fontSize.author,
+                'letter-spacing': '-0.025em',
               }}
             >
               {author_name}
@@ -138,8 +139,8 @@ export const Image: Component<ImageProps> = (props: ImageProps) => {
               src={avatar.url}
               alt="author avatar"
               style={{
-                borderRadius: '50%',
-                marginLeft: 'auto',
+                'border-radius': '50%',
+                'margin-left': 'auto',
               }}
               width={avatar.size.width}
               height={avatar.size.height}

@@ -33,6 +33,7 @@ const rootDir = path.resolve(__dirname);
 
 const mdxPlugins = locales.map(locale => mdx({
   ...createForLocale(locale),
+  imageGenerationPath: path.join('public', 'assets', 'img', 'generated', locale),
   include: `_content/${locale}/*.{mdx,md}`,
   compress: process.env.NODE_ENV === 'production',
 }));

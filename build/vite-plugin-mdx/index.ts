@@ -33,13 +33,13 @@ type Options = CompileOptions & {
 /** Compiles mdx to a function-body in a tree-shakable module & generate images from frontmatter */
 export function mdx(options: Options): Plugin {
 
-  const { include, exclude, compress, ...compileOptions } = options;
+  const { include, exclude, compress, imageGenerationPath, ...compileOptions } = options;
   const { extnames, process } = createFormatAwareProcessors(compileOptions);
   const filter = createFilter(include, exclude);
 
   const generateImages = async (file: VFile): Promise<string> => {
     const slug = path.parse(file.path).name;
-    const dir = path.join(options.imageGenerationPath, slug);
+    const dir = path.join(imageGenerationPath, slug);
     if (!fs.existsSync(dir)) {
       fs.mkdirSync(dir, { recursive: true });
     }

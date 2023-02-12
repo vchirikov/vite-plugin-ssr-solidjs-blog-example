@@ -6,10 +6,7 @@
     "esModuleInterop": true,
     "moduleDetection": "auto",
     "jsx": "react-jsx",
-    "jsxImportSource": "solid-js/h"
-    // //"jsx": "react-jsx",
-    // "jsx": "react",
-    // "jsxFactory": "h",
+    "jsxImportSource": "solid-js/h",
   },
   "include": [
     "vite.config.ts",
