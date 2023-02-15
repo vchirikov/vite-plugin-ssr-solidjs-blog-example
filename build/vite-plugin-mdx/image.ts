@@ -55,7 +55,7 @@ export const Image = (props: ImageProps): VNode => {
   return html(`
     <div
       tw="flex flex-nowrap"
-      style='font-family: "Consolas NF"; padding: ${outerPadding}px; font-size: ${fontSize.small}; background: ${background ?? primaryColor}; width: ${size.width}; height: ${size.height}; ${(debug ? 'background: red;' : '')}'
+      style='font-family: "Consolas NF"; padding: ${outerPadding}px; font-size: ${fontSize.small}; background: ${background ?? primaryColor}; width: ${size.width}px; height: ${size.height}px; ${(debug ? 'background: red;' : '')}'
     >
       ${/* inner panel with border flex direction: ⬇️ */''}
       <div

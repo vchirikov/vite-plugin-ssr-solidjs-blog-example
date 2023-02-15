@@ -13,6 +13,7 @@ import { Resvg, type ResvgRenderOptions } from '@resvg/resvg-js';
 import { createFilter, dataToEsm, type FilterPattern } from '@rollup/pluginutils';
 import { sha1 } from 'object-hash';
 import satori from 'satori';
+import { html } from 'satori-html';
 import { VFile } from 'vfile';
 import { matter } from 'vfile-matter';
 import type { Plugin } from 'vite';
@@ -39,12 +40,59 @@ type Options = CompileOptions & {
   };
 };
 
+const defaultImageDataUri = await readToDataUri('public/assets/img/bg.svg');
+const defaultBackground = `url("${defaultImageDataUri}")`;
+
+function arrayBufferToBase64(buffer) {
+  let binary = '';
+  const bytes = new Uint8Array(buffer);
+  for (let i = 0; i < bytes.byteLength; i++) {
+    // eslint-disable-next-line unicorn/prefer-code-point
+    binary += String.fromCharCode(bytes[i]);
+  }
+  return btoa(binary);
+}
+
+async function readToDataUri(imagePath: string): Promise<string> {
+  const ext = path.parse(imagePath).ext.toLowerCase();
+  let imageType;
+  switch (ext) {
+    case '.svg': {
+      imageType = 'image/svg+xml';
+      break;
+    }
+    case '.webp': {
+      imageType = 'image/webp';
+      break;
+    }
+    case '.png': {
+      imageType = 'image/png';
+      break;
+    }
+    case '.gif': {
+      imageType = 'image/gif';
+      break;
+    }
+    case '.jpg':
+    case '.jpeg': {
+      imageType = 'image/jpeg';
+      break;
+    }
+  }
+
+  const data = await fs.promises.readFile(imagePath);
+  return `data:${imageType};base64,${arrayBufferToBase64(data)}`;
+}
+
+/** workaround of https://github.com/vercel/satori/issues/390 */
+let isFirstSatoriCall = true;
 /** Compiles mdx to a function-body in a tree-shakable module & generate images from frontmatter */
 export function mdx(options: Options): Plugin {
 
   const { include, exclude, compress, imageGenerationPath, ...compileOptions } = options;
   const { extnames, process } = createFormatAwareProcessors(compileOptions);
   const filter = createFilter(include, exclude);
+
 
   const generateImages = async (file: VFile): Promise<string> => {
     const slug = path.parse(file.path).name;
@@ -72,10 +120,30 @@ export function mdx(options: Options): Plugin {
     const text = file.data.matter?.image?.text;
     const theme: 'dark' | 'light' = file.data.matter?.image?.theme ?? 'light';
 
-    // TODO: change default to use base64 local file
-    const background = file.data.matter?.image?.background ?? 'url("https://vchirikov.github.io/assets/img/bg.svg")';
+    let background = file.data.matter?.image?.background?.trim();
+    if (background
+      && !background.startsWith('url(')
+      && !background.startsWith('#')
+      && !background.startsWith('rgb(')
+      && !background.startsWith('rgba(')) {
+      const imageDataUri = await readToDataUri(background);
+      background = `url("${imageDataUri}")`;
+    }
+    background ??= defaultBackground;
+
+    if (isFirstSatoriCall) {
+      isFirstSatoriCall = false;
+      try {
+        await satori(html('<div></div>'), { fonts, width: 1, height: 1 });
+      }
+      catch {
+        // [first call of satori always fails](https://github.com/vercel/satori/issues/390)
+      }
+    }
+
 
     const promises = [];
+
     if (!isUpToDateOpenGraph) {
       promises.push(generateOpenGraph());
     }
@@ -90,52 +158,62 @@ export function mdx(options: Options): Plugin {
     return imageHash;
 
     async function generateArtBoard() {
-      const svg_artboard_xs = await satori(ArtboardImage({
-        size: 'xs',
-        background,
-        text,
-        title,
-        theme,
+      try {
+        const svg_artboard_xs = await satori(ArtboardImage({
+          size: 'xs',
+          background,
+          text,
+          title,
+          theme,
 
-      }), { ...artboardSizes.xs, fonts });
-      await fs.promises.writeFile(path.join(dir, `${imageHash}.sm.svg`), svg_artboard_xs, { encoding: 'utf8' });
+        }), { ...artboardSizes.xs, fonts });
+        await fs.promises.writeFile(path.join(dir, `${imageHash}.sm.svg`), svg_artboard_xs, { encoding: 'utf8' });
+      }
+      catch (error) {
+        console.error(`Error while generate artboard image for file: ${file.path} hash: ${imageHash}\n`, error);
+      }
+
     }
 
     async function generateOpenGraph() {
-      const { name, avatarUrl } = options.author;
-      const svg_opengraph = await satori(OpenGraphImage({
-        avatarUrl: avatarUrl,
-        authorName: name,
-        background,
-        text,
-        title,
-        theme
-      }), { ...openGraphSize, fonts });
-      const fullSvgPath = path.join(dir, `${imageHash}.svg`);
-      await fs.promises.writeFile(fullSvgPath, svg_opengraph, { encoding: 'utf8' });
-      // opengraph uses jpg/gif/png (at least telegram.org does not support svg for images)
-      // [sharp doesn't support embedded svg](https://github.com/lovell/sharp/issues/1378)
-      // so we can use rust-based [@resvg/resvg-js - npm](https://www.npmjs.com/package/@resvg/resvg-js)
-      const pngPath = path.join(dir, `${imageHash}.og.png`);
+      try {
+        const { name, avatarUrl } = options.author;
+        const svg_opengraph = await satori(OpenGraphImage({
+          avatarUrl: avatarUrl,
+          authorName: name,
+          background,
+          text,
+          title,
+          theme
+        }), { ...openGraphSize, fonts, });
+        const fullSvgPath = path.join(dir, `${imageHash}.svg`);
+        await fs.promises.writeFile(fullSvgPath, svg_opengraph, { encoding: 'utf8' });
+        // opengraph uses jpg/gif/png (at least telegram.org does not support svg for images)
+        // [sharp doesn't support embedded svg](https://github.com/lovell/sharp/issues/1378)
+        // so we can use rust-based [@resvg/resvg-js - npm](https://www.npmjs.com/package/@resvg/resvg-js)
+        const pngPath = path.join(dir, `${imageHash}.og.png`);
 
-      const opts: ResvgRenderOptions = {
-        background: theme === 'light' ? 'white' : 'black',
-        fitTo: {
-          mode: 'width',
-          value: openGraphSize.width
-        },
-        font: {
-          fontFiles: getFontFiles(),
-          loadSystemFonts: false,
-          defaultFontFamily: fonts[0]!.name
-        }
-      };
-
-      const resvg = new Resvg(svg_opengraph, opts);
-      // we also can use resvg.resolveImage() to add some images without urls
-      const pngData = resvg.render();
-      const pngBuffer = pngData.asPng();
-      await fs.promises.writeFile(pngPath, pngBuffer, 'binary');
+        const opts: ResvgRenderOptions = {
+          background: theme === 'light' ? 'white' : 'black',
+          fitTo: {
+            mode: 'width',
+            value: openGraphSize.width
+          },
+          font: {
+            fontFiles: getFontFiles(),
+            loadSystemFonts: false,
+            defaultFontFamily: fonts[0]!.name
+          },
+        };
+        const resvg = new Resvg(svg_opengraph, opts);
+        // we also can use resvg.resolveImage() to add some images without urls
+        const pngData = resvg.render();
+        const pngBuffer = pngData.asPng();
+        await fs.promises.writeFile(pngPath, pngBuffer, 'binary');
+      }
+      catch (error) {
+        console.error(`Error while generate opengraph image for file: ${file.path} hash: ${imageHash}\n`, error);
+      }
     }
   };
 
