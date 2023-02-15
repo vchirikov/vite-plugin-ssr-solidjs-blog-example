@@ -3,7 +3,7 @@ import { locales } from '#shared/i18n/i18n-util';
 import { split2chunks } from '#shared/utils';
 import type { AsyncPrerender, PageContext } from '#types';
 
-const pageSize = 1;
+const pageSize = 6;
 
 export async function onBeforeRender(pageContext: PageContext) {
   const posts = await postProvider.all(pageContext.locale);

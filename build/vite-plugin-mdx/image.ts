@@ -68,7 +68,7 @@ export const Image = (props: ImageProps): VNode => {
           style='${debug ? 'background: gray;' : ''} color: ${secondaryColor}; font-size: ${fontSize.title}; line-height: ${fontSize.title}; letter-spacing: -0.025em;'
           ,
         }}>
-          ${title}
+          ${title ?? ''}
         </div>
 
         <div
