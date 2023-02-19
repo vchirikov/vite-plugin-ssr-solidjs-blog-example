@@ -13,7 +13,6 @@ import { Resvg, type ResvgRenderOptions } from '@resvg/resvg-js';
 import { createFilter, dataToEsm, type FilterPattern } from '@rollup/pluginutils';
 import { sha1 } from 'object-hash';
 import satori from 'satori';
-import { html } from 'satori-html';
 import { VFile } from 'vfile';
 import { matter } from 'vfile-matter';
 import type { Plugin } from 'vite';
@@ -84,8 +83,6 @@ async function readToDataUri(imagePath: string): Promise<string> {
   return `data:${imageType};base64,${arrayBufferToBase64(data)}`;
 }
 
-/** workaround of https://github.com/vercel/satori/issues/390 */
-let isFirstSatoriCall = true;
 /** Compiles mdx to a function-body in a tree-shakable module & generate images from frontmatter */
 export function mdx(options: Options): Plugin {
 
@@ -130,17 +127,6 @@ export function mdx(options: Options): Plugin {
       background = `url("${imageDataUri}")`;
     }
     background ??= defaultBackground;
-
-    if (isFirstSatoriCall) {
-      isFirstSatoriCall = false;
-      try {
-        await satori(html('<div></div>'), { fonts, width: 1, height: 1 });
-      }
-      catch {
-        // [first call of satori always fails](https://github.com/vercel/satori/issues/390)
-      }
-    }
-
 
     const promises = [];
 
