@@ -67,14 +67,10 @@ const config: UserConfigExport & VitestConfig = {
         noExtraDir: false,
         partial: true,
         parallel: true,
-        // we can disable ssg during build time and might provide our custom pageContextInit
-        // with some hooks to work with in pageContext.exports or something like this ¯\(°_o)/¯
-        // but we also want to use onPagePrerender because of ssg bug
-        disableAutoRun: true,
+        disableAutoRun: false,
       },
       /**
-       * We can disable
-       * {@link https://vite-plugin-ssr.com/disableAutoFullBuild#page-content auto-build}
+       * We can disable {@link https://vite-plugin-ssr.com/disableAutoFullBuild#page-content auto-build}
        * although we must to build dist/server/ to use ssg anyway
        */
       disableAutoFullBuild: false,

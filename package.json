@@ -10,7 +10,6 @@
     "dev:vite": "cross-env servedUrl=http://localhost:3000/ vite dev",
     "dev:i18n": "typesafe-i18n",
     "build": "vite build",
-    "build:prerender": "cross-env NODE_OPTIONS='--no-warnings' node build/prerender.js",
     "preview": "vite preview",
     "clean": "rimraf dist",
     "lint": "eslint .",

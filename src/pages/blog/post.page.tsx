@@ -1,4 +1,3 @@
-//import { type Component, createMemo, For, type JSX, Show } from 'solid-js';
 import { type Component, createMemo, ErrorBoundary, Show, Suspense } from 'solid-js';
 import * as jsxRuntime from 'solid-jsx';
 

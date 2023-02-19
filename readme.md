@@ -79,5 +79,3 @@ pnpm build
   * converts `urlOriginal` as a path via `urlToFile()`
   * calls `onPagePrerender(pageContext & _prerenderResult: { filePath, fileContent })` if any or write the file
   * all the same for writing `.pageContext.json`
-
-so the bug is that write uses urlOriginal instead of _urlPristine

@@ -77,18 +77,20 @@ export async function render(pageContext: PageContextServer) {
   return documentHtml;
 }
 
-/** Only for SSG */
+/**
+ * Only for SSG, to localize static pages that don't load data (which don't have prerender() hook),
+ * note this hook runs after all prerender() calls
+ */
 export function onBeforePrerender(prerenderContext: PrerenderContext) {
   const pageContexts: PageContext[] = [];
 
   for (const pageContext of prerenderContext.pageContexts) {
-    // for the main page we will generate one main page and 2 with locales
-    if (pageContext.urlOriginal === '/') {
-      pageContexts.push({
-        ...pageContext,
-        locale: baseLocale
-      });
+    // page could be already localized by one of our prerender() hooks
+    if (pageContext.locale) {
+      pageContexts.push(pageContext);
+      continue;
     }
+    // duplicate the non-localized page for each locale
     for (const locale of locales) {
       pageContexts.push({
         ...pageContext,

@@ -29,7 +29,7 @@ const route: PageRoutingFunction<PageRouteParameters> = (pageContext: PageContex
   url = url.slice(5);
 
   let page = 1;
-    // try to find page number
+  // try to find page number
   if (url !== '' && url !== '/') {
     const pageNum = url.slice(1).split('/', 1);
     if (pageNum && pageNum[0]) {
