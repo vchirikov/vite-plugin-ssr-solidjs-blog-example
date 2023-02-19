@@ -42,8 +42,12 @@ export type PageContext = PageContextClient | PageContextServer;
 /** {@link https://github.com/brillout/vite-plugin-ssr/blob/8f73669b21007934cab67c7a236b873b98870645/vite-plugin-ssr/node/prerender/runPrerender.ts#L57-L61 } */
 export interface PrerenderContext {
   pageContexts: PageContext[];
+  /** (?) maybe it's not presented  */
   pageContextInit: Record<string, unknown> | null;
+  /** (?) maybe it's not presented  */
   _noExtraDir: boolean;
+  /** (?) maybe it's not presented  */
+  _urlHandler: unknown | null;
 }
 
 export type PageRoutingFunction<TRouteParameters extends Record<string, string>> = (pageContext: PageContext) =>

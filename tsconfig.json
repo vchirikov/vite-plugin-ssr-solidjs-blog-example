@@ -94,5 +94,6 @@
     "transpileOnly": true,
     "experimentalResolver": true,
     "experimentalSpecifierResolution": "node",
+    "swc": false
   }
 }

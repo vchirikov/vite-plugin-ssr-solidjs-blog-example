@@ -7,7 +7,7 @@ interface PageRouteParameters extends Record<string, string> {
 
 const route: PageRoutingFunction<PageRouteParameters> = (pageContext: PageContext) => {
   // post.page.tsx should be used for /post/@slug
-
+  // console.log('post.page.route: pageContext', pageContext);
   if (!pageContext.urlPathname)
     return false;
   let url = pageContext.urlPathname;
@@ -19,7 +19,7 @@ const route: PageRoutingFunction<PageRouteParameters> = (pageContext: PageContex
   url = url.slice(6);
 
   // try to find page number
-  if (!url || url.length < 1)
+  if (!url || url.length === 0)
     return false;
 
   const slug = url.split('/', 1)[0];

@@ -4,6 +4,14 @@ import type { AsyncPrerender, PageContext } from '#types';
 
 export async function onBeforeRender(pageContext: PageContext) {
   const post = await postProvider.get(pageContext.locale, pageContext.routeParams.slug);
+  console.log('post.onBeforeRender', JSON.stringify({
+    urlOriginal: pageContext.urlOriginal,
+    _urlPristine: pageContext['_urlPristine'],
+    locale: pageContext.locale,
+    pageProps__locale: pageContext.pageProps?.locale ?? 'undefined',
+    _pageContextAlreadyProvidedByPrerenderHook: pageContext['_pageContextAlreadyProvidedByPrerenderHook'],
+    _prerenderHookFile: pageContext['_prerenderHookFile']
+  }, undefined, 2));
   return {
     pageContext: {
       pageProps: {
@@ -18,15 +26,19 @@ export const prerender: AsyncPrerender = async () => {
     const posts = await postProvider.all(locale);
     return posts.map((post) => (
       {
+        // [must not have a trailing slash here](https://github.com/brillout/vite-plugin-ssr/issues/654)
         url: `/post/${post.slug}`,
         pageContext: {
           locale,
           pageProps: {
+            locale,
             post,
           }
         }
       })
     );
   });
-  return (await Promise.all(promises)).flat();
+  const posts = (await Promise.all(promises)).flat();
+  //console.log(JSON.stringify(posts, undefined, 2));
+  return posts;
 };

@@ -55,3 +55,29 @@ $env:DEBUG='vps:extractAssets'
 pnpm build
 # output: `dist/client/manifest.json`
 ```
+
+### Pre-rendering
+
+1. collect page infos
+2. exclude pages with export of `doNotPrerender`
+3. call exported `prerender()` in `*.page.server.ts` files -> normalize to `{url, pageContext}[]`, so it's create a list of urls
+4. collect page routes from `*.page.route.ts` -> call `onBeforeRoute` with urls collected here ^^
+5. call `onBeforePrerender` from `_default.page.server.ts`
+6. call `routeAndPrerender()`
+    - route part
+      * parses url from route function
+      * calls `onBeforeRoute(pageContext)` which could return 
+        - `_pageId` (should be in `allPageIds` (it's path without `fileType` suffix))
+        - `routeParams`
+        - `urlOriginal`
+      * adds  `_urlPristine` == urlOriginal if `onBeforeRoute` overrides `urlOriginal`
+    - render part
+      * call `OnBeforeRender()`
+      * call `render()` -> get html from && serialize `pageContext`
+7. call `prerender404()`
+8. foreach `writeHtmlFile(htmlFile & serializedPageContext)`
+  * converts `urlOriginal` as a path via `urlToFile()`
+  * calls `onPagePrerender(pageContext & _prerenderResult: { filePath, fileContent })` if any or write the file
+  * all the same for writing `.pageContext.json`
+
+so the bug is that write uses urlOriginal instead of _urlPristine

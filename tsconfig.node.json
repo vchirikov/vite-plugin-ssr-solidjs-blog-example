@@ -5,7 +5,7 @@
     "target": "ES2022",
     "moduleResolution": "Node",
     "esModuleInterop": true,
-    "moduleDetection": "auto",
+    "moduleDetection": "force",
   },
   "include": [
     "vite.config.ts",

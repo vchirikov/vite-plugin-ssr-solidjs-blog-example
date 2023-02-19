@@ -1,4 +1,4 @@
-import { type Component, createMemo, ErrorBoundary, For, type JSX, Show, Suspense } from 'solid-js';
+import { type Component, createMemo, type JSX, Show } from 'solid-js';
 import * as jsxRuntime from 'solid-jsx';
 
 import { A } from '#client/components/a';
@@ -32,11 +32,11 @@ export const Page: Component<Props> = (props: Props) => {
   return (
     <>
       <PageDescription title={`${LL().page()} ${props.page}`} description={`${LL().page()} ${props.page}`} />
-      {/* TODO: change layout */}
       <jsxRuntime.MDXProvider components={components}>
         <Blog posts={posts()} />
       </jsxRuntime.MDXProvider>
-      <div class="flex justify-between">
+
+      <div class="flex justify-between px-4">
         <Show when={props.previous} >
           <div>
             <A href={props.previous}>{LL().posts_previous()}</A>

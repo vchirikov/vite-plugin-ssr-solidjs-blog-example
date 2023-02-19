@@ -69,7 +69,8 @@ const config: UserConfigExport & VitestConfig = {
         parallel: true,
         // we can disable ssg during build time and might provide our custom pageContextInit
         // with some hooks to work with in pageContext.exports or something like this ¯\(°_o)/¯
-        disableAutoRun: false,
+        // but we also want to use onPagePrerender because of ssg bug
+        disableAutoRun: true,
       },
       /**
        * We can disable
