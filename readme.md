@@ -1,5 +1,7 @@
 # vite-plugin-ssr-solidjs-blog-example
 
+![Demo](demo.gif)
+
 This is an example, which I did before migrating of [my homepage](https://vchirikov.github.io) from nextjs to
 [vite-plugin-ssr](https://vite-plugin-ssr.com) + solidjs. The example uses:
 
@@ -17,7 +19,7 @@ This is an example, which I did before migrating of [my homepage](https://vchiri
 > **Warning**
 > before publishing/preview you should set `servedUrl` env variable to the full url of the app (for opengraph images it's matter & in other places)
 
-> > **Warning**
+> **Warning**
 > We cache typesafe-i18n locale at first run and don't reload locale all the time, thus if you add a new
 > translate function. restart `pnpm dev` (`vite dev`) to reload locale at nodejs.
 
