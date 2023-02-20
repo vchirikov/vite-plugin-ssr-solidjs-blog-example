@@ -1,8 +1,29 @@
+# vite-plugin-ssr-solidjs-blog-example
+
+This is an example, which I did before migrating of [my homepage](https://vchirikov.github.io) from nextjs to
+[vite-plugin-ssr](https://vite-plugin-ssr.com) + solidjs. The example uses:
+
+* [stork](https://github.com/jameslittle230/stork) as file search engine (wasm)
+* [satori](https://github.com/vercel/satori/) to generate post images & opengraph images from frontmatter (at build-time with vite hot reload)
+* [mdx-js/mdx](https://github.com/mdx-js/mdx/) to support components in markdown (but I don't use `@mdx-js/rollup`, instead, use my own implementation to copy referenced images/files to assets from .md/.mdx)
+* [typesafe-i18n](https://github.com/ivanhofer/typesafe-i18n) to work with i18n
+* [prismjs](https://prismjs.com) to work with code blocks inside md/mdx
+* [postcss](https://postcss.org/) + [tailwindcss](https://tailwindcss.com) & [daisyui](https://daisyui.com) for theming & css
+* [vitest](https://vitest.dev/) for testing (unit + [@solidjs/testing-library](https://github.com/solidjs/solid-testing-library) for component testing)
+* and many more...
+
 ## Developing
 
 > **Warning**
+> before publishing/preview you should set `servedUrl` env variable to the full url of the app (for opengraph images it's matter & in other places)
+
+> > **Warning**
 > We cache typesafe-i18n locale at first run and don't reload locale all the time, thus if you add a new
 > translate function. restart `pnpm dev` (`vite dev`) to reload locale at nodejs.
+
+> **Note**
+> If you just want to test the example you don't need stork, just use `build:vite` script
+
 
 ## Requirements
 
