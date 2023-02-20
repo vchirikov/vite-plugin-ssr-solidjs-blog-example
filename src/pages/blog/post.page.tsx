@@ -60,7 +60,9 @@ export const Page: Component<Props> = (props: Props) => {
             {/* mdx could use a dynamic-loaded components, so we should use loading indicator here */}
             <Suspense fallback={<LoadingIndicator />}>
               <jsxRuntime.MDXProvider components={components}>
-                {post().component()}
+                <div>
+                  {post().component()}
+                </div>
               </jsxRuntime.MDXProvider>
             </Suspense>
           </ErrorBoundary>
