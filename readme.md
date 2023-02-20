@@ -3,7 +3,9 @@
 ![Demo](demo.gif)
 
 This is an example, which I did before migrating of [my homepage](https://vchirikov.github.io) from nextjs to
-[vite-plugin-ssr](https://vite-plugin-ssr.com) + solidjs. The example uses:
+[vite-plugin-ssr](https://vite-plugin-ssr.com) + solidjs. The example is fully SSG compatible, including image generation and full-text search.
+
+The example uses:
 
 * [stork](https://github.com/jameslittle230/stork) as file search engine (wasm)
 * [satori](https://github.com/vercel/satori/) to generate post images & opengraph images from frontmatter (at build-time with vite hot reload)
