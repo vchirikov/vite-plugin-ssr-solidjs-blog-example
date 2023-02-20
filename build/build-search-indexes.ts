@@ -71,7 +71,7 @@ const generateIndexFile = async (locale: Locales): Promise<void> => {
   const storkJsonDirectory = join('dist', 'server');
 
   if (!fs.existsSync(storkJsonDirectory)) {
-    fs.mkdirSync(storkJsonDirectory);
+    fs.mkdirSync(storkJsonDirectory, { recursive: true });
   }
   const storkJsonPath = join(storkJsonDirectory, `${locale}.stork.json`);
   await fs.promises.writeFile(storkJsonPath, JSON.stringify(cfg), { encoding: 'utf8' });
