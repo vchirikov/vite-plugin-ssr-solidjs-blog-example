@@ -18,6 +18,12 @@
   # time-to-time use prune to cleanup old packages
   pnpm store prune
   ```
+* [stork](https://github.com/jameslittle230/stork)
+  ```sh
+  # if you don't have rust go to https://rustup.rs or download from release page
+  cargo install stork-search --locked
+  ```
+
 
 ### Suffixes
 

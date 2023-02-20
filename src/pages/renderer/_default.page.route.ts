@@ -35,7 +35,7 @@ export function onBeforeRoute(pageContext: PageContext) {
       // we make `locale` available as `pageContext.locale`
       locale,
       // we override the original url to url without locale
-      urlOriginal: url
+      urlOriginal: url,
     }
   };
 }

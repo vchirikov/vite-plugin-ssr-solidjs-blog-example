@@ -9,7 +9,7 @@ import { MainLayout } from '#client/render/main-layout';
 import { createScoped, Services } from '#server/container';
 import type { Configuration } from '#shared/configuration';
 import TypesafeI18n from '#shared/i18n/i18n-solid';
-import { baseLocale, loadedLocales, locales } from '#shared/i18n/i18n-util';
+import { loadedLocales, locales } from '#shared/i18n/i18n-util';
 import { loadLocale } from '#shared/i18n/i18n-util.sync';
 import type { PageContext, PageContextServer, PrerenderContext } from '#types';
 
@@ -95,7 +95,7 @@ export function onBeforePrerender(prerenderContext: PrerenderContext) {
       pageContexts.push({
         ...pageContext,
         urlOriginal: `/${locale}${pageContext.urlOriginal}`,
-        locale
+        locale,
       });
     }
   }

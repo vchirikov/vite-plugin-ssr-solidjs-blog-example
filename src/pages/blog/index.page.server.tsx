@@ -58,18 +58,18 @@ export const prerender: AsyncPrerender = async () => {
         result.push(
           // add /${locale}/blog/ pageContext as a copy of /${locale}/blog/1
           {
-            ...result[0],
+            pageContext: result[0].pageContext,
             url: `/${locale}/blog`,
           },
           // we also don't use index pages, so let's create them from blog index
           {
-            ...result[0],
+            pageContext: result[0].pageContext,
             url: `/${locale}`,
           }
         );
         // index uses the baseLocale
         if (locale === baseLocale) {
-          result.push({ ...result[0], url: '/' });
+          result.push({ pageContext: result[0].pageContext, url: '/' });
         }
 
       }
@@ -91,8 +91,9 @@ export const prerender: AsyncPrerender = async () => {
     }
   )));
 
-  return [
+  const pages = [
     ...indexPages,
     ...blogPages,
   ];
+  return pages;
 };
